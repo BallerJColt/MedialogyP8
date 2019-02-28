@@ -9,12 +9,15 @@ public class MazeGenerator : MonoBehaviour
     public GameObject tilePrefab;
     public Tile[,] tileArray;
     bool matCheck = false;
+    public int[,] mazeIntArray;
 
     // Start is called before the first frame update
     void Start()
     {
         InitializeMaze();
         GenerateMaze();
+        //SeededMazeGeneration(0,0,1); // now we seeded
+        GenerateIntArray();
     }
 
     // Update is called once per frame
@@ -63,6 +66,43 @@ public class MazeGenerator : MonoBehaviour
         int startRow = Random.Range(0, mazeRows);
         int startCol = Random.Range(0, mazeColumns);
         RecursiveDFS(startRow, startCol);
+    }
+
+    void GenerateIntArray()
+    {
+        mazeIntArray = new int[mazeRows, mazeColumns];
+        for (int i = 0; i < mazeRows; i++)
+        {
+            for (int j = 0; j < mazeColumns; j++)
+            {
+                mazeIntArray[i, j] = tileArray[i, j].GetTileID();
+            }
+        }
+    }
+
+    void SeededMazeGeneration(int startRow, int startCol, int startDirection)
+    {
+        switch (startDirection)
+        {
+            case 0:
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], 0);
+                RecursiveDFS(startRow - 1, startCol);
+                break;
+            case 1:
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol + 1], 1);
+                RecursiveDFS(startRow, startCol + 1);
+                break;
+            case 2:
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], 2);
+                RecursiveDFS(startRow + 1, startCol);
+                break;
+            case 3:
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], 3);
+                RecursiveDFS(startRow, startCol - 1);
+                break;
+            default:
+                break;
+        }
     }
 
 
