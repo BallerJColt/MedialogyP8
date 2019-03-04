@@ -295,8 +295,8 @@ MonoBehaviour:
   mazeGeneratorPrefab: {fileID: 6700716075161373839, guid: 22bc3d0eaee86bb428496bf988489ae9,
     type: 3}
   mazeCount: 5
-  mazeRows: 3
-  mazeCols: 3
+  mazeRows: 5
+  mazeCols: 5
 --- !u!4 &1604854435
 Transform:
   m_ObjectHideFlags: 0
