@@ -33,6 +33,8 @@ public class Tile : MonoBehaviour
     {
         wallArray[direction] = val;
         SetIDFromArray();
+
+        // - Run Event
     }
 
     public void OpenWall(int direction)
