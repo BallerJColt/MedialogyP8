@@ -63,14 +63,21 @@ public static class PortalPositionHelper
     }
 
     // If we want to choose an exit direction ourselves, we can use this method to access the possible exit directions
-    public static int[] GetEntranceArray(string position) {
+    public static int[] GetEntranceArray(string position)
+    {
         return PortalEntranceArrayList[position];
+    }
+
+    public static int[] GetEntranceArray(int row, int col)
+    {
+        string direction = GetDirectionArray(row, col);
+        return GetEntranceArray(direction);
     }
 
     public static int GetRandomPortalExit(int row, int col, int direction)
     {
-        string entrancePosition = GetDirectionArray(row,col);
+        string entrancePosition = GetDirectionArray(row, col);
         int[] directionArray = PortalEntranceArrayList[entrancePosition];
-        return GetRandomArrayElementWithFlag(directionArray,direction);
+        return GetRandomArrayElementWithFlag(directionArray, direction);
     }
 }
