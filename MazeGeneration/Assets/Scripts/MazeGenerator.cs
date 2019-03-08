@@ -7,6 +7,7 @@ public class MazeGenerator : MonoBehaviour
     public int mazeRows;
     public int mazeColumns;
     public float tileWidth;
+    public float wallWidth;
     public GameObject tilePrefab;
     public Tile[,] tileArray;
     bool matCheck = false;
@@ -217,11 +218,12 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    public void SetDimensions(int rows, int cols, float width)
+    public void SetDimensions(int rows, int cols, float width, float wWidth)
     {
         mazeRows = rows;
         mazeColumns = cols;
         tileWidth = width;
+        wallWidth = wWidth;
     }
 
 
