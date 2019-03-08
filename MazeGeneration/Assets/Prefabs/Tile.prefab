@@ -146,11 +146,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 740540993216588667}
     m_Modifications:
-    - target: {fileID: 6395070241882163283, guid: da65273e1ca2d6f4c959dc86610a8cc1,
-        type: 3}
-      propertyPath: m_Name
-      value: MeshGenerator
-      objectReference: {fileID: 0}
     - target: {fileID: 6395070241882163287, guid: da65273e1ca2d6f4c959dc86610a8cc1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -204,6 +199,16 @@ PrefabInstance:
     - target: {fileID: 6395070241882163287, guid: da65273e1ca2d6f4c959dc86610a8cc1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395070241882163283, guid: da65273e1ca2d6f4c959dc86610a8cc1,
+        type: 3}
+      propertyPath: m_Name
+      value: MeshGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6395070241882163283, guid: da65273e1ca2d6f4c959dc86610a8cc1,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

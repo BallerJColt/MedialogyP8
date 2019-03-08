@@ -627,6 +627,7 @@ MonoBehaviour:
   mazeCount: 5
   mazeRows: 5
   mazeCols: 5
+  tileWidth: 1
   startRow: 0
   startCol: 0
 --- !u!4 &1604854435

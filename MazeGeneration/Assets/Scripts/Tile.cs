@@ -6,11 +6,18 @@ public class Tile : MonoBehaviour
 {
     public int tileID;
     public int[] wallArray; //[0] = north, [1] = east, [2]= south, [3] = west. 1 = traversable, 0 = not traversable
+    public float tileWidth;
 
     void Awake()
     {
         wallArray = new int[] { 0, 0, 0, 0 };
         tileID = 0;
+    }
+
+    public void SetWidth(float width)
+    {
+        tileWidth = width;
+        transform.localScale *= tileWidth;
     }
 
     private void SetIDFromArray()
