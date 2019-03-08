@@ -6,6 +6,7 @@ public class MazeGenerator : MonoBehaviour
 {
     public int mazeRows;
     public int mazeColumns;
+    public float tileWidth;
     public GameObject tilePrefab;
     public Tile[,] tileArray;
     bool matCheck = false;
@@ -63,11 +64,12 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < mazeColumns; j++)
             {
-                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j, 0, transform.position.z - i); //if we want to center it, we need to subtract mazeHalfwidth from x and add mazehalfheight to z.
+                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j*tileWidth, 0, transform.position.z - i*tileWidth); //if we want to center it, we need to subtract mazeHalfwidth from x and add mazehalfheight to z.
                 GameObject emptyTile = Instantiate(tilePrefab, tileSpawnPosition, Quaternion.identity);
                 emptyTile.name = "Tile " + (mazeColumns * i + j).ToString();
                 emptyTile.transform.parent = transform;
                 tileArray[i, j] = emptyTile.GetComponent<Tile>();
+                tileArray[i, j].SetWidth(tileWidth);
             }
         }
         //Debug.Log(name + " initialized.");
@@ -221,10 +223,11 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    public void SetDimensions(int rows, int cols)
+    public void SetDimensions(int rows, int cols, float width)
     {
         mazeRows = rows;
         mazeColumns = cols;
+        tileWidth = width;
     }
 
 

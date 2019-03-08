@@ -8,6 +8,7 @@ public class MapGenerator : MonoBehaviour
     public int mazeCount;
     public int mazeRows;
     public int mazeCols;
+    public float tileWidth = 1f;
     public int startRow;
     public int startCol;
 
@@ -24,12 +25,12 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < mazeCount; i++)
         {
-            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols + 1), 0, 0);
+            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
             GameObject tempMaze = Instantiate(mazeGeneratorPrefab, mazeSpawnPoint, Quaternion.identity);
             tempMaze.name = "Maze " + i.ToString();
             tempMaze.transform.parent = transform;
             MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
-            mazeScript.SetDimensions(mazeRows, mazeCols);
+            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth);
             mazeScript.InitializeMaze();
 
             if (i == 0)
