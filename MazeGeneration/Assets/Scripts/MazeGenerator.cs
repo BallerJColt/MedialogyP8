@@ -92,11 +92,17 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < mazeColumns; j++)
             {
+                EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
                 mazeIntArray[i, j] = tileArray[i, j].GetTileID();
+                gtei.go = tileArray[i, j].gameObject;
+                gtei.wallArray = tileArray[i, j].GetWallArray();
+                //gtei.tileID = tileID;
+                //ID Changing when creating new tile
+                gtei.FireEvent();
+                //Debug.Log(name + " generated int array");
             }
         }
 
-        //Debug.Log(name + " generated int array");
     }
 
     // Maze generation using recursive DFS with a starting position and direction as seed.
@@ -283,23 +289,25 @@ public class MazeGenerator : MonoBehaviour
         List<int[]> deadEndList = GetDeadEndList();
         foreach (int[] deadEnd in deadEndList)
         {
-            if(deadEnd[0] == entranceRow && deadEnd[1] == entranceCol)
+            if (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol)
                 continue;
             else
                 return deadEnd;
         }
-        return new int[] {-1,-1};
+        return new int[] { -1, -1 };
     }
 
-    public int[] GetRandomDeadEnd(int entranceRow, int entranceCol) {
+    public int[] GetRandomDeadEnd(int entranceRow, int entranceCol)
+    {
         List<int[]> deadEndList = GetDeadEndList();
         System.Random rnd = new System.Random();
-        int[] deadEnd = new int[] {-1,-1};
-        do{
+        int[] deadEnd = new int[] { -1, -1 };
+        do
+        {
             int idx = rnd.Next(deadEndList.Count);
             deadEnd = deadEndList[idx];
         }
-        while(deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
+        while (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
         return deadEnd;
     }
 }

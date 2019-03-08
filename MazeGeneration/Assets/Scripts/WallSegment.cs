@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshGenerator : MonoBehaviour
+public class WallSegment : MonoBehaviour
 {
     Mesh mesh;
 
@@ -31,14 +31,6 @@ public class MeshGenerator : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x / (float)xSize, transform.localScale.y / (float)ySize, transform.localScale.z / (float)xSize);
 
         Debug.Log(wallArray[0] + wallArray[1] + wallArray[2] + wallArray[3]);
-
-        for (int i = 0; i < wallArray.Length; i++)
-        {
-            if(wallArray[i] == 0)
-            {
-                CreateShape(i);
-            }
-        }
 
         UpdateMesh();
     }
