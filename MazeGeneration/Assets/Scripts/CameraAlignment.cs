@@ -11,7 +11,7 @@ public class CameraAlignment : MonoBehaviour
     public GameObject nextCamera;
     public GameObject nextPortal;
 
-
+    
     
     Vector3 playerOffset;
 
@@ -28,7 +28,19 @@ public class CameraAlignment : MonoBehaviour
         float playerToPortalDistance = playerToPortalDirection.magnitude;
         playerToPortalDirection = playerToPortalDirection.normalized;
 
+
+        nextCamera.transform.position = nextPortal.transform.position - (-playerToPortalDirection*playerToPortalDistance);
+        nextCamera.transform.forward = -playerCamera.transform.forward;
+
         float angularDifferenceBetweenPortalRotations= Quaternion.Angle(playerPortal.transform.rotation, nextPortal.transform.rotation);
+
+        Quaternion nextPlayerToPortalDirection =  Quaternion.AngleAxis(angularDifferenceBetweenPortalRotations, Vector3.up);
+
+
+
+
+
+        Debug.Log("angular "+ angularDifferenceBetweenPortalRotations); 
 
         //playerOffset = playerPortal.transform.position - playerCamera.transform.position;
         //nextCamera.transform.position = nextPortal.transform.position + playerOffset;
