@@ -70,7 +70,7 @@ public class MazeGenerator : MonoBehaviour
                 tileArray[i, j] = emptyTile.GetComponent<Tile>();
             }
         }
-        Debug.Log(name + " initialized.");
+        //Debug.Log(name + " initialized.");
     }
 
     // Random starting positions
@@ -80,7 +80,7 @@ public class MazeGenerator : MonoBehaviour
         int startCol = Random.Range(0, mazeColumns);
         RecursiveDFS(startRow, startCol);
 
-        Debug.Log(name + " generated random maze");
+        //Debug.Log(name + " generated random maze");
         GenerateIntArray();
     }
 
@@ -96,7 +96,7 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        Debug.Log(name + " generated int array");
+        //Debug.Log(name + " generated int array");
     }
 
     // Maze generation using recursive DFS with a starting position and direction as seed.
@@ -124,7 +124,7 @@ public class MazeGenerator : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log(name + " generated seeded maze, startPos: (" + startRow + ";" + startCol + ";" + startDirection + ").");
+        //Debug.Log(name + " generated seeded maze, startPos: (" + startRow + ";" + startCol + ";" + startDirection + ").");
         GenerateIntArray();
     }
 
@@ -154,7 +154,7 @@ public class MazeGenerator : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log(name + "endPos: (" + endRow + ";" + endCol + ").");
+        //Debug.Log(name + "endPos: (" + endRow + ";" + endCol + ").");
         GenerateIntArray();
     }
 

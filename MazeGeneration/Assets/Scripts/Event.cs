@@ -32,6 +32,7 @@ namespace EventCallbacks
 
     public class GenerateTerrainEvent : Event<GenerateTerrainEvent>
     {
+        public GameObject go;
         public int[] wallArray;
         public int tileID;
     }

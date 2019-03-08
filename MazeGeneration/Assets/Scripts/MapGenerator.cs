@@ -40,7 +40,7 @@ public class MapGenerator : MonoBehaviour
 
                 mazeScript.GenerateSeededMaze(startCol, startRow, startDirection);
                 nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
-                Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
 
             }
             else
@@ -48,12 +48,12 @@ public class MapGenerator : MonoBehaviour
 
                 mazeScript.GenerateSeededMaze(nextEntrancePosition[0], nextEntrancePosition[1], nextEntranceDirection);
                 nextEntrancePosition = mazeScript.GetRandomDeadEnd(nextEntrancePosition[0], nextEntrancePosition[1]);
-                Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
             }
             currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
-            Debug.Log("current entrancedirection: " + currentEntranceDirection);
+            //Debug.Log("current entrancedirection: " + currentEntranceDirection);
             nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            Debug.Log("next entrancedirection: " + nextEntranceDirection);
+            //Debug.Log("next entrancedirection: " + nextEntranceDirection);
         }
     }
 }
