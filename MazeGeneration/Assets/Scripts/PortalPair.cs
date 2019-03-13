@@ -76,17 +76,6 @@ public class PortalPair : MonoBehaviour
         UpdatePortalCameraTransform();
         CheckForTeleport();
     }
-
-    public void CheckForTeleport()
-    {
-        //if(entranceTrigger.shouldTeleport || exitTrigger.shouldTeleport)        
-        if(entrancePortal.GetComponent<TeleportTrigger>().shouldTeleport || exitPortal.GetComponent<TeleportTrigger>().shouldTeleport)
-        {
-            TeleportPlayerCameras();
-            entrancePortal.GetComponent<TeleportTrigger>().shouldTeleport = false;
-            exitPortal.GetComponent<TeleportTrigger>().shouldTeleport= false;
-        }
-    }
     public void UpdatePortalCameraTransform()
     {
         //
@@ -106,15 +95,22 @@ public class PortalPair : MonoBehaviour
         //entrance
         entrancePortal.transform.position = tilePosition;
         entrancePortal.transform.rotation = tileRotation;
-        //push portal along forward vector to position it correctly within the tile
 
         //exit
         exitPortal.transform.position = tilePosition+offset;
         exitPortal.transform.rotation = Quaternion.Inverse(tileRotation);
-        //push portal along forward vector to position it correctly within the tile
     }
-    
-    public void TeleportPlayerCameras()
+    public void CheckForTeleport()
+    {
+        //if(entranceTrigger.shouldTeleport || exitTrigger.shouldTeleport)        
+        if(entrancePortal.GetComponent<TeleportTrigger>().shouldTeleport || exitPortal.GetComponent<TeleportTrigger>().shouldTeleport)
+        {
+            TeleportPlayer();
+            entrancePortal.GetComponent<TeleportTrigger>().shouldTeleport = false;
+            exitPortal.GetComponent<TeleportTrigger>().shouldTeleport= false;
+        }
+    }
+    public void TeleportPlayer()
     {
         //switch which is the entrance and exit portal
         
@@ -137,5 +133,4 @@ public class PortalPair : MonoBehaviour
         //portalCamera.transform.position = temp.position;
 
     }
-
 }
