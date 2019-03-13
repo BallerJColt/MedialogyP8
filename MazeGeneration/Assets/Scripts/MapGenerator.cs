@@ -8,6 +8,8 @@ public class MapGenerator : MonoBehaviour
     public int mazeCount;
     public int mazeRows;
     public int mazeCols;
+    public int startRow;
+    public int startCol;
 
     void Start()
     {
@@ -16,6 +18,10 @@ public class MapGenerator : MonoBehaviour
 
     void InitializeMazes()
     {
+        int[] nextEntrancePosition = new int[] { -1, -1 };
+        int currentEntranceDirection = 0;
+        int nextEntranceDirection = 0;
+
         for (int i = 0; i < mazeCount; i++)
         {
             Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols + 1), 0, 0);
@@ -25,28 +31,29 @@ public class MapGenerator : MonoBehaviour
             MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
             mazeScript.SetDimensions(mazeRows, mazeCols);
             mazeScript.InitializeMaze();
-            mazeScript.GenerateRandomMaze();
 
-        }
-    }
-
-    private int[] FindFirstDeadEnd(MazeGenerator maze, int rowFlag, int colFlag)
-    {
-        for (int i = 0; i < mazeRows; i++)
-        {
-            for (int j = 0; j < mazeCols; j++)
+            if (i == 0)
             {
-                if (i == rowFlag && j == colFlag) // skip previous entrance
-                    continue;
-                if (maze.mazeIntArray[i, j] == 1 || maze.mazeIntArray[i, j] == 2 || maze.mazeIntArray[i, j] == 4 || maze.mazeIntArray[i, j] == 8)
-                    return new int[] { i, j };
-            }
-        }
-        return new int[] { 0, 0 };
-    }
+                int[] possibleStartDirections = PortalPositionHelper.GetEntranceArray(startRow, startCol);
+                int idx = Random.Range(0, possibleStartDirections.Length);
+                int startDirection = possibleStartDirections[idx];
 
-    private int[] FindFirstDeadEnd(MazeGenerator maze)
-    {
-        return FindFirstDeadEnd(maze, -1, -1);
+                mazeScript.GenerateSeededMaze(startCol, startRow, startDirection);
+                nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
+                Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+
+            }
+            else
+            {
+
+                mazeScript.GenerateSeededMaze(nextEntrancePosition[0], nextEntrancePosition[1], nextEntranceDirection);
+                nextEntrancePosition = mazeScript.GetRandomDeadEnd(nextEntrancePosition[0], nextEntrancePosition[1]);
+                Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+            }
+            currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
+            Debug.Log("current entrancedirection: " + currentEntranceDirection);
+            nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
+            Debug.Log("next entrancedirection: " + nextEntranceDirection);
+        }
     }
 }

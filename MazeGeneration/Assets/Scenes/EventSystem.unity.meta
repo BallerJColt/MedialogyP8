@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:MazeGeneration/Assets/Materials.meta
 guid: 2530da75396189c45b802525f29858db
 folderAsset: yes
+=======
+guid: e439eb07591d20e4a9664ea25b0ad535
+>>>>>>> origin/master:MazeGeneration/Assets/Scenes/EventSystem.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

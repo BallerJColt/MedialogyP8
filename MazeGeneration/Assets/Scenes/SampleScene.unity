@@ -263,6 +263,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1603307970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1603307972}
+  - component: {fileID: 1603307971}
+  m_Layer: 0
+  m_Name: PortalGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1603307971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603307970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f48100c6fe1834bbd7d8556f570944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalExitCoord: 0
+  portalExitDir: 1
+  tileWidth: 1
+  wallWidth: 1
+  mazeWidthInput: 1
+  portalEntPrefab: {fileID: 3620765893249609554, guid: 582524f12a1bed84994082133ebf8a27,
+    type: 3}
+  portalExtPrefab: {fileID: 3620765893249609554, guid: 582524f12a1bed84994082133ebf8a27,
+    type: 3}
+--- !u!4 &1603307972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603307970}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.263394, y: -0.10830021, z: -2.7962809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1604854433
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +349,8 @@ MonoBehaviour:
   mazeCount: 5
   mazeRows: 5
   mazeCols: 5
+  startRow: 0
+  startCol: 0
 --- !u!4 &1604854435
 Transform:
   m_ObjectHideFlags: 0

@@ -12,13 +12,23 @@ public class MazeGenerator : MonoBehaviour
     public int[,] mazeIntArray;
 
     // Staart is called before the first frame update
+    /* void Awake() {
+        Debug.Log(name + " awake method called");
+        Debug.Log(name + " awake method ended");
+    } */
+
     /* void Start()
     {
+        Debug.Log(name + " start method called");
         InitializeMaze();
         //GenerateRandomMaze();
-        //GenerateSeededMaze(0,0,1); // now we seeded
+        GenerateSeededMaze(0,0,1); // now we seeded
         //GenerateSeededMaze(0, 0, 1, mazeRows - 1, mazeColumns - 1, 0);
         GenerateIntArray();
+        //int[] alma = GetRandomDeadEnd(-1, -1);
+        int[] alma = GetRandomDeadEnd(0, 0);
+        Debug.Log(name + " First dead end: (" + alma[0] + ";" + alma[1] + ").");
+        Debug.Log(name + " start method ended");
     } */
 
     // The inputs here are just for debug reasons to show the wang tiles
@@ -60,6 +70,7 @@ public class MazeGenerator : MonoBehaviour
                 tileArray[i, j] = emptyTile.GetComponent<Tile>();
             }
         }
+        Debug.Log(name + " initialized.");
     }
 
     // Random starting positions
@@ -68,6 +79,9 @@ public class MazeGenerator : MonoBehaviour
         int startRow = Random.Range(0, mazeRows);
         int startCol = Random.Range(0, mazeColumns);
         RecursiveDFS(startRow, startCol);
+
+        Debug.Log(name + " generated random maze");
+        GenerateIntArray();
     }
 
     //Generates an integer array with the tileIDs in it. Will be used to find dead ends for portal placement
@@ -81,6 +95,8 @@ public class MazeGenerator : MonoBehaviour
                 mazeIntArray[i, j] = tileArray[i, j].GetTileID();
             }
         }
+
+        Debug.Log(name + " generated int array");
     }
 
     // Maze generation using recursive DFS with a starting position and direction as seed.
@@ -108,6 +124,8 @@ public class MazeGenerator : MonoBehaviour
             default:
                 break;
         }
+        Debug.Log(name + " generated seeded maze, startPos: (" + startRow + ";" + startCol + ";" + startDirection + ").");
+        GenerateIntArray();
     }
 
     // Overload of the seeded maze generation method with a specified end position and direction as well.
@@ -136,6 +154,8 @@ public class MazeGenerator : MonoBehaviour
             default:
                 break;
         }
+        Debug.Log(name + "endPos: (" + endRow + ";" + endCol + ").");
+        GenerateIntArray();
     }
 
 
@@ -239,5 +259,47 @@ public class MazeGenerator : MonoBehaviour
             default:
                 return false;
         }
+    }
+
+    public List<int[]> GetDeadEndList()
+    {
+        List<int[]> deadEnd = new List<int[]>();
+        for (int i = 0; i < mazeRows; i++)
+        {
+            for (int j = 0; j < mazeColumns; j++)
+            {
+                if (mazeIntArray[i, j] == 1 || mazeIntArray[i, j] == 2 || mazeIntArray[i, j] == 4 || mazeIntArray[i, j] == 8)
+                {
+                    deadEnd.Add(new int[] { i, j });
+                    //Debug.Log("" + i + " " + j);
+                }
+            }
+        }
+        return deadEnd;
+    }
+
+    public int[] GetFirstDeadEnd(int entranceRow, int entranceCol)
+    {
+        List<int[]> deadEndList = GetDeadEndList();
+        foreach (int[] deadEnd in deadEndList)
+        {
+            if(deadEnd[0] == entranceRow && deadEnd[1] == entranceCol)
+                continue;
+            else
+                return deadEnd;
+        }
+        return new int[] {-1,-1};
+    }
+
+    public int[] GetRandomDeadEnd(int entranceRow, int entranceCol) {
+        List<int[]> deadEndList = GetDeadEndList();
+        System.Random rnd = new System.Random();
+        int[] deadEnd = new int[] {-1,-1};
+        do{
+            int idx = rnd.Next(deadEndList.Count);
+            deadEnd = deadEndList[idx];
+        }
+        while(deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
+        return deadEnd;
     }
 }
