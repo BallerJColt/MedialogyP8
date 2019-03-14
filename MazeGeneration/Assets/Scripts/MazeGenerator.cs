@@ -65,7 +65,7 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < mazeColumns; j++)
             {
-                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j*tileWidth, 0, transform.position.z - i*tileWidth); //if we want to center it, we need to subtract mazeHalfwidth from x and add mazehalfheight to z.
+                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j * tileWidth, 0, transform.position.z - i * tileWidth); //if we want to center it, we need to subtract mazeHalfwidth from x and add mazehalfheight to z.
                 GameObject emptyTile = Instantiate(tilePrefab, tileSpawnPosition, Quaternion.identity);
                 emptyTile.name = "Tile " + (mazeColumns * i + j).ToString();
                 emptyTile.transform.parent = transform;
