@@ -6,7 +6,11 @@ namespace EventCallbacks
 {
     public class TerrainGenerator : MonoBehaviour
     {
+        GameObject newSegment;
+        GameObject newPillar;
+        public float wallOffset = 0f;
         public GameObject wallSegment;
+        public GameObject woodPillar;
         // Start is called before the first frame update
         void Start()
         {
@@ -15,15 +19,43 @@ namespace EventCallbacks
 
         void OnGenerateTerrain(GenerateTerrainEvent generateTerrain)
         {
-            //Debug.Log("Alerted about terrain generation on ID: " + generateTerrain.tileID);
+            Transform tileTransform = generateTerrain.go.transform;
+            
             for (int i = 0; i < generateTerrain.wallArray.Length; i++)
             {
                 if(generateTerrain.wallArray[i] == 0)
                 {
-                    GameObject newSegment = Instantiate (wallSegment, new Vector3(generateTerrain.go.transform.position.x, generateTerrain.go.transform.position.y, generateTerrain.go.transform.position.z) , Quaternion.identity);
-                    newSegment.transform.parent = generateTerrain.go.transform;
+                    switch (i)
+                    {
+                        case 0:
+                            newSegment = Instantiate (wallSegment, new Vector3(tileTransform.position.x - (generateTerrain.tileWidth / 2) + wallOffset, tileTransform.position.y, tileTransform.position.z + (generateTerrain.tileWidth / 2) - wallOffset) , Quaternion.AngleAxis(i * 90, Vector3.up));
+                            newSegment.transform.parent = tileTransform;
+                            break;
+                        case 1:
+                            newSegment = Instantiate (wallSegment, new Vector3(tileTransform.position.x + (generateTerrain.tileWidth / 2) - wallOffset, tileTransform.position.y, tileTransform.position.z + (generateTerrain.tileWidth / 2) - wallOffset) , Quaternion.AngleAxis(i * 90, Vector3.up));
+                            newSegment.transform.parent = tileTransform;
+                            break;
+                        case 2:
+                            newSegment = Instantiate (wallSegment, new Vector3(tileTransform.position.x + (generateTerrain.tileWidth / 2) - wallOffset, tileTransform.position.y, tileTransform.position.z - (generateTerrain.tileWidth / 2) + wallOffset) , Quaternion.AngleAxis(i * 90, Vector3.up));
+                            newSegment.transform.parent = tileTransform;
+                            break;
+                        case 3:
+                            newSegment = Instantiate (wallSegment, new Vector3(tileTransform.position.x - (generateTerrain.tileWidth / 2) + wallOffset, tileTransform.position.y, tileTransform.position.z - (generateTerrain.tileWidth / 2) + wallOffset) , Quaternion.AngleAxis(i * 90, Vector3.up));
+                            newSegment.transform.parent = tileTransform;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
+            newPillar = Instantiate(woodPillar, new Vector3(tileTransform.position.x - (generateTerrain.tileWidth / 2) + (woodPillar.transform.localScale.x / 2), tileTransform.position.y + 0.5f, tileTransform.position.z - (generateTerrain.tileWidth / 2) + (woodPillar.transform.localScale.z / 2)), Quaternion.identity);
+            newPillar.transform.parent = tileTransform;
+            newPillar = Instantiate(woodPillar, new Vector3(tileTransform.position.x + (generateTerrain.tileWidth / 2) - (woodPillar.transform.localScale.x / 2), tileTransform.position.y + 0.5f, tileTransform.position.z + (generateTerrain.tileWidth / 2) - (woodPillar.transform.localScale.z / 2)), Quaternion.identity);
+            newPillar.transform.parent = tileTransform;
+            newPillar = Instantiate(woodPillar, new Vector3(tileTransform.position.x + (generateTerrain.tileWidth / 2) - (woodPillar.transform.localScale.x / 2), tileTransform.position.y + 0.5f, tileTransform.position.z - (generateTerrain.tileWidth / 2) + (woodPillar.transform.localScale.z / 2)), Quaternion.identity);
+            newPillar.transform.parent = tileTransform;
+            newPillar = Instantiate(woodPillar, new Vector3(tileTransform.position.x - (generateTerrain.tileWidth / 2) + (woodPillar.transform.localScale.x / 2), tileTransform.position.y + 0.5f, tileTransform.position.z + (generateTerrain.tileWidth / 2) - (woodPillar.transform.localScale.z / 2)), Quaternion.identity);
+            newPillar.transform.parent = tileTransform;
         }
     }
 }

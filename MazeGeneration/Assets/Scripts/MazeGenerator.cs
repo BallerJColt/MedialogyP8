@@ -98,7 +98,8 @@ public class MazeGenerator : MonoBehaviour
                 mazeIntArray[i, j] = tileArray[i, j].GetTileID();
                 gtei.go = tileArray[i, j].gameObject;
                 gtei.wallArray = tileArray[i, j].GetWallArray();
-                //gtei.tileID = tileID;
+                gtei.tileWidth = tileWidth;
+
                 //ID Changing when creating new tile
                 gtei.FireEvent();
                 //Debug.Log(name + " generated int array");

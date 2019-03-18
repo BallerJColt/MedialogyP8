@@ -30,12 +30,11 @@ public class WallSegment : MonoBehaviour
         
         transform.localScale = new Vector3(transform.localScale.x / (float)xSize, transform.localScale.y / (float)ySize, transform.localScale.z / (float)xSize);
 
-        Debug.Log(wallArray[0] + wallArray[1] + wallArray[2] + wallArray[3]);
-
+        CreateShape();
         UpdateMesh();
     }
 
-    void CreateShape(int direction)
+    void CreateShape()
     {
         vertices = new Vector3[(xSize + 1) * (ySize + 1)];
         uv = new Vector2[vertices.Length];
