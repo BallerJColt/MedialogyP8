@@ -95,11 +95,18 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < mazeColumns; j++)
             {
+                EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
                 mazeIntArray[i, j] = tileArray[i, j].GetTileID();
+                gtei.go = tileArray[i, j].gameObject;
+                gtei.wallArray = tileArray[i, j].GetWallArray();
+                gtei.tileWidth = tileWidth;
+
+                //ID Changing when creating new tile
+                gtei.FireEvent();
+                //Debug.Log(name + " generated int array");
             }
         }
 
-        //Debug.Log(name + " generated int array");
     }
 
     // Maze generation using recursive DFS with a starting position and direction as seed.

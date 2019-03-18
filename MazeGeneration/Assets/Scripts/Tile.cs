@@ -40,13 +40,6 @@ public class Tile : MonoBehaviour
     {
         wallArray[direction] = val;
         SetIDFromArray();
-
-        EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
-        gtei.go = gameObject;
-        gtei.wallArray = wallArray;
-        gtei.tileID = tileID;
-        //ID Changing when creating new tile
-        gtei.FireEvent();
     }
 
     public void OpenWall(int direction)

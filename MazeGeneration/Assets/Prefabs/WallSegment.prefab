@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6395070241882163287}
   - component: {fileID: 6395070241882163286}
   - component: {fileID: 6395070241882163281}
-  - component: {fileID: 6395070241882163280}
+  - component: {fileID: 3907946024521144469}
   m_Layer: 0
-  m_Name: MeshGenerator
+  m_Name: WallSegment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &6395070241882163280
+--- !u!114 &3907946024521144469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6395070241882163283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218ea80057b58ce4e910685216fc2646, type: 3}
+  m_Script: {fileID: 11500000, guid: 1acf3b07efeba4d498ef45e7fa83b824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   xSize: 20
   ySize: 20
-  amplitude: 1.53
-  frequenzy: 1
-  depth: 1
+  amplitude: 2.32
+  frequenzy: 1.8
+  depth: 1.2

@@ -27,6 +27,7 @@ namespace EventCallbacks
             if (listeners != null) {
                 listeners(this as T);
             }
+            
         }
     }
 
@@ -34,6 +35,7 @@ namespace EventCallbacks
     {
         public GameObject go;
         public int[] wallArray;
-        public int tileID;
+        public float tileWidth;
+
     }
 }
