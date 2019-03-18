@@ -45,9 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileID: 0
-  tileArray: 
-  visited: 0
-  hasEmptyNeighbours: 0
+  wallArray: 
+  tileWidth: 0
 --- !u!1 &740540993738681865
 GameObject:
   m_ObjectHideFlags: 0

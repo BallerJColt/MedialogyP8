@@ -8,6 +8,7 @@ public class MapGenerator : MonoBehaviour
     public int mazeCount;
     public int mazeRows;
     public int mazeCols;
+    public float tileWidth = 1f;
     public int startRow;
     public int startCol;
 
@@ -24,12 +25,12 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < mazeCount; i++)
         {
-            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols + 1), 0, 0);
+            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
             GameObject tempMaze = Instantiate(mazeGeneratorPrefab, mazeSpawnPoint, Quaternion.identity);
             tempMaze.name = "Maze " + i.ToString();
             tempMaze.transform.parent = transform;
             MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
-            mazeScript.SetDimensions(mazeRows, mazeCols);
+            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth);
             mazeScript.InitializeMaze();
 
             if (i == 0)
@@ -40,7 +41,7 @@ public class MapGenerator : MonoBehaviour
 
                 mazeScript.GenerateSeededMaze(startCol, startRow, startDirection);
                 nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
-                Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
 
             }
             else
@@ -48,12 +49,12 @@ public class MapGenerator : MonoBehaviour
 
                 mazeScript.GenerateSeededMaze(nextEntrancePosition[0], nextEntrancePosition[1], nextEntranceDirection);
                 nextEntrancePosition = mazeScript.GetRandomDeadEnd(nextEntrancePosition[0], nextEntrancePosition[1]);
-                Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
             }
             currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
-            Debug.Log("current entrancedirection: " + currentEntranceDirection);
+            //Debug.Log("current entrancedirection: " + currentEntranceDirection);
             nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            Debug.Log("next entrancedirection: " + nextEntranceDirection);
+            //Debug.Log("next entrancedirection: " + nextEntranceDirection);
         }
     }
 }
