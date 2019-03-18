@@ -5,15 +5,18 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     public GameObject mazeGeneratorPrefab;
+    public PortalGenerator pg;
     public int mazeCount;
     public int mazeRows;
     public int mazeCols;
     public int startRow;
     public int startCol;
 
+
     void Start()
     {
         InitializeMazes();
+        pg.GeneratePortals(pg.testingRows, pg.testingCols, pg.testingDirs, pg.testingWides, 0.2f);
     }
 
     void InitializeMazes()
