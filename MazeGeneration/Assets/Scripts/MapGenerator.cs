@@ -9,12 +9,20 @@ public class MapGenerator : MonoBehaviour
     public int mazeRows;
     public int mazeCols;
     public float tileWidth = 1f;
+    public float wallWidth = 0f;
     public int startRow;
     public int startCol;
 
+    public PortalInfo[] portalInfo;
+
     void Start()
     {
+        portalInfo = new PortalInfo[mazeCount - 1];
         InitializeMazes();
+        for (int i = 0; i < portalInfo.Length; i++)
+        {
+            Debug.Log("pp for maze: " + i + " r: " + portalInfo[i].row + " c: " + portalInfo[i].column + " d: " + portalInfo[i].entranceDirection);
+        }
     }
 
     void InitializeMazes()
@@ -30,7 +38,7 @@ public class MapGenerator : MonoBehaviour
             tempMaze.name = "Maze " + i.ToString();
             tempMaze.transform.parent = transform;
             MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
-            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth);
+            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
             mazeScript.InitializeMaze();
 
             if (i == 0)
@@ -52,6 +60,8 @@ public class MapGenerator : MonoBehaviour
                 //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
             }
             currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
+            if (i < portalInfo.Length)
+                portalInfo[i] = new PortalInfo(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
             //Debug.Log("current entrancedirection: " + currentEntranceDirection);
             nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
             //Debug.Log("next entrancedirection: " + nextEntranceDirection);
