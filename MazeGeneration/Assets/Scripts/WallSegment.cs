@@ -24,11 +24,15 @@ public class WallSegment : MonoBehaviour
     void Start()
     {
         int[] wallArray = transform.parent.GetComponent<Tile>().wallArray;
+        float tileWidth = transform.parent.GetComponent<Tile>().tileWidth;
 
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+
+        xSize = xSize * (int)tileWidth;
+        ySize = ySize * (int)tileWidth;
         
-        transform.localScale = new Vector3(transform.localScale.x / (float)xSize, transform.localScale.y / (float)ySize, transform.localScale.z / (float)xSize);
+        transform.localScale = new Vector3(tileWidth / (float)xSize, transform.localScale.y / (float)ySize, tileWidth / (float)xSize);
 
         CreateShape();
         UpdateMesh();
