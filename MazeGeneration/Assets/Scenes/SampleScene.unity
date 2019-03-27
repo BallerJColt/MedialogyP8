@@ -177,7 +177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &387014561
 Light:
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 970162663}
   - component: {fileID: 970162662}
   m_Layer: 0
-  m_Name: WallGenerator
+  m_Name: TileGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,6 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallOffset: 0.1
   wallHeight: 1
+  ceilingLamp: {fileID: 4771548619695553747, guid: 8ca664705a6803049aa393e96c6ca14b,
+    type: 3}
   ceiling: {fileID: 9109257161806172612, guid: d303b1d90640a1f46909707957f5889f, type: 3}
   wallSegment: {fileID: 6395070241882163283, guid: da65273e1ca2d6f4c959dc86610a8cc1,
     type: 3}
