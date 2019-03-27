@@ -21,7 +21,7 @@ public class PortalGenerator : MonoBehaviour
     }
 public void GeneratePortals(int[] entRows, int[] entCols, int[] entDirs, float tileWidth, float wallWidth)     // Generate the portal pairs at the specified locations around the mazes. Takes arrays of entrance rows and cols + directions
     {
-        MapGenerator mapGenScript = GameObject.Find("MapGenerator").GetComponent<MapGenerator>();   
+        MapManager mapGenScript = GameObject.Find("MapManager").GetComponent<MapManager>();   
         mazeWidth = mapGenScript.mazeCols*(int)tileWidth;
         //float tileWidthFloat = tileWidth;       // Convert int to float
 
@@ -31,8 +31,8 @@ public void GeneratePortals(int[] entRows, int[] entCols, int[] entDirs, float t
         {
 
             //entrance portal tranform
-            GameObject mazeObject = GameObject.Find("MapGenerator/Maze " + i);  // Find specific maze            
-            GameObject nextMazeObject = GameObject.Find("MapGenerator/Maze " + (i + 1));    // Find specific maze + 1
+            GameObject mazeObject = GameObject.Find("MapManager/Maze " + i);  // Find specific maze            
+            GameObject nextMazeObject = GameObject.Find("MapManager/Maze " + (i + 1));    // Find specific maze + 1
             Transform transformHelper = transform; // for calculating the proper portal position as it depends on an object's forward vector. set to transform temporally 
 
             Quaternion entrancePortalRotation = Quaternion.Euler(90, 90 * entDirs[i], 0);
@@ -55,7 +55,7 @@ public void GeneratePortals(int[] entRows, int[] entCols, int[] entDirs, float t
     /* 
     public void GeneratePortals(int[] entRows, int[] entCols, int[] entDirs, int tileWidth)     // Generate the portal pairs at the specified locations around the mazes. Takes arrays of entrance rows and cols + directions
     {
-        MapGenerator mapGenScript = GameObject.Find("MapGenerator").GetComponent<MapGenerator>();   
+        MapManager mapGenScript = GameObject.Find("MapManager").GetComponent<MapManager>();   
         mazeWidth = mapGenScript.mazeCols;
         float tileWidthFloat = tileWidth;       // Convert int to float
 
@@ -71,7 +71,7 @@ public void GeneratePortals(int[] entRows, int[] entCols, int[] entDirs, float t
 
 
             // Entrance portal:
-            GameObject mazeObject = GameObject.Find("MapGenerator/Maze " + i);  // Find specific maze
+            GameObject mazeObject = GameObject.Find("MapManager/Maze " + i);  // Find specific maze
 
             Vector3 portalEntSpawnPosition = new Vector3((mazeObject.transform.position.x + tileWidth / 2) + entRows[i], 0, (mazeObject.transform.position.z + tileWidth / 2) - entCols[i]);    // Find tile position vector, based on input coordinates
 
@@ -83,7 +83,7 @@ public void GeneratePortals(int[] entRows, int[] entCols, int[] entDirs, float t
 
 
             // Exit portal:
-            GameObject nextMazeObject = GameObject.Find("MapGenerator/Maze " + (i + 1));    // Find specific maze + 1
+            GameObject nextMazeObject = GameObject.Find("MapManager/Maze " + (i + 1));    // Find specific maze + 1
 
             Vector3 portalExtSpawnPosition = new Vector3((nextMazeObject.transform.position.x + tileWidth / 2) + entRows[i], 0, (nextMazeObject.transform.position.z + tileWidth / 2) - entCols[i]);
             GameObject emptyExitPortal = Instantiate(portalPairPrefabs[i, 1], portalExtSpawnPosition, Quaternion.Euler(0, ((90 * entDirs[i]) + 180) % 360, 0));     // Instantiate exit portal, place it at same tile coordinate, but of the next maze. Then rotate opposite direction of entrance portal

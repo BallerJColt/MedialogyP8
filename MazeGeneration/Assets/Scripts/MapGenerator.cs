@@ -2,104 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public abstract class MapGenerator : MonoBehaviour
 {
-    public GameObject mazeGeneratorPrefab;
-    public Transform playerHead;
-    public int mazeCount;
     public int mazeRows;
-    public int mazeCols;
-    public float tileWidth = 1f;
-    public float wallWidth = 0f;
-    public int startRow;
-    public int startCol;
+    public int mazeColumns;
+    public float tileWidth;
+    public float wallWidth;
+    public GameObject tilePrefab;
+    public Tile[,] tileArray;
+    bool matCheck = false;
+    public int[,] mazeIntArray;
 
-    public Vector3 playAreaSize;
-
-    public PortalInfo[] portalInfo;
-
-    void Start()
+    public void Initialize()
     {
-        //playAreaSize = GetCameraRigSize();
-        portalInfo = new PortalInfo[mazeCount - 1];
-
-        GetStartSeedFromPlayerPosition(out startCol, out startRow);
-        InitializeMazes();
-        OffsetMap();
-        for (int i = 0; i < portalInfo.Length; i++)
+        tileArray = new Tile[mazeRows, mazeColumns];
+        //float mazeHalfWidth = mazeRows / 2f; // Add scalability with tile width!
+        //float mazeHalfHeight = mazeColumns / 2f; // Add scalability with tile height!
+        for (int i = 0; i < mazeRows; i++)
         {
-            Debug.Log("pp for maze: " + i + " r: " + portalInfo[i].row + " c: " + portalInfo[i].column + " d: " + portalInfo[i].entranceDirection);
-        }
-
-        //maybe add script to find player head so we don't have to drag it in
-    }
-
-
-    void InitializeMazes()
-    {
-        int[] nextEntrancePosition = new int[] { -1, -1 };
-        int currentEntranceDirection = 0;
-        int nextEntranceDirection = 0;
-
-        for (int i = 0; i < mazeCount; i++)
-        {
-            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
-            GameObject tempMaze = Instantiate(mazeGeneratorPrefab, mazeSpawnPoint, Quaternion.identity);
-            tempMaze.name = "Maze " + i.ToString();
-            tempMaze.transform.parent = transform;
-            MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
-            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
-            mazeScript.InitializeMaze();
-
-            if (i == 0)
+            for (int j = 0; j < mazeColumns; j++)
             {
-                int[] possibleStartDirections = PortalPositionHelper.GetEntranceArray(startRow, startCol);
-                int idx = Random.Range(0, possibleStartDirections.Length);
-                int startDirection = possibleStartDirections[idx];
-
-                mazeScript.GenerateSeededMaze(startRow, startCol, startDirection);
-                nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
-                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
-
+                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j * tileWidth, 0, transform.position.z - i * tileWidth);
+                GameObject emptyTile = Instantiate(tilePrefab, tileSpawnPosition, Quaternion.identity);
+                emptyTile.name = "Tile " + (mazeColumns * i + j).ToString();
+                emptyTile.transform.parent = transform;
+                tileArray[i, j] = emptyTile.GetComponent<Tile>();
+                tileArray[i, j].SetWidth(tileWidth);
             }
-            else
-            {
-
-                mazeScript.GenerateSeededMaze(nextEntrancePosition[0], nextEntrancePosition[1], nextEntranceDirection);
-                nextEntrancePosition = mazeScript.GetRandomDeadEnd(nextEntrancePosition[0], nextEntrancePosition[1]);
-                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
-            }
-            currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
-            if (i < portalInfo.Length)
-                portalInfo[i] = new PortalInfo(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            //Debug.Log("current entrancedirection: " + currentEntranceDirection);
-            nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            //Debug.Log("next entrancedirection: " + nextEntranceDirection);
         }
+        //Debug.Log(name + " initialized.");
     }
 
-    public Vector3 GetCameraRigSize()
+    protected void GenerateIntArray()
     {
-        var chaperone = Valve.VR.OpenVR.Chaperone;
-        float x = 0, z = 0;
-        if (chaperone != null)
+        mazeIntArray = new int[mazeRows, mazeColumns];
+        for (int i = 0; i < mazeRows; i++)
         {
-            chaperone.GetPlayAreaSize(ref x, ref z);
-            Debug.Log("got here");
+            for (int j = 0; j < mazeColumns; j++)
+            {
+                EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
+                mazeIntArray[i, j] = tileArray[i, j].GetTileID();
+                gtei.go = tileArray[i, j].gameObject;
+                gtei.wallArray = tileArray[i, j].GetWallArray();
+                gtei.tileWidth = tileWidth;
+
+                //ID Changing when creating new tile
+                gtei.FireEvent();
+                //Debug.Log(tileWidth + " generated int array");
+            }
         }
-        return new Vector3(x, 0, z);
     }
 
-    void OffsetMap()
+    public void SetDimensions(int rows, int cols, float width, float wWidth)
     {
-        transform.Translate(-playAreaSize.x / 2f + tileWidth / 2f, 0, playAreaSize.z / 2f - tileWidth / 2f);
+        mazeRows = rows;
+        mazeColumns = cols;
+        tileWidth = width;
+        wallWidth = wWidth;
     }
 
-    void GetStartSeedFromPlayerPosition(out int col, out int row)
-    {
-        col = Mathf.RoundToInt(Mathf.Abs((playerHead.position.x - (-playAreaSize.x / 2f + tileWidth / 2f)) / tileWidth));
-        row = Mathf.RoundToInt(Mathf.Abs((playerHead.position.z - (playAreaSize.z / 2f - tileWidth / 2f)) / tileWidth));
-
-        return;
-    }
+    public abstract void Generate();
+    public abstract void Generate(TileInfo info);
+    public abstract void Generate(int startRow, int startCol, int startDir);
+    public abstract void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir);
 }
