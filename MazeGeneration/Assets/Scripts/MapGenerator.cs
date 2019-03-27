@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     public GameObject mazeGeneratorPrefab;
+    public Transform playerHead;
     public int mazeCount;
     public int mazeRows;
     public int mazeCols;
@@ -13,17 +14,26 @@ public class MapGenerator : MonoBehaviour
     public int startRow;
     public int startCol;
 
+    public Vector3 playAreaSize;
+
     public PortalInfo[] portalInfo;
 
     void Start()
     {
+        //playAreaSize = GetCameraRigSize();
         portalInfo = new PortalInfo[mazeCount - 1];
+
+        GetStartSeedFromPlayerPosition(out startCol, out startRow);
         InitializeMazes();
+        OffsetMap();
         for (int i = 0; i < portalInfo.Length; i++)
         {
             Debug.Log("pp for maze: " + i + " r: " + portalInfo[i].row + " c: " + portalInfo[i].column + " d: " + portalInfo[i].entranceDirection);
         }
+
+        //maybe add script to find player head so we don't have to drag it in
     }
+
 
     void InitializeMazes()
     {
@@ -47,7 +57,7 @@ public class MapGenerator : MonoBehaviour
                 int idx = Random.Range(0, possibleStartDirections.Length);
                 int startDirection = possibleStartDirections[idx];
 
-                mazeScript.GenerateSeededMaze(startCol, startRow, startDirection);
+                mazeScript.GenerateSeededMaze(startRow, startCol, startDirection);
                 nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
                 //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
 
@@ -66,5 +76,30 @@ public class MapGenerator : MonoBehaviour
             nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
             //Debug.Log("next entrancedirection: " + nextEntranceDirection);
         }
+    }
+
+    public Vector3 GetCameraRigSize()
+    {
+        var chaperone = Valve.VR.OpenVR.Chaperone;
+        float x = 0, z = 0;
+        if (chaperone != null)
+        {
+            chaperone.GetPlayAreaSize(ref x, ref z);
+            Debug.Log("got here");
+        }
+        return new Vector3(x, 0, z);
+    }
+
+    void OffsetMap()
+    {
+        transform.Translate(-playAreaSize.x / 2f + tileWidth / 2f, 0, playAreaSize.z / 2f - tileWidth / 2f);
+    }
+
+    void GetStartSeedFromPlayerPosition(out int col, out int row)
+    {
+        col = Mathf.RoundToInt(Mathf.Abs((playerHead.position.x - (-playAreaSize.x / 2f + tileWidth / 2f))));
+        row = Mathf.RoundToInt(Mathf.Abs((playerHead.position.z - (playAreaSize.z / 2f - tileWidth / 2f))));
+
+        return;
     }
 }
