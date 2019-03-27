@@ -103,7 +103,7 @@ public class MazeGenerator : MonoBehaviour
 
                 //ID Changing when creating new tile
                 gtei.FireEvent();
-                Debug.Log(tileWidth + " generated int array");
+                //Debug.Log(tileWidth + " generated int array");
             }
         }
 
