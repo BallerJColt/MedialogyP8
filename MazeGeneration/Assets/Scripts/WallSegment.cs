@@ -13,11 +13,11 @@ public class WallSegment : MonoBehaviour
     public int xSize = 20;
     public int ySize = 20;
 
-    [Range(1,5)]
+    [Range(1, 5)]
     public float amplitude = 1f;
-    [Range(1,5)]
+    [Range(1, 5)]
     public float frequenzy = 1f;
-    [Range(1,5)]
+    [Range(1, 5)]
     public float depth = 1f;
 
     // Start is called before the first frame update
@@ -29,9 +29,11 @@ public class WallSegment : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        xSize = xSize * (int)tileWidth;
-        ySize = ySize * (int)tileWidth;
-        
+        if (tileWidth > 1)
+        {
+            xSize = xSize * (int)tileWidth;
+            ySize = ySize * (int)tileWidth;
+        }
         transform.localScale = new Vector3(tileWidth / (float)xSize, transform.localScale.y / (float)ySize, tileWidth / (float)xSize);
 
         CreateShape();
@@ -66,7 +68,7 @@ public class WallSegment : MonoBehaviour
                 triangles[tris + 0] = vert + 0;
                 triangles[tris + 1] = vert + xSize + 1;
                 triangles[tris + 2] = vert + 1;
-                
+
                 triangles[tris + 3] = vert + 1;
                 triangles[tris + 4] = vert + xSize + 1;
                 triangles[tris + 5] = vert + xSize + 2;
