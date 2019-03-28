@@ -74,7 +74,7 @@ public static class PortalPositionHelper
         return GetEntranceArray(direction);
     }
 
-    public static int GetRandomPortalExit(int row, int col, int direction)
+    public static int GetRandomPortalExit(int row, int col, int direction = -1)
     {
         string entrancePosition = GetDirectionArray(row, col);
         int[] directionArray = PortalEntranceArrayList[entrancePosition];

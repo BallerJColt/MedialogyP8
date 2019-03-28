@@ -9,6 +9,10 @@ public class RoomGenerator : MapGenerator
     {
         Generate(0, 0, 1);
     }
+    public override void Generate(MapInfo info)
+    {
+        Generate(info.startSeed);
+    }
     public override void Generate(TileInfo startSeed)
     {
         Generate(startSeed.row, startSeed.column, startSeed.direction);
@@ -78,6 +82,7 @@ public class RoomGenerator : MapGenerator
                 break;
         }
         GenerateEmptyRoom(sR, sC, eR, eC);
+        GenerateIntArray();
     }
 
     void GenerateEmptyRoom(int startRow, int startCol, int endRow, int endCol)
