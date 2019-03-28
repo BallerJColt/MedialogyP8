@@ -33,8 +33,8 @@ public class MapManager : MonoBehaviour
             Debug.Log("Player was out of game area, Maze starts from (0;0).");
         }
 
-        //InitializeMazes();
-        GenerateMapSequence();
+        InitializeMazes();
+        //GenerateMapSequence();
         OffsetMap();
         /*
         //This is to debug the portal infos in the console

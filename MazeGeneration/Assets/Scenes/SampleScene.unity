@@ -181,7 +181,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!43 &400581511
+--- !u!43 &580070733
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -341,6 +341,40 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!21 &653870075
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &777009145
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f597773bc07373a4bb4206e11aea4ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallOffset: 0.1
+  wallOffset: 0
   wallHeight: 1
   ceilingLamp: {fileID: 4771548619695553747, guid: 8ca664705a6803049aa393e96c6ca14b,
     type: 3}
@@ -485,40 +519,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1283811343
-Material:
-  serializedVersion: 6
+--- !u!1 &1124145437
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1124145438}
+  - component: {fileID: 1124145439}
+  m_Layer: 0
+  m_Name: PortalGeneratorCaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1124145438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124145437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1124145439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124145437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d528fef9809a754e996f0bbf67c6809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1603307970
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,12 +591,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f48100c6fe1834bbd7d8556f570944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalPairPrefab: {fileID: 5499060173104227572, guid: cfd3635ea253d2a44a1b2ad697d401ca,
+  steamVRIsOn: 0
+  portalPairPrefab: {fileID: 5499060173104227572, guid: f5d55e64ab8cfa3468d55b334512da1c,
     type: 3}
-  testingRows: 01000000020000000300000004000000
-  testingCols: 01000000020000000300000004000000
-  testingDirs: 00000000010000000200000003000000
-  testingWides: 1
+  testingRows: 
+  testingCols: 
+  testingDirs: 
+  testingWides: 0
 --- !u!4 &1603307972
 Transform:
   m_ObjectHideFlags: 0
@@ -599,68 +643,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeGeneratorPrefab:
   - {fileID: 6700716075161373839, guid: 22bc3d0eaee86bb428496bf988489ae9, type: 3}
-  - {fileID: 2500389178016090726, guid: 3767eab88ce28c4448bbd26f359914bc, type: 3}
   playerHead: {fileID: 777009149}
-  mazeCount: 5
+  mazeCount: 2
   mazeRows: 5
   mazeCols: 5
-  tileWidth: 0.8
-  wallWidth: 0.1
+  tileWidth: 1
+  wallWidth: 1
   startRow: 0
   startCol: 0
-  playAreaSize: {x: 4, y: 0, z: 3}
+  playAreaSize: {x: 0, y: 0, z: 0}
   portalInfo: []
-  mapSequence:
-  - mapType: 0
-    isSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
-  - mapType: 0
-    isSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
-  - mapType: 0
-    isSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
-  - mapType: 0
-    isSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
-  - mapType: 0
-    isSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
+  mapSequence: []
 --- !u!4 &1604854435
 Transform:
   m_ObjectHideFlags: 0
@@ -733,11 +726,11 @@ PrefabInstance:
     - target: {fileID: 2348914, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1283811343}
+      objectReference: {fileID: 653870075}
     - target: {fileID: 3380982, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 400581511}
+      objectReference: {fileID: 580070733}
     - target: {fileID: 11489174, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: size
       value: 1
