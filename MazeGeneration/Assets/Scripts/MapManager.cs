@@ -21,9 +21,10 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        //playAreaSize = GetCameraRigSize();
-        portalInfo = new TileInfo[mazeCount - 1];
+        if (mapSequence.Length > 1)
+            portalInfo = new TileInfo[mapSequence.Length - 1];
 
+        //playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
         if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols)
@@ -32,8 +33,6 @@ public class MapManager : MonoBehaviour
             startCol = 0;
             Debug.Log("Player was out of game area, Maze starts from (0;0).");
         }
-
-        //InitializeMazes();
         GenerateMapSequence();
         OffsetMap();
         /*
@@ -70,28 +69,35 @@ public class MapManager : MonoBehaviour
             if (i > 0)
             {
                 mapSequence[i].startSeed = new TileInfo(mapSequence[i - 1].endSeed);
-                Debug.Log(mapSequence[i-1].endSeed.direction + " " + mapSequence[i].startSeed.direction);
                 mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, mapSequence[i - 1].endSeed.direction);
-                Debug.Log(mapSequence[i-1].endSeed.direction + " " + mapSequence[i].startSeed.direction);
             }
-            if ((int)mapSequence[i].mapType != 1)
+            if ((int)mapSequence[i].mapType == 1)
+            {
+                if (!((mapSequence[i].startSeed.row == 0 || mapSequence[i].startSeed.row == mazeRows - 1) && (mapSequence[i].startSeed.column == 0 || mapSequence[i].startSeed.column == mazeCols - 1)))
+                {
+                    mapSequence[i].startSeed.row = 0;
+                    mapSequence[i].startSeed.column = 0;
+                    mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column);
+                }
+            }
+            else
             {
                 if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
                 {
                     mapSequence[i].isEndSeeded = true;
-                    do
-                    {
-                        mapSequence[i].endSeed = GenerateRandomConrner();
-                    }
-                    while (mapSequence[i].endSeed == mapSequence[i].startSeed); //this will introduce errors if they are next to each other, need to fix
+                    mapSequence[i].endSeed = GenerateRandomConrner(mapSequence[i].startSeed); //this will introduce errors if they are next to each other, need to fix
                 }
 
             }
             mapScript.Generate(mapSequence[i]);
-            mapSequence[i].endSeed = mapScript.GetRandomDeadEnd(mapSequence[i].startSeed);
+            if (mapSequence[i].isEndSeeded == false)
+                mapSequence[i].endSeed = mapScript.GetRandomDeadEnd(mapSequence[i].startSeed);
+            if (i < portalInfo.Length)
+                portalInfo[i] = new TileInfo(mapSequence[i].endSeed);
         }
     }
 
+    //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.
     void InitializeMazes()
     {
         int[] nextEntrancePosition = new int[] { -1, -1 };
@@ -138,11 +144,16 @@ public class MapManager : MonoBehaviour
         return PortalPositionHelper.GetRandomPortalExit(row, col);
     }
 
-    TileInfo GenerateRandomConrner()
+    TileInfo GenerateRandomConrner(TileInfo flag)
     {
-        int row = Mathf.RoundToInt(Random.value) * (mazeRows - 1);
-        int col = Mathf.RoundToInt(Random.value) * (mazeCols - 1);
-        int dir = GenerateRandomStartDirection(row, col);
+        int row, col, dir;
+        do
+        {
+            row = Mathf.RoundToInt(Random.value) * (mazeRows - 1);
+            col = Mathf.RoundToInt(Random.value) * (mazeCols - 1);
+            dir = GenerateRandomStartDirection(row, col);
+        }
+        while (row == flag.row && col == flag.column);
         return new TileInfo(row, col, dir);
     }
 
@@ -153,7 +164,7 @@ public class MapManager : MonoBehaviour
         if (chaperone != null)
         {
             chaperone.GetPlayAreaSize(ref x, ref z);
-            Debug.Log("got here");
+            Debug.Log("got here"); //expert debugging right here
         }
         return new Vector3(x, 0, z);
     }

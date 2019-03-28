@@ -93,15 +93,10 @@ public abstract class MapGenerator : MonoBehaviour
     public int[] GetRandomDeadEnd(int entranceRow, int entranceCol)
     {
         List<int[]> deadEndList = GetDeadEndList();
-        System.Random rnd = new System.Random();
         int[] deadEnd = new int[] { -1, -1 };
         do
         {
-            int idx = rnd.Next(deadEndList.Count);
-            
-            Debug.Log(idx); //debug stuff to fix index out of range
-            Debug.Log(deadEndList.Count);
-            
+            int idx = Random.Range(0,deadEndList.Count);
             deadEnd = deadEndList[idx];
         }
         while (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
