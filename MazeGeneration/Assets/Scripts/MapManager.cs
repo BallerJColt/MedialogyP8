@@ -21,9 +21,10 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        //playAreaSize = GetCameraRigSize();
-        portalInfo = new TileInfo[mazeCount - 1];
+        if (mapSequence.Length > 1)
+            portalInfo = new TileInfo[mapSequence.Length - 1];
 
+        //playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
         if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols)
@@ -32,9 +33,7 @@ public class MapManager : MonoBehaviour
             startCol = 0;
             Debug.Log("Player was out of game area, Maze starts from (0;0).");
         }
-
-        InitializeMazes();
-        //GenerateMapSequence();
+        GenerateMapSequence();
         OffsetMap();
         /*
         //This is to debug the portal infos in the console
@@ -48,19 +47,57 @@ public class MapManager : MonoBehaviour
 
     void GenerateMapSequence()
     {
+        if (mapSequence.Length > 0)
+        {
+            mapSequence[0].startSeed.row = startRow;
+            mapSequence[0].startSeed.column = startCol;
+            mapSequence[0].startSeed.direction = GenerateRandomStartDirection(startRow, startCol);
+        }
+
         for (int i = 0; i < mapSequence.Length; i++)
         {
             Vector3 mapSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
             GameObject tempMap = Instantiate(mazeGeneratorPrefab[(int)mapSequence[i].mapType], mapSpawnPoint, Quaternion.identity);
             tempMap.name = i.ToString() + " - " + mapSequence[i].mapType.ToString();
             tempMap.transform.parent = transform;
+
             MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
-            mapScript.SetDimensions(mazeRows,mazeCols,tileWidth,wallWidth);
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
             mapScript.Initialize();
-            mapScript.Generate();
+
+            //calculate start seed
+            if (i > 0)
+            {
+                mapSequence[i].startSeed = new TileInfo(mapSequence[i - 1].endSeed);
+                mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, mapSequence[i - 1].endSeed.direction);
+            }
+            if ((int)mapSequence[i].mapType == 1)
+            {
+                if (!((mapSequence[i].startSeed.row == 0 || mapSequence[i].startSeed.row == mazeRows - 1) && (mapSequence[i].startSeed.column == 0 || mapSequence[i].startSeed.column == mazeCols - 1)))
+                {
+                    mapSequence[i].startSeed.row = 0;
+                    mapSequence[i].startSeed.column = 0;
+                    mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column);
+                }
+            }
+            else
+            {
+                if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
+                {
+                    mapSequence[i].isEndSeeded = true;
+                    mapSequence[i].endSeed = GenerateRandomConrner(mapSequence[i].startSeed); //this will introduce errors if they are next to each other, need to fix
+                }
+
+            }
+            mapScript.Generate(mapSequence[i]);
+            if (mapSequence[i].isEndSeeded == false)
+                mapSequence[i].endSeed = mapScript.GetRandomDeadEnd(mapSequence[i].startSeed);
+            if (i < portalInfo.Length)
+                portalInfo[i] = new TileInfo(mapSequence[i].endSeed);
         }
     }
 
+    //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.
     void InitializeMazes()
     {
         int[] nextEntrancePosition = new int[] { -1, -1 };
@@ -79,9 +116,7 @@ public class MapManager : MonoBehaviour
 
             if (i == 0)
             {
-                int[] possibleStartDirections = PortalPositionHelper.GetEntranceArray(startRow, startCol);
-                int idx = Random.Range(0, possibleStartDirections.Length);
-                int startDirection = possibleStartDirections[idx];
+                int startDirection = GenerateRandomStartDirection(startRow, startCol);
 
                 mazeScript.Generate(startRow, startCol, startDirection);
                 nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
@@ -104,6 +139,24 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    int GenerateRandomStartDirection(int row, int col)
+    {
+        return PortalPositionHelper.GetRandomPortalExit(row, col);
+    }
+
+    TileInfo GenerateRandomConrner(TileInfo flag)
+    {
+        int row, col, dir;
+        do
+        {
+            row = Mathf.RoundToInt(Random.value) * (mazeRows - 1);
+            col = Mathf.RoundToInt(Random.value) * (mazeCols - 1);
+            dir = GenerateRandomStartDirection(row, col);
+        }
+        while (row == flag.row && col == flag.column);
+        return new TileInfo(row, col, dir);
+    }
+
     public Vector3 GetCameraRigSize()
     {
         var chaperone = Valve.VR.OpenVR.Chaperone;
@@ -111,7 +164,7 @@ public class MapManager : MonoBehaviour
         if (chaperone != null)
         {
             chaperone.GetPlayAreaSize(ref x, ref z);
-            Debug.Log("got here");
+            Debug.Log("got here"); //expert debugging right here
         }
         return new Vector3(x, 0, z);
     }

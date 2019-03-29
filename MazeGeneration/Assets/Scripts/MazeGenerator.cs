@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MazeGenerator : MapGenerator
 {
-    
+
     // Random starting positions
     public override void Generate()
     {
@@ -17,11 +17,24 @@ public class MazeGenerator : MapGenerator
     }
 
     //Generates an integer array with the tileIDs in it. Will be used to find dead ends for portal placement
-
+    public override void Generate(MapInfo info)
+    {
+        if (!info.isEndSeeded)
+        {
+            Generate(info.startSeed);
+        }
+        else //if both start and end are seeded
+            Generate(info.startSeed, info.endSeed);
+    }
 
     public override void Generate(TileInfo startSeed)
     {
         Generate(startSeed.row, startSeed.column, startSeed.direction);
+    }
+
+    public void Generate(TileInfo startSeed, TileInfo endSeed)
+    {
+        Generate(startSeed.row, startSeed.column, startSeed.direction, endSeed.row, endSeed.column, endSeed.direction);
     }
 
     // Maze generation using recursive DFS with a starting position and direction as seed.
@@ -178,49 +191,5 @@ public class MazeGenerator : MapGenerator
             default:
                 return false;
         }
-    }
-
-    public List<int[]> GetDeadEndList()
-    {
-        List<int[]> deadEnd = new List<int[]>();
-        for (int i = 0; i < mazeRows; i++)
-        {
-            for (int j = 0; j < mazeColumns; j++)
-            {
-                if (mazeIntArray[i, j] == 1 || mazeIntArray[i, j] == 2 || mazeIntArray[i, j] == 4 || mazeIntArray[i, j] == 8)
-                {
-                    deadEnd.Add(new int[] { i, j });
-                    //Debug.Log("" + i + " " + j);
-                }
-            }
-        }
-        return deadEnd;
-    }
-
-    public int[] GetFirstDeadEnd(int entranceRow, int entranceCol)
-    {
-        List<int[]> deadEndList = GetDeadEndList();
-        foreach (int[] deadEnd in deadEndList)
-        {
-            if (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol)
-                continue;
-            else
-                return deadEnd;
-        }
-        return new int[] { -1, -1 };
-    }
-
-    public int[] GetRandomDeadEnd(int entranceRow, int entranceCol)
-    {
-        List<int[]> deadEndList = GetDeadEndList();
-        System.Random rnd = new System.Random();
-        int[] deadEnd = new int[] { -1, -1 };
-        do
-        {
-            int idx = rnd.Next(deadEndList.Count);
-            deadEnd = deadEndList[idx];
-        }
-        while (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
-        return deadEnd;
     }
 }

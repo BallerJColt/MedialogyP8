@@ -12,7 +12,7 @@ public struct MapInfo
     }
 
     public MapType mapType;
-    public bool isSeeded;
+    public bool isEndSeeded;
     public TileInfo startSeed;
     public TileInfo endSeed;
 }

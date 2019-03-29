@@ -60,8 +60,58 @@ public abstract class MapGenerator : MonoBehaviour
         tileWidth = width;
         wallWidth = wWidth;
     }
+    public List<int[]> GetDeadEndList()
+    {
+        List<int[]> deadEnd = new List<int[]>();
+        for (int i = 0; i < mazeRows; i++)
+        {
+            for (int j = 0; j < mazeColumns; j++)
+            {
+                if (mazeIntArray[i, j] == 1 || mazeIntArray[i, j] == 2 || mazeIntArray[i, j] == 4 || mazeIntArray[i, j] == 8)
+                {
+                    deadEnd.Add(new int[] { i, j });
+                    //Debug.Log("" + i + " " + j);
+                }
+            }
+        }
+        return deadEnd;
+    }
+
+    public int[] GetFirstDeadEnd(int entranceRow, int entranceCol)
+    {
+        List<int[]> deadEndList = GetDeadEndList();
+        foreach (int[] deadEnd in deadEndList)
+        {
+            if (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol)
+                continue;
+            else
+                return deadEnd;
+        }
+        return new int[] { -1, -1 };
+    }
+
+    public int[] GetRandomDeadEnd(int entranceRow, int entranceCol)
+    {
+        List<int[]> deadEndList = GetDeadEndList();
+        int[] deadEnd = new int[] { -1, -1 };
+        do
+        {
+            int idx = Random.Range(0,deadEndList.Count);
+            deadEnd = deadEndList[idx];
+        }
+        while (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
+        return deadEnd;
+    }
+
+    public TileInfo GetRandomDeadEnd(TileInfo entrance)
+    {
+        int[] deadEnd = GetRandomDeadEnd(entrance.row, entrance.column);
+        int deadEndDirection = (int)Mathf.Log(mazeIntArray[deadEnd[0], deadEnd[1]], 2);
+        return new TileInfo(deadEnd[0], deadEnd[1], deadEndDirection);
+    }
 
     public abstract void Generate();
+    public abstract void Generate(MapInfo info);
     public abstract void Generate(TileInfo info);
     public abstract void Generate(int startRow, int startCol, int startDir);
     public abstract void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir);
