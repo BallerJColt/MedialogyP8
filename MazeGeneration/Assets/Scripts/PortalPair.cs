@@ -149,7 +149,7 @@ public class PortalPair : MonoBehaviour
             Vector3 entranceColliderPos = entrancePortal.transform.position + entrancePortal.transform.forward*playerCapsuleCol.radius; //the offset for the entrance portal
             entranceColliderObj.transform.position = entranceColliderPos;
             Vector3 exitColliderPos = exitPortal.transform.position + exitPortal.transform.forward*playerCapsuleCol.radius; //the offset for the entrance portal
-            exitColliderObj.transform.position = entranceColliderPos;
+            exitColliderObj.transform.position = exitColliderPos;
         } 
         else
         {
@@ -169,7 +169,6 @@ public class PortalPair : MonoBehaviour
         if(entranceColliderObj.GetComponent<TeleportTrigger>().shouldTeleport || exitColliderObj.GetComponent<TeleportTrigger>().shouldTeleport)
         {
             Debug.Log("teleport");
-            Debug.Break();
             TeleportPlayer();
             entranceColliderObj.GetComponent<TeleportTrigger>().shouldTeleport = false;
             exitColliderObj.GetComponent<TeleportTrigger>().shouldTeleport= false;

@@ -26,7 +26,7 @@ public class PortalGenerator : MonoBehaviour
 
     public void GeneratePortals(TileInfo[] pi, float tileWidth, float wallWidth) // Generate the portal pairs at the specified locations around the mazes. Takes arrays of entrance rows and cols + directions
     {
-        MapManager mapGenScript = GameObject.Find("MapGenerator").GetComponent<MapManager>();   
+        MapManager mapGenScript = GameObject.Find("MapManager").GetComponent<MapManager>();   
         mazeWidth = mapGenScript.mazeCols*(int)tileWidth;
         //float tileWidthFloat = tileWidth;       // Convert int to float
 
@@ -36,8 +36,8 @@ public class PortalGenerator : MonoBehaviour
         {
 
             //entrance portal tranform
-            GameObject mazeObject = GameObject.Find("MapGenerator/Maze "+ i);  // Find specific maze            
-            GameObject nextMazeObject = GameObject.Find("MapGenerator/Maze "+ (i + 1));    // Find specific maze + 1
+            GameObject mazeObject = GameObject.Find("MapManager/" + i + " - Maze");  // Find specific maze            
+            GameObject nextMazeObject = GameObject.Find("MapManager/" + (i + 1) + " - Maze" );    // Find specific maze + 1
             Transform transformHelper = transform; // for calculating the proper portal position as it depends on an object's forward vector. set to transform temporally 
 
             //set the transform of the transformHelper
@@ -52,7 +52,9 @@ public class PortalGenerator : MonoBehaviour
                 mazeObject.transform.position.x + tileWidth * pi[i].column,
                  tg.wallHeight/2,
                 mazeObject.transform.position.z - tileWidth * pi[i].row); //positioning the portal at the center of the dead end tile
-            entrancePortalPosition += transformHelper.forward * ((tileWidth /2.0f)-wallWidth); //set the portal at the correct position within the tile
+            entrancePortalPosition += -transformHelper.forward * ((tileWidth / 2.0f)-wallWidth);//set the portal at the correct position within the tile
+            Debug.Log("tileWidth "+tileWidth);
+            Debug.Log("wallWidth " + wallWidth);
             transformHelper.position = entrancePortalPosition; //give transformHelper the correct position
             
             Vector3 mazeOffset = nextMazeObject.transform.position - mazeObject.transform.position; //distance between to adjadent mazes

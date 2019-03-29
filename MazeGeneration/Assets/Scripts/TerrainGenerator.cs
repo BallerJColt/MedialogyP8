@@ -34,8 +34,8 @@ namespace EventCallbacks
 
             // Place ceiling lamp in the center of the tile
             // Set the object as a child of the current tile
-            newCeilingLamp = Instantiate (ceilingLamp, new Vector3(tileTransform.position.x, ceilingLamp.transform.position.y + wallHeight, tileTransform.position.z), Quaternion.identity);
-            newCeilingLamp.transform.parent = tileTransform;
+            //newCeilingLamp = Instantiate (ceilingLamp, new Vector3(tileTransform.position.x, ceilingLamp.transform.position.y + wallHeight, tileTransform.position.z), Quaternion.identity);
+            //newCeilingLamp.transform.parent = tileTransform;
 
             // Read through wallArray to see how many walls should be placed and where
             // Each case corresponds to a side on the current tile

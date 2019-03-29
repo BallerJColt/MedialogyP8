@@ -7,6 +7,8 @@ public class PortalGeneratorCaller : MonoBehaviour
 
     private MapManager mapManager;
     private PortalGenerator portalGenerator;
+    private EventCallbacks.TerrainGenerator tg;
+
     TileInfo[] portalInfos;
 
 
@@ -14,8 +16,9 @@ public class PortalGeneratorCaller : MonoBehaviour
     void Start()
     {
         StartCoroutine(LateStart());
-        mapManager = GameObject.Find("MapGenerator").GetComponent<MapManager>(); 
-        portalGenerator = GameObject.Find("PortalGenerator").GetComponent<PortalGenerator>(); 
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManager>(); 
+        portalGenerator = GameObject.Find("PortalGenerator").GetComponent<PortalGenerator>();
+        tg = GameObject.Find("TileGenerator").GetComponent<EventCallbacks.TerrainGenerator>();
     }
 
     IEnumerator LateStart()
@@ -25,7 +28,7 @@ public class PortalGeneratorCaller : MonoBehaviour
         yield return 50;
 
         portalInfos = mapManager.portalInfo;
-        portalGenerator.GeneratePortals(portalInfos,mapManager.tileWidth,mapManager.wallWidth);
+        portalGenerator.GeneratePortals(portalInfos,mapManager.tileWidth,tg.wallOffset);
 
     }
 }

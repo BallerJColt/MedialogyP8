@@ -24,7 +24,8 @@ public class MapManager : MonoBehaviour
         if (mapSequence.Length > 1)
             portalInfo = new TileInfo[mapSequence.Length - 1];
 
-        //playAreaSize = GetCameraRigSize();
+        //Only use this method when in VR, otherwise it won't work
+        playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
         if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols)
@@ -97,7 +98,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.
+    //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.  
     void InitializeMazes()
     {
         int[] nextEntrancePosition = new int[] { -1, -1 };
@@ -166,7 +167,7 @@ public class MapManager : MonoBehaviour
             chaperone.GetPlayAreaSize(ref x, ref z);
             Debug.Log("got here"); //expert debugging right here
         }
-        return new Vector3(x, 0, z);
+        return new Vector3(Mathf.Round(x), 0, Mathf.Round(z));
     }
 
     void OffsetMap()
