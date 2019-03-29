@@ -4,8 +4,8 @@ using UnityEngine;
 
 public static class PortalPositionHelper
 {
-    private static int maxRows = GameObject.FindObjectOfType<MapGenerator>().mazeRows;
-    private static int maxCols = GameObject.FindObjectOfType<MapGenerator>().mazeCols;
+    private static int maxRows = GameObject.FindObjectOfType<MapManager>().mazeRows;
+    private static int maxCols = GameObject.FindObjectOfType<MapManager>().mazeCols;
     private static Dictionary<string, int[]> PortalEntranceArrayList = new Dictionary<string, int[]>
     {
         {"topLeftCorner", new int[2] {1,2}},

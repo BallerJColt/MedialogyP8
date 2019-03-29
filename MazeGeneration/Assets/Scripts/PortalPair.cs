@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PortalPair : MonoBehaviour
 {
-    public Vector3 tilePosition;
-    public Quaternion tileRotation;
+    public Vector3 portalPosition;
+    public Quaternion portalRotation;
+    public Vector3 portalScale;
     public Vector3 offset;
     public GameObject entrancePortal;
+    public GameObject entranceColliderObj;
     public  GameObject exitPortal;
+    public  GameObject exitColliderObj;
     public GameObject portalCamera;
     public GameObject playerCamera;
+    public CapsuleCollider playerCapsuleCol;
+    public SphereCollider playerSphereCol;
+
     public Material CameraMat;
 
     public TeleportTrigger entranceTrigger;
@@ -18,12 +24,16 @@ public class PortalPair : MonoBehaviour
     public Transform cameraRig;
     public Vector3 cameraRigToEntrance;
     public Vector3 cameraRigToExit;
+    
+    bool steamVRIsOn;
 
-    public void PortalPairConstructor(Vector3 tilePosition, Quaternion tileRotation, Vector3 offset)
+    public void PortalPairConstructor(Transform portalTransform, Vector3 offset, bool _SteamVR)
     {
-        this.tilePosition = tilePosition;
-        this.tileRotation = tileRotation;
+        this.portalPosition = portalTransform.position;
+        this.portalRotation = portalTransform.rotation;
+        this.portalScale = portalTransform.localScale;
         this.offset = offset;
+        this.steamVRIsOn = _SteamVR;
         SetVariables();
     }
     void SetVariables()
@@ -31,22 +41,27 @@ public class PortalPair : MonoBehaviour
         //set entrancePortal, exitPortal and portalCamera
         SearchThroughChildObjects();
         
-        FindPlayerCamera();
+        FindPlayerCameraAndCollider();
 
-        entranceTrigger = entrancePortal.GetComponent<TeleportTrigger>();
-        exitTrigger = exitPortal.GetComponent<TeleportTrigger>();
+        entranceTrigger = entranceColliderObj.GetComponent<TeleportTrigger>();
+        exitTrigger = exitColliderObj.GetComponent<TeleportTrigger>();
 
         cameraRig = GameObject.Find("[CameraRig]").transform;
         //cameraRigToEntrancePortal = cameraRig.position - entrancePortal.transform.position;
     }
-    void FindPlayerCamera()
+    void FindPlayerCameraAndCollider()
     {
-
-        //playerCamera = GameObject.Find("VRCamera");
-        if(!playerCamera)
+        if (steamVRIsOn)
+        {
+            playerCamera = GameObject.Find("VRCamera");
+            playerCapsuleCol = GameObject.Find("BodyCollider").GetComponent<CapsuleCollider>();
+        }
+        else
         {
             playerCamera = GameObject.Find("FallbackObjects");
+            playerSphereCol = GameObject.Find("HeadCollider").GetComponent<SphereCollider>();
         }
+            
     }
     void SearchThroughChildObjects()
     {
@@ -55,10 +70,12 @@ public class PortalPair : MonoBehaviour
             if(transform.GetChild(i).name == "ent")
             {
                 entrancePortal = transform.GetChild(i).gameObject;
+                entranceColliderObj = entrancePortal.transform.GetChild(0).gameObject;
             }   
             else if(transform.GetChild(i).name == "exit")
             {
                 exitPortal = transform.GetChild(i).gameObject;
+                exitColliderObj = exitPortal.transform.GetChild(0).gameObject;
             }
             else if(transform.GetChild(i).name == "cam")
             {
@@ -99,7 +116,7 @@ public class PortalPair : MonoBehaviour
         {
             //portalCamera.transform.position = playerCamera.transform.position - offset;
             playerOffsetFromPortal = exitPortal.transform.position - playerCamera.transform.position;
-        portalCamera.transform.position = entrancePortal.transform.position - playerOffsetFromPortal;
+            portalCamera.transform.position = entrancePortal.transform.position - playerOffsetFromPortal;
         }
         
         //
@@ -114,25 +131,48 @@ public class PortalPair : MonoBehaviour
     }
     public void PositionPortals()
     {
+        //positioning the entrance portal
+        entrancePortal.transform.position = portalPosition;
+        entrancePortal.transform.rotation = portalRotation;
+        entrancePortal.transform.localScale = portalScale;
         
-        Debug.Log("Positioning Portals");
-        //entrance
-        entrancePortal.transform.position = tilePosition;
-        entrancePortal.transform.rotation = tileRotation;
+        //positioning the exit portal
+        exitPortal.transform.position = portalPosition+offset;
+        exitPortal.transform.rotation = Quaternion.Euler(portalRotation.eulerAngles.x,portalRotation.eulerAngles.y+180,portalRotation.eulerAngles.z);
+        exitPortal.transform.localScale = portalScale;
 
-        //exit
-        exitPortal.transform.position = tilePosition+offset;
-        exitPortal.transform.rotation = Quaternion.Euler(tileRotation.eulerAngles.x,tileRotation.eulerAngles.y+180,tileRotation.eulerAngles.z);
+        //offsetting the portal colliders based on the player collider radius
+
+        if(steamVRIsOn)
+        {
+            Debug.Log("steamVR on");
+            Vector3 entranceColliderPos = entrancePortal.transform.position + entrancePortal.transform.forward*playerCapsuleCol.radius; //the offset for the entrance portal
+            entranceColliderObj.transform.position = entranceColliderPos;
+            Vector3 exitColliderPos = exitPortal.transform.position + exitPortal.transform.forward*playerCapsuleCol.radius; //the offset for the entrance portal
+            exitColliderObj.transform.position = entranceColliderPos;
+        } 
+        else
+        {
+            Debug.Log("SphereCollider "+ playerSphereCol.radius);
+            Vector3 entranceColliderPos = entrancePortal.transform.position + entrancePortal.transform.forward*playerSphereCol.radius; //the offset for the entrance portal
+            entranceColliderObj.transform.position = entranceColliderPos;
+            Vector3 exitColliderPos = exitPortal.transform.position + exitPortal.transform.forward*playerSphereCol.radius; //the offset for the entrance portal
+            exitColliderObj.transform.position = exitColliderPos;
+        }
+        
+
     }
+
     public void CheckForTeleport()
     {
         //if(entranceTrigger.shouldTeleport || exitTrigger.shouldTeleport)        
-        if(entrancePortal.GetComponent<TeleportTrigger>().shouldTeleport || exitPortal.GetComponent<TeleportTrigger>().shouldTeleport)
+        if(entranceColliderObj.GetComponent<TeleportTrigger>().shouldTeleport || exitColliderObj.GetComponent<TeleportTrigger>().shouldTeleport)
         {
             Debug.Log("teleport");
+            Debug.Break();
             TeleportPlayer();
-            entrancePortal.GetComponent<TeleportTrigger>().shouldTeleport = false;
-            exitPortal.GetComponent<TeleportTrigger>().shouldTeleport= false;
+            entranceColliderObj.GetComponent<TeleportTrigger>().shouldTeleport = false;
+            exitColliderObj.GetComponent<TeleportTrigger>().shouldTeleport= false;
         }
     }
 
@@ -140,6 +180,7 @@ public class PortalPair : MonoBehaviour
     {
         //Debug.DrawRay(entrancePortal.transform.position, entrancePortal.transform.up, Color.red,1);
         Debug.DrawLine(entrancePortal.transform.position,exitPortal.transform.position, Color.magenta,1);
+        Debug.DrawRay(entrancePortal.transform.position,entrancePortal.transform.forward, Color.blue,1);
     }
     public void TeleportPlayer()
     {
@@ -153,27 +194,5 @@ public class PortalPair : MonoBehaviour
             cameraRig.position = cameraRig.position - offset;
         }
 
-
-
-
-
-        /* 
-        //switch which is the entrance and exit portal
-        
-        //make temp position and rotation
-        Vector3 tempPos = entrancePortal.transform.position;
-        Quaternion tempRot = entrancePortal.transform.rotation;
-       //switch them around
-        entrancePortal.transform.position = exitPortal.transform.position;
-        entrancePortal.transform.rotation = exitPortal.transform.rotation;
-        exitPortal.transform.position = tempPos;
-        exitPortal.transform.rotation = tempRot;
-
-
-
-        //switch the position of the camera rig 
-        cameraRig.position = entrancePortal.transform.position + cameraRigToEntrancePortal;
-        playerCamera.transform.position = portalCamera.transform.position;
-        */
     }
 }

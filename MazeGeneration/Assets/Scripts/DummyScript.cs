@@ -32,7 +32,7 @@ public class DummyScript : MonoBehaviour
             Instantiate(PortalPairPrefab);
             pp = PortalPairPrefab.GetComponent<PortalPair>();
             //pp.PortalPairConstructor(entrancePortal,exitPortal,portalCamera,playerCamera,cameraMat);
-            pp.PortalPairConstructor(entrancePortal.transform.position, entrancePortal.transform.rotation, exitPortal.transform.position - entrancePortal.transform.position); 
+            //pp.PortalPairConstructor(entrancePortal.transform.position, entrancePortal.transform.rotation, exitPortal.transform.position - entrancePortal.transform.position); 
         }
     }
 }

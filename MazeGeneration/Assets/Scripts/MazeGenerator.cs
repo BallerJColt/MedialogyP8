@@ -2,82 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MazeGenerator : MonoBehaviour
+public class MazeGenerator : MapGenerator
 {
-    public int mazeRows;
-    public int mazeColumns;
-    public float tileWidth;
-    public float wallWidth;
-    public GameObject tilePrefab;
-    public Tile[,] tileArray;
-    bool matCheck = false;
-    public int[,] mazeIntArray;
-
-    // Staart is called before the first frame update
-    /* void Awake() {
-        Debug.Log(name + " awake method called");
-        Debug.Log(name + " awake method ended");
-    } */
-
-    /* void Start()
-    {
-        Debug.Log(name + " start method called");
-        InitializeMaze();
-        //GenerateRandomMaze();
-        GenerateSeededMaze(0,0,1); // now we seeded
-        //GenerateSeededMaze(0, 0, 1, mazeRows - 1, mazeColumns - 1, 0);
-        GenerateIntArray();
-        //int[] alma = GetRandomDeadEnd(-1, -1);
-        int[] alma = GetRandomDeadEnd(0, 0);
-        Debug.Log(name + " First dead end: (" + alma[0] + ";" + alma[1] + ").");
-        Debug.Log(name + " start method ended");
-    } */
-
-    // The inputs here are just for debug reasons to show the wang tiles
-    void Update()
-    {
-        if (Input.GetKeyUp("space"))
-        {
-            if (matCheck != true)
-            {
-                foreach (Tile t in tileArray)
-                {
-                    t.SetMaterial(t.GetTileID(), 'w');
-                }
-            }
-            else
-            {
-                foreach (Tile t in tileArray)
-                {
-                    t.SetMaterial(t.GetTileID(), 'p');
-                }
-            }
-            matCheck = !matCheck;
-        }
-    }
-
-    public void InitializeMaze()
-    {
-        tileArray = new Tile[mazeRows, mazeColumns];
-        //float mazeHalfWidth = mazeRows / 2f; // Add scalability with tile width!
-        //float mazeHalfHeight = mazeColumns / 2f; // Add scalability with tile height!
-        for (int i = 0; i < mazeRows; i++)
-        {
-            for (int j = 0; j < mazeColumns; j++)
-            {
-                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j * tileWidth, 0, transform.position.z - i * tileWidth); //if we want to center it, we need to subtract mazeHalfwidth from x and add mazehalfheight to z.
-                GameObject emptyTile = Instantiate(tilePrefab, tileSpawnPosition, Quaternion.identity);
-                emptyTile.name = "Tile " + (mazeColumns * i + j).ToString();
-                emptyTile.transform.parent = transform;
-                tileArray[i, j] = emptyTile.GetComponent<Tile>();
-                tileArray[i, j].SetWidth(tileWidth);
-            }
-        }
-        //Debug.Log(name + " initialized.");
-    }
-
+    
     // Random starting positions
-    public void GenerateRandomMaze()
+    public override void Generate()
     {
         int startRow = Random.Range(0, mazeRows);
         int startCol = Random.Range(0, mazeColumns);
@@ -88,30 +17,16 @@ public class MazeGenerator : MonoBehaviour
     }
 
     //Generates an integer array with the tileIDs in it. Will be used to find dead ends for portal placement
-    void GenerateIntArray()
+
+
+    public override void Generate(TileInfo startSeed)
     {
-        mazeIntArray = new int[mazeRows, mazeColumns];
-        for (int i = 0; i < mazeRows; i++)
-        {
-            for (int j = 0; j < mazeColumns; j++)
-            {
-                EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
-                mazeIntArray[i, j] = tileArray[i, j].GetTileID();
-                gtei.go = tileArray[i, j].gameObject;
-                gtei.wallArray = tileArray[i, j].GetWallArray();
-                gtei.tileWidth = tileWidth;
-
-                //ID Changing when creating new tile
-                gtei.FireEvent();
-                //Debug.Log(tileWidth + " generated int array");
-            }
-        }
-
+        Generate(startSeed.row, startSeed.column, startSeed.direction);
     }
 
     // Maze generation using recursive DFS with a starting position and direction as seed.
     // It makes the first connection manually, then calls the RecursiveDFS() method to generate the rest of the maze.
-    public void GenerateSeededMaze(int startRow, int startCol, int startDirection)
+    public override void Generate(int startRow, int startCol, int startDirection)
     {
         switch (startDirection)
         {
@@ -141,11 +56,11 @@ public class MazeGenerator : MonoBehaviour
     // Overload of the seeded maze generation method with a specified end position and direction as well.
     // It opens the end tile so it will be ignored by the generator method, then calls the GenerateSeededMaze(int,int,int) method,
     // finally it connects the end tile with its neighbour to the specified direction.
-    void GenerateSeededMaze(int startRow, int startCol, int startDirection, int endRow, int endCol, int endDirection)
+    public override void Generate(int startRow, int startCol, int startDirection, int endRow, int endCol, int endDirection)
     {
         tileArray[endRow, endCol].OpenWall(endDirection);
 
-        GenerateSeededMaze(startRow, startCol, startDirection);
+        Generate(startRow, startCol, startDirection);
 
         switch (endDirection)
         {
@@ -223,14 +138,6 @@ public class MazeGenerator : MonoBehaviour
                     break;
             }
         }
-    }
-
-    public void SetDimensions(int rows, int cols, float width, float wWidth)
-    {
-        mazeRows = rows;
-        mazeColumns = cols;
-        tileWidth = width;
-        wallWidth = wWidth;
     }
 
 

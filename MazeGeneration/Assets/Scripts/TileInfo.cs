@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct PortalInfo
+[System.Serializable]
+public struct TileInfo
 {
     public int row;
     public int column;
-    public int entranceDirection;
+    public int direction;
 
-    public PortalInfo(int _row, int _col, int _dir)
+    public TileInfo(int _row, int _col, int _dir)
     {
         row = _row;
         column = _col;
-        entranceDirection = _dir;
+        direction = _dir;
     }
 }

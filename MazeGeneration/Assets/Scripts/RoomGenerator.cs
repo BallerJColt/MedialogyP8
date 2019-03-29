@@ -2,67 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomGenerator : MonoBehaviour
+public class RoomGenerator : MapGenerator
 {
-    public int mazeRows;
-    public int mazeColumns;
-    public float tileWidth;
-    public float wallWidth;
-    public GameObject tilePrefab;
-    public Tile[,] tileArray;
-    bool matCheck = false;
-    public int[,] mazeIntArray;
-    // Start is called before the first frame update
-    void Start()
-    {
-        InitializeRoom();
-        GenerateRoom(0, 0, 1);
-    }
 
-    // Update is called once per frame
-    void Update()
+    public override void Generate()
     {
-        if (Input.GetKeyUp("space"))
-        {
-            if (matCheck != true)
-            {
-                foreach (Tile t in tileArray)
-                {
-                    t.SetMaterial(t.GetTileID(), 'w');
-                }
-            }
-            else
-            {
-                foreach (Tile t in tileArray)
-                {
-                    t.SetMaterial(t.GetTileID(), 'p');
-                }
-            }
-            matCheck = !matCheck;
-        }
+        Generate(0, 0, 1);
     }
-
-    public void InitializeRoom()
+    public override void Generate(TileInfo startSeed)
     {
-        tileArray = new Tile[mazeRows, mazeColumns];
-        //float mazeHalfWidth = mazeRows / 2f; // Add scalability with tile width!
-        //float mazeHalfHeight = mazeColumns / 2f; // Add scalability with tile height!
-        for (int i = 0; i < mazeRows; i++)
-        {
-            for (int j = 0; j < mazeColumns; j++)
-            {
-                Vector3 tileSpawnPosition = new Vector3(transform.position.x + j * tileWidth, 0, transform.position.z - i * tileWidth); //if we want to center it, we need to subtract mazeHalfwidth from x and add mazehalfheight to z.
-                GameObject emptyTile = Instantiate(tilePrefab, tileSpawnPosition, Quaternion.identity);
-                emptyTile.name = "Tile " + (mazeColumns * i + j).ToString();
-                emptyTile.transform.parent = transform;
-                tileArray[i, j] = emptyTile.GetComponent<Tile>();
-                tileArray[i, j].SetWidth(tileWidth);
-            }
-        }
-        //Debug.Log(name + " initialized.");
+        Generate(startSeed.row, startSeed.column, startSeed.direction);
     }
-
-    void GenerateRoom(int startRow, int startCol, int startDirection)
+    public override void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir)
+    {
+        Generate(startRow, startCol, startDir);
+    }
+    public override void Generate(int startRow, int startCol, int startDirection)
     {
         int sR = 0;
         int sC = 0;
