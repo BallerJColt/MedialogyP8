@@ -29,12 +29,7 @@ public class WallSegment : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        if (tileWidth > 1)
-        {
-            xSize = xSize * (int)tileWidth;
-            ySize = ySize * (int)tileWidth;
-        }
-        transform.localScale = new Vector3(tileWidth / (float)xSize, transform.localScale.y / (float)ySize, tileWidth / (float)xSize);
+        transform.localScale = new Vector3(1 / (float)xSize, transform.localScale.y / (float)ySize, 1 / (float)xSize);
 
         CreateShape();
         UpdateMesh();
@@ -49,7 +44,7 @@ public class WallSegment : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float z = Mathf.PerlinNoise(x * frequenzy, y * amplitude) * depth;
+                float z = Mathf.PerlinNoise(x * frequenzy, y * frequenzy) * depth;
                 vertices[i] = new Vector3(x, y, z);
                 uv[i] = new Vector2(x, y);
                 i++;
