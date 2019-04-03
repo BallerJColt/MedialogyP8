@@ -29,10 +29,13 @@ public class TileInfo
         int mazeCols = GameObject.Find("MapManager").GetComponent<MapManager>().mazeCols;
         bool inCorner = false;
         if (row == 0 && column == 0 ||
-            row == 0 && column == mazeCols - 1 ||
-            row == mazeRows && column == 0 ||
-            row == mazeRows && column == mazeCols - 1)
+            row == 0 && column == (mazeCols - 1) ||
+            row == (mazeRows - 1) && column == 0 ||
+            row == (mazeRows - 1) && column == (mazeCols - 1))
+        {
+            Debug.Log("tile (" + row + ";" + column + ") is in a corner");
             inCorner = true;
+        }
         return inCorner;
     }
 
@@ -48,15 +51,15 @@ public class TileInfo
                     perpendicular = true;
                 break;
             case 1:
-                if(column == 0)
+                if (column == 0)
                     perpendicular = true;
                 break;
             case 2:
-                if(row == 0)
+                if (row == 0)
                     perpendicular = true;
                 break;
             case 3:
-                if(column == mazeCols - 1)
+                if (column == mazeCols - 1)
                     perpendicular = true;
                 break;
             default:

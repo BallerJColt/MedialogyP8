@@ -25,6 +25,7 @@ public class MazeGenerator : MapGenerator
         }
         else //if both start and end are seeded
             Generate(info.startSeed, info.endSeed);
+        GenerateIntArray();
     }
 
     public override void Generate(TileInfo startSeed)
@@ -63,7 +64,7 @@ public class MazeGenerator : MapGenerator
                 break;
         }
         //Debug.Log(name + " generated seeded maze, startPos: (" + startRow + ";" + startCol + ";" + startDirection + ").");
-        GenerateIntArray();
+        //GenerateIntArray();
     }
 
     // Overload of the seeded maze generation method with a specified end position and direction as well.
@@ -93,7 +94,7 @@ public class MazeGenerator : MapGenerator
                 break;
         }
         //Debug.Log(name + "endPos: (" + endRow + ";" + endCol + ").");
-        GenerateIntArray();
+        //GenerateIntArray();
     }
 
 
