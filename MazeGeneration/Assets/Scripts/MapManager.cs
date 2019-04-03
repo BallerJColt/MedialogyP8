@@ -29,7 +29,6 @@ public class MapManager : MonoBehaviour
         if (mapSequence.Length > 1)
             portalInfo = new TileInfo[mapSequence.Length - 1];
 
-        //Only use this method when in VR, otherwise it won't work
         playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
@@ -137,16 +136,16 @@ public class MapManager : MonoBehaviour
             if ((int)mapSequence[i].mapType == 1)
             {
                 Debug.Log("Can't do rooms with this method yet...");
-                i++;
+                continue;
             }
-            else
+            /* else
             {
                 if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
                 {
                     Debug.Log("Can't do rooms with this method yet...");
-                    i++;
+                    //i++;
                 }
-            }
+            } */
             if(i+1 < mapSequence.Length) {
                 mapSequence[i].isEndSeeded = true;
                 mapSequence[i].endSeed = GenerateRandomHallwayDeadEnd(mapSequence[i].startSeed);
