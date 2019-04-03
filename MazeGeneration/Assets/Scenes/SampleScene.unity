@@ -541,7 +541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1603307971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +614,8 @@ MonoBehaviour:
   wallWidth: 0.5
   startRow: 0
   startCol: 0
-  playAreaSize: {x: 0, y: 0, z: 0}
+  playAreaSize: {x: 4, y: 0, z: 3}
+  portalGenerationLocation: 1
   portalInfo: []
   mapSequence:
   - mapType: 0
@@ -844,7 +845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1966189761
 MonoBehaviour:
   m_ObjectHideFlags: 0

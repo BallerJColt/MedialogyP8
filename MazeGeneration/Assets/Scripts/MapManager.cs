@@ -15,7 +15,12 @@ public class MapManager : MonoBehaviour
     public int startCol;
 
     public Vector3 playAreaSize;
-
+    public enum PortalGenerationType
+    {
+        Everywhere,
+        Hallways
+    }
+    public PortalGenerationType portalGenerationLocation;
     public TileInfo[] portalInfo;
     public MapInfo[] mapSequence;
 
@@ -34,7 +39,10 @@ public class MapManager : MonoBehaviour
             startCol = 0;
             Debug.Log("Player was out of game area, Maze starts from (0;0).");
         }
-        GenerateMapSequence();
+        if (portalGenerationLocation == PortalGenerationType.Everywhere)
+            GenerateMapSequence();
+        else
+            GenerateMapSequenceHallway();
         OffsetMap();
         /*
         //This is to debug the portal infos in the console
@@ -98,6 +106,59 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    void GenerateMapSequenceHallway()
+    {
+        if (mapSequence.Length > 0)
+        {
+            mapSequence[0].startSeed.row = startRow;
+            mapSequence[0].startSeed.column = startCol;
+            mapSequence[0].startSeed.direction = GenerateRandomStartDirection(startRow, startCol);
+        }
+
+        for (int i = 0; i < mapSequence.Length; i++)
+        {
+            Vector3 mapSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
+            GameObject tempMap = Instantiate(mazeGeneratorPrefab[(int)mapSequence[i].mapType], mapSpawnPoint, Quaternion.identity);
+            tempMap.name = i.ToString() + " - " + mapSequence[i].mapType.ToString();
+            tempMap.transform.parent = transform;
+
+            MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
+            mapScript.Initialize();
+
+            //calculate start seed
+            if (i > 0)
+            {
+                mapSequence[i].startSeed = new TileInfo(mapSequence[i - 1].endSeed);
+                mapSequence[i].startSeed.direction = (mapSequence[i - 1].endSeed.direction + 2) % 4; //rotate 180 degrees
+
+                //mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, mapSequence[i - 1].endSeed.direction);
+            }
+            if ((int)mapSequence[i].mapType == 1)
+            {
+                Debug.Log("Can't do rooms with this method yet...");
+                i++;
+            }
+            else
+            {
+                if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
+                {
+                    Debug.Log("Can't do rooms with this method yet...");
+                    i++;
+                }
+            }
+            if(i+1 < mapSequence.Length) {
+                mapSequence[i].isEndSeeded = true;
+                mapSequence[i].endSeed = GenerateRandomHallwayDeadEnd(mapSequence[i].startSeed);
+            }
+            mapScript.Generate(mapSequence[i]);
+            //if (mapSequence[i].isEndSeeded == false)
+                mapSequence[i].endSeed = mapScript.GetRandomDeadEndHallway(mapSequence[i].startSeed);
+            if (i < portalInfo.Length)
+                portalInfo[i] = new TileInfo(mapSequence[i].endSeed);
+        }
+    }
+
     //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.  
     void InitializeMazes()
     {
@@ -145,6 +206,21 @@ public class MapManager : MonoBehaviour
         return PortalPositionHelper.GetRandomPortalExit(row, col);
     }
 
+    TileInfo GenerateRandomHallwayDeadEnd(TileInfo flag)
+    {
+        int row, col, dir;
+        TileInfo newTile = new TileInfo(-1,-1,-1);
+        do
+        {
+            row = Random.Range(0,mazeRows);
+            col = Random.Range(0,mazeCols);
+            dir = GenerateRandomStartDirection(row,col);
+            newTile = new TileInfo(row,col,dir);
+        }
+        while(newTile.IsSamePosition(flag) || newTile.IsInCorner() || newTile.IsPerpendicular());
+        return newTile;
+    }
+
     TileInfo GenerateRandomConrner(TileInfo flag)
     {
         int row, col, dir;
@@ -160,14 +236,16 @@ public class MapManager : MonoBehaviour
 
     public Vector3 GetCameraRigSize()
     {
+        Vector3 size = new Vector3(playAreaSize.x, 0, playAreaSize.z);
         var chaperone = Valve.VR.OpenVR.Chaperone;
         float x = 0, z = 0;
         if (chaperone != null)
         {
             chaperone.GetPlayAreaSize(ref x, ref z);
             Debug.Log("got here"); //expert debugging right here
+            size = new Vector3(Mathf.Round(x), 0, Mathf.Round(z));
         }
-        return new Vector3(Mathf.Round(x), 0, Mathf.Round(z));
+        return size;
     }
 
     void OffsetMap()
