@@ -902,7 +902,7 @@ MonoBehaviour:
   - {fileID: 6700716075161373839, guid: 22bc3d0eaee86bb428496bf988489ae9, type: 3}
   - {fileID: 2500389178016090726, guid: 3767eab88ce28c4448bbd26f359914bc, type: 3}
   playerHead: {fileID: 591162371}
-  mazeCount: 3
+  mazeCount: 5
   mazeRows: 3
   mazeCols: 3
   tileWidth: 0.8
@@ -913,6 +913,26 @@ MonoBehaviour:
   portalGenerationLocation: 1
   portalInfo: []
   mapSequence:
+  - mapType: 0
+    isEndSeeded: 0
+    startSeed:
+      row: 0
+      column: 0
+      direction: 0
+    endSeed:
+      row: 0
+      column: 0
+      direction: 0
+  - mapType: 0
+    isEndSeeded: 0
+    startSeed:
+      row: 0
+      column: 0
+      direction: 0
+    endSeed:
+      row: 0
+      column: 0
+      direction: 0
   - mapType: 0
     isEndSeeded: 0
     startSeed:

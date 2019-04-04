@@ -137,6 +137,7 @@ public abstract class MapGenerator : MonoBehaviour
             int idx = Random.Range(0, deadEndList.Count);
             deadEnd = deadEndList[idx];
             error++;
+            //Debug.Log("Error " + error);
         }
         while ((deadEnd.IsSamePosition(entrance) || deadEnd.IsInCorner() || deadEnd.IsPerpendicular()) && error < 30);
         if(error >= 29)

@@ -33,7 +33,7 @@ public class TileInfo
             row == (mazeRows - 1) && column == 0 ||
             row == (mazeRows - 1) && column == (mazeCols - 1))
         {
-            Debug.Log("tile (" + row + ";" + column + ") is in a corner");
+            //Debug.Log("tile (" + row + ";" + column + ") is in a corner");
             inCorner = true;
         }
         return inCorner;
@@ -66,6 +66,36 @@ public class TileInfo
                 break;
         }
         return perpendicular;
+    }
+
+    public TileInfo GetNeighbour()
+    {
+        int r = row;
+        int c = column;
+        switch (direction)
+        {
+            case 0:
+                r--;
+                break;
+            case 1:
+                c++;
+                break;
+            case 2:
+                r++;
+                break;
+            case 3:
+                c--;
+                break;
+            default:
+                break;
+        }
+        return new TileInfo(r, c, direction);
+    }
+
+    public bool IsLeadingIntoEntrance(TileInfo entrance)
+    {
+        TileInfo neighbour = entrance.GetNeighbour();
+        return (IsSamePosition(neighbour));
     }
 
     public bool IsSamePosition(TileInfo tile)
