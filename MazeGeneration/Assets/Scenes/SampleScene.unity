@@ -903,8 +903,8 @@ MonoBehaviour:
   - {fileID: 2500389178016090726, guid: 3767eab88ce28c4448bbd26f359914bc, type: 3}
   playerHead: {fileID: 591162371}
   mazeCount: 5
-  mazeRows: 3
-  mazeCols: 3
+  mazeRows: 5
+  mazeCols: 5
   tileWidth: 0.8
   wallWidth: 0.5
   startRow: 0

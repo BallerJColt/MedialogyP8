@@ -20,16 +20,16 @@ public static class PortalPositionHelper
         {"inside", new int[4] {0,1,2,3}},
     };
 
-    private static List<int[]> CornerShutoffList = new List<int[]>
+    private static List<TileInfo> CornerShutoffList = new List<TileInfo>
     {
-        new int[2] {0,1},
-        new int[2] {0, maxCols - 2},
-        new int[2] {maxRows - 2, 0},
-        new int[2] {maxRows - 1, maxCols - 2},
-        new int[2] {1, 0},
-        new int[2] {1, maxCols - 1},
-        new int[2] {maxRows - 1, 1},
-        new int[2] {maxRows - 2, maxCols - 1},
+        new TileInfo(0,1, -1),
+        new TileInfo(0, maxCols - 2, -1),
+        new TileInfo(maxRows - 2, 0, -1),
+        new TileInfo(maxRows - 1, maxCols - 2, -1),
+        new TileInfo(1, 0, -1),
+        new TileInfo(1, maxCols - 1, -1),
+        new TileInfo(maxRows - 1, 1, -1),
+        new TileInfo(maxRows - 2, maxCols - 1, -1),
     };
 
     private static string GetDirectionArray(int row, int col)
@@ -95,47 +95,25 @@ public static class PortalPositionHelper
         return GetRandomArrayElementWithFlag(directionArray, direction);
     }
 
-    public static List<int[]> GetShutoffCoordinate(int[] tileCoord)
+    public static List<TileInfo> GetShutoffList(TileInfo tile)
     {
-        /* int idx = 0;
-        if (IsShutoffCoordinate(tileCoord))
+        List<TileInfo> shutoffIndexes = new List<TileInfo>();
+        /* foreach (TileInfo t in CornerShutoffList)
         {
-            idx = (CornerShutoffList.IndexOf(tileCoord) + 4) % 8;
-        }
-        return CornerShutoffList[idx]; */
-        List<int> indexes = new List<int>();
-        if (IsShutoffCoordinate(tileCoord))
-        {
-
-            foreach (int[] c in CornerShutoffList)
+            if (t.IsSamePosition(tile))
             {
-                if (c == tileCoord)
-                {
-                    indexes.Add(CornerShutoffList.IndexOf(c));
-                }
+                int idx = (CornerShutoffList.IndexOf(t) + 4) % 8;
+                shutoffIndexes.Add(CornerShutoffList[idx]);
+            }
+        } */
+        for (int i = 0; i < CornerShutoffList.Count; i++)
+        {
+            if (CornerShutoffList[i].IsSamePosition(tile))
+            {
+                shutoffIndexes.Add(CornerShutoffList[(i+4)%8]);
             }
         }
-        List<int[]> shutoffCoords = new List<int[]>();
-        foreach (int i in indexes)
-        {
-            int shutoffIndex = (i + 4) % 8;
-            shutoffCoords.Add(CornerShutoffList[shutoffIndex]);
-        }
-        return shutoffCoords;
+        return shutoffIndexes;
     }
 
-    public static bool IsShutoffCoordinate(int[] tileCoord)
-    {
-        bool alma = false;
-        Debug.Log("checking " + tileCoord[0] + ";" + tileCoord[1]);
-        foreach (var v in CornerShutoffList)
-        {
-            if (v[0] == tileCoord[0] && v[1] == tileCoord[1])
-            {
-                Debug.Log("tile " + tileCoord[0] + ";" + tileCoord[1] + " is a shutoffcoord");
-                alma = true;
-            }
-        }
-        return alma;
-    }
 }

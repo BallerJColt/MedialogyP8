@@ -26,6 +26,12 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
+        //3x3 is the minimum size
+        if (mazeRows < 3)
+            mazeRows = 3;
+        if (mazeCols < 3)
+            mazeCols = 3;
+
         if (mapSequence.Length > 1)
             portalInfo = new TileInfo[mapSequence.Length - 1];
 
@@ -162,50 +168,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.  
-    void InitializeMazes()
-    {
-        int[] nextEntrancePosition = new int[] { -1, -1 };
-        int currentEntranceDirection = 0;
-        int nextEntranceDirection = 0;
-
-        for (int i = 0; i < mazeCount; i++)
-        {
-            Debug.Log("Starting Maze " + i);
-            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
-            GameObject tempMaze = Instantiate(mazeGeneratorPrefab[0], mazeSpawnPoint, Quaternion.identity);
-            tempMaze.name = "Maze " + i.ToString();
-            tempMaze.transform.parent = transform;
-            MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
-            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
-            mazeScript.Initialize();
-            Debug.Log("Maze " + i + " Initialized!");
-
-            if (i == 0)
-            {
-                int startDirection = GenerateRandomStartDirection(startRow, startCol);
-
-                mazeScript.Generate(startRow, startCol, startDirection);
-                nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
-                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
-
-            }
-            else
-            {
-
-                mazeScript.Generate(nextEntrancePosition[0], nextEntrancePosition[1], nextEntranceDirection);
-                nextEntrancePosition = mazeScript.GetRandomDeadEnd(nextEntrancePosition[0], nextEntrancePosition[1]);
-                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
-            }
-            currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
-            if (i < portalInfo.Length)
-                portalInfo[i] = new TileInfo(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            //Debug.Log("current entrancedirection: " + currentEntranceDirection);
-            nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            //Debug.Log("next entrancedirection: " + nextEntranceDirection);
-        }
-    }
-
     int GenerateRandomStartDirection(int row, int col)
     {
         return PortalPositionHelper.GetRandomPortalExit(row, col);
@@ -213,111 +175,99 @@ public class MapManager : MonoBehaviour
 
     TileInfo GenerateRandomHallwayDeadEnd(TileInfo flag)
     {
-        //REWRITE THESE SO THEY USE A LIST OF TILEINFO CLASSES!
-        
-        int[] flagCoord = new int[2] { flag.row, flag.column };
-        /* int row, col, dir;
-        TileInfo newTile = new TileInfo(-1,-1,-1);
-        do
-        {
-            row = Random.Range(0,mazeRows);
-            col = Random.Range(0,mazeCols);
-            dir = GenerateRandomStartDirection(row,col);
-            newTile = new TileInfo(row,col,dir);
-        }
-        while(newTile.IsSamePosition(flag) || newTile.IsInCorner() || newTile.IsPerpendicular());
-        return newTile; */
-        List<int[]> possibleCoordinates = new List<int[]>();
+        TileInfo startCoord = new TileInfo(flag.row, flag.column, -1);
+        List<TileInfo> possibleCoordinates = new List<TileInfo>();
         for (int i = 0; i < mazeRows; i++)
         {
             for (int j = 0; j < mazeCols; j++)
             {
-                possibleCoordinates.Add(new int[2] { i, j });
+                possibleCoordinates.Add(new TileInfo(i, j, -1));
             }
         }
-        Debug.Log("All possible coords");
-        foreach (var v in possibleCoordinates)
-        {
-            Debug.Log("(" + v[0] + ";" + v[1] + ")");
-        }
-        
-        
-        //LOCATION BASED RULES
 
+        //Remove Start
+        if (possibleCoordinates.Remove(startCoord))
+            Debug.Log("Removed Start (" + startCoord.row + ";" + startCoord.column + ")");
 
-        //Remove  Corners
-        int[] cornerCoords = new int[] { 0, mazeRows - 1, 0, mazeCols - 1 };
+        //Remove Lead-in
+        if (possibleCoordinates.Remove(flag.GetNeighbourCoord()))
+            Debug.Log("Removed Lead-in (" + flag.GetNeighbourCoord().row + ";" + flag.GetNeighbourCoord().column + ")");
+
+        //Remove corners
         for (int i = 0; i < 2; i++)
         {
-            for (int j = 2; j < cornerCoords.Length; j++)
+            for (int j = 0; j < 2; j++)
             {
-                int[] corner = new int[] { cornerCoords[i], cornerCoords[j] };
-                /* foreach (int[] c in possibleCoordinates)
-                {
-                    if(c[0] == corner[0] && c[1] == corner[1])
-                } */
-                if (possibleCoordinates.Remove(corner))
-                    Debug.Log("Removed corner (" + corner[0] + ";" + corner[1] + ")");
+                TileInfo cornerTile = new TileInfo(i * (mazeRows - 1), j * (mazeCols - 1), -1);
+                if (possibleCoordinates.Remove(cornerTile))
+                    Debug.Log("Removed corner (" + cornerTile.row + ";" + cornerTile.column + ")");
             }
         }
 
-        //Remove Corner shutoffs
-
-        if (PortalPositionHelper.IsShutoffCoordinate(flagCoord))
+        //Remove corner shutoffs
+        List<TileInfo> shutoffCorners = PortalPositionHelper.GetShutoffList(startCoord);
+        if (shutoffCorners.Count > 0)
         {
-            Debug.Log("shutoff coord");
-            List<int[]> shutoffCoords = PortalPositionHelper.GetShutoffCoordinate(flagCoord);
-            foreach (int[] SOC in shutoffCoords)
+            Debug.Log("Start (" + startCoord.row + ";" + startCoord.column + ") Shuts off corners.");
+            foreach (TileInfo t in shutoffCorners)
             {
-                Debug.Log("row: " + SOC[0] + " col: " + SOC[1]);
-                if (possibleCoordinates.Contains(SOC))
-                    possibleCoordinates.Remove(SOC);
+                if (possibleCoordinates.Remove(t))
+                    Debug.Log("(" + t.row + ";" + t.column + ") Removed.");
             }
         }
-        //DIRECTION BASED RULES
 
-        //Generate TileArray list
+        //Generate possible directions
+        Debug.Log("All possible coordinates\n---------------------");
+        foreach (TileInfo t in possibleCoordinates)
+        {
+            Debug.Log("(" + t.row + ";" + t.column + ")");
+        }
+
         List<TileInfo> possibleTiles = new List<TileInfo>();
-
-        foreach (int[] coord in possibleCoordinates)
+        foreach (TileInfo t in possibleCoordinates)
         {
-            int[] directions = PortalPositionHelper.GetEntranceArray(coord[0], coord[1]);
-            for (int i = 0; i < directions.Length; i++)
+            int[] possibleDirections = PortalPositionHelper.GetEntranceArray(t.row, t.column);
+            for (int i = 0; i < possibleDirections.Length; i++)
             {
-                possibleTiles.Add(new TileInfo(coord[0], coord[1], directions[i]));
+                TileInfo tileToAdd = new TileInfo(t.row, t.column, possibleDirections[i]);
+                possibleTiles.Add(tileToAdd);
             }
         }
 
-
-        //Remove perpendicular wall directions
+        //Remove perpendicular
         List<TileInfo> tilesToRemove = new List<TileInfo>();
-        foreach (TileInfo tile in possibleTiles)
-        {
-            if (tile.IsPerpendicular() || tile.IsLeadingIntoEntrance(flag))
-            {
-                tilesToRemove.Add(tile);
-            }
-        }
-
-        //Remove lead-ins
-
-        foreach (TileInfo tile in tilesToRemove)
-        {
-            possibleTiles.Remove(tile);
-        }
-
-        Debug.Log("possible end seeds based on " + flag.row + ";" + flag.column + ";" + flag.direction + ":");
         foreach (TileInfo t in possibleTiles)
         {
-            Debug.Log(t.row + ";" + t.column + ";" + t.direction);
+            if (t.IsPerpendicular())
+            {
+                tilesToRemove.Add(t);
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") is perpendicular");
+            }
+            else if (t.IsLeadingIntoEntrance(flag))
+            {
+                tilesToRemove.Add(t);
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") leads into entrance");
+            }
         }
-        TileInfo[] possibleTileArray = possibleTiles.ToArray();
-        int idx = Random.Range(0, possibleTileArray.Length);
-        possibleCoordinates.Clear();
-        possibleTiles.Clear();
-        tilesToRemove.Clear();
-        return possibleTileArray[idx];
+
+        foreach (TileInfo t in tilesToRemove)
+        {
+            if (possibleTiles.Remove(t))
+            {
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") removed");
+            }
+        }
+
+        Debug.Log("All possible Tiles\n---------------------");
+        foreach (TileInfo t in possibleTiles)
+        {
+            Debug.Log("(" + t.row + ";" + t.column + ";" + t.direction + ")");
+        }
+
+        int idx = Random.Range(0, possibleTiles.Count);
+        return possibleTiles[idx];
     }
+
     TileInfo GenerateRandomConrner(TileInfo flag)
     {
         int row, col, dir;

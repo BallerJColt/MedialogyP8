@@ -47,19 +47,19 @@ public class MazeGenerator : MapGenerator
         {
             case 0:
                 RecursiveDFS(startRow - 1, startCol);
-                //Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], startDirection);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], startDirection);
                 break;
             case 1:
                 RecursiveDFS(startRow, startCol + 1);
-                //Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol + 1], startDirection);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol + 1], startDirection);
                 break;
             case 2:
                 RecursiveDFS(startRow + 1, startCol);
-                //Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow + 1, startCol], startDirection);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow + 1, startCol], startDirection);
                 break;
             case 3:
                 RecursiveDFS(startRow, startCol - 1);
-                //Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol - 1], startDirection);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol - 1], startDirection);
                 break;
             default:
                 break;
@@ -80,16 +80,16 @@ public class MazeGenerator : MapGenerator
         switch (endDirection)
         {
             case 0:
-                //Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow - 1, endCol], endDirection);
+                Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow - 1, endCol], endDirection);
                 break;
             case 1:
-                //Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow, endCol + 1], endDirection);
+                Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow, endCol + 1], endDirection);
                 break;
             case 2:
-                //Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow + 1, endCol], endDirection);
+                Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow + 1, endCol], endDirection);
                 break;
             case 3:
-                //Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow, endCol - 1], endDirection);
+                Tile.ConnectTiles(tileArray[endRow, endCol], tileArray[endRow, endCol - 1], endDirection);
                 break;
             default:
                 break;
