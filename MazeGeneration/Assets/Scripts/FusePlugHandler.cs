@@ -29,7 +29,7 @@ public class FusePlugHandler : MonoBehaviour
 
         gameObject.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z + 0.0077f);
 
-        transform.parent.GetComponent<Valve.VR.InteractionSystem.Hand>().DetachObject(gameObject);
+        //transform.parent.GetComponent<Valve.VR.InteractionSystem.Hand>().DetachObject(gameObject);
 
         EventCallbacks.FusePuzzlePlugIn fpPlugIn = new EventCallbacks.FusePuzzlePlugIn();
         fpPlugIn.sGo = socketGoIn;
