@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Fuse_01
+  - Fuse_02
+  - Fuse_03
+  - Fuse_04
+  - Fuse_05
+  - CameraRig
+  - FuseBox
+  - MineLights
   layers:
   - Default
   - TransparentFX

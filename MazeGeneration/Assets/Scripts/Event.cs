@@ -38,4 +38,16 @@ namespace EventCallbacks
         public float tileWidth;
 
     }
+
+    public class FusePuzzlePlugIn : Event<FusePuzzlePlugIn>
+    {
+        public GameObject go;
+        public GameObject sGo;
+    }
+
+    public class FusePuzzlePlugOut : Event<FusePuzzlePlugOut>
+    {
+        public GameObject go;
+        public GameObject sGo;
+    }
 }
