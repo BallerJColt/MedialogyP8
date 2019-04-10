@@ -9,10 +9,12 @@ public class ElevatorMovement : MonoBehaviour
     private bool goingDown = false;
     private bool goingUp = false;
     private float renderIntensity;
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         renderIntensity = RenderSettings.ambientIntensity;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -27,28 +29,54 @@ public class ElevatorMovement : MonoBehaviour
         {
             StartCoroutine("MoveUp");
         } */
+
+
     }
 
-    public IEnumerator MoveDown()
+    public void DownBtn()
     {
         if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5)
         {
-            goingUp = false;
-            StopCoroutine("GoingUp");
-            goingDown = true;
-            while (transform.position.y > finalElevatorHeight && goingDown)
-            {
-                transform.position = transform.position + elevatorVelocity * Time.fixedDeltaTime;
-                GameObject.FindGameObjectWithTag("CameraRig").transform.position = transform.position + elevatorVelocity * Time.fixedDeltaTime;
-                yield return new WaitForSeconds(0f);
-            }
-            goingDown = false;
-            RenderSettings.ambientIntensity = 0;
-        } else {
+            StartCoroutine("MoveDown");
+        }
+        else
+        {
             Debug.Log("Puzzle not done!! " + GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs + "/5 plugs are placed correctly.");
             // Puzzle not solved
             // Some sound feedback or something??
         }
+    }
+
+    public void UpBtn()
+    {
+
+        if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5)
+        {
+            StartCoroutine("MoveUp");
+        }
+        else
+        {
+            Debug.Log("Puzzle not done!! " + GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs + "/5 plugs are placed correctly.");
+            // Puzzle not solved
+            // Some sound feedback or something??
+        }
+    }
+
+    public IEnumerator MoveDown()
+    {
+
+        goingUp = false;
+        StopCoroutine("goingUp");
+        goingDown = true;
+        while (transform.position.y > finalElevatorHeight && goingDown)
+        {
+            transform.position = transform.position + elevatorVelocity * Time.fixedDeltaTime;
+            player.transform.position = new Vector3(player.transform.position.x, transform.position.y + elevatorVelocity.y * Time.fixedDeltaTime, player.transform.position.z);
+            yield return new WaitForSeconds(0f);
+        }
+        goingDown = false;
+        RenderSettings.ambientIntensity = 0;
+
     }
 
     public IEnumerator MoveUp()
@@ -56,17 +84,19 @@ public class ElevatorMovement : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5)
         {
             goingDown = false;
-            StopCoroutine("GoingDown");
+            StopCoroutine("goingDown");
             goingUp = true;
             while (transform.position.y < 0 && goingUp)
             {
                 transform.position = transform.position - elevatorVelocity * Time.fixedDeltaTime;
-                GameObject.FindGameObjectWithTag("CameraRig").transform.position = transform.position - elevatorVelocity * Time.fixedDeltaTime;
+                player.transform.position = new Vector3(player.transform.position.x, transform.position.y + elevatorVelocity.y * Time.fixedDeltaTime, player.transform.position.z);
                 yield return new WaitForSeconds(0f);
             }
             goingUp = false;
             RenderSettings.ambientIntensity = 1;
-        } else {
+        }
+        else
+        {
             // Puzzle not solved
             // Some sound feedback or something??
             Debug.Log("Puzzle not done!! " + GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs + "/5 plugs are placed correctly.");

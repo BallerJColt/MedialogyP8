@@ -12,35 +12,37 @@ public class FusePlugHandler : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         if (inSocket)
         {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        } else {
+        }
+        else
+        {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
         inSocket = true;
         socketGoIn = other.gameObject;
 
-        gameObject.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z + 0.0077f);
+        transform.parent.GetComponent<Valve.VR.InteractionSystem.Hand>().DetachObject(gameObject);
 
-        //transform.parent.GetComponent<Valve.VR.InteractionSystem.Hand>().DetachObject(gameObject);
+        gameObject.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
 
         EventCallbacks.FusePuzzlePlugIn fpPlugIn = new EventCallbacks.FusePuzzlePlugIn();
         fpPlugIn.sGo = socketGoIn;
         fpPlugIn.go = gameObject;
         fpPlugIn.FireEvent();
-        
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
+
         inSocket = false;
         socketGoOut = other.gameObject;
 
@@ -48,6 +50,6 @@ public class FusePlugHandler : MonoBehaviour
         fpPlugOut.sGo = socketGoOut;
         fpPlugOut.go = gameObject;
         fpPlugOut.FireEvent();
-        
+
     }
 }
