@@ -25,6 +25,7 @@ public class MazeGenerator : MapGenerator
         }
         else //if both start and end are seeded
             Generate(info.startSeed, info.endSeed);
+        GenerateIntArray();
     }
 
     public override void Generate(TileInfo startSeed)
@@ -41,29 +42,30 @@ public class MazeGenerator : MapGenerator
     // It makes the first connection manually, then calls the RecursiveDFS() method to generate the rest of the maze.
     public override void Generate(int startRow, int startCol, int startDirection)
     {
+        tileArray[startRow, startCol].OpenWall(startDirection);
         switch (startDirection)
         {
             case 0:
-                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], startDirection);
                 RecursiveDFS(startRow - 1, startCol);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow - 1, startCol], startDirection);
                 break;
             case 1:
-                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol + 1], startDirection);
                 RecursiveDFS(startRow, startCol + 1);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol + 1], startDirection);
                 break;
             case 2:
-                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow + 1, startCol], startDirection);
                 RecursiveDFS(startRow + 1, startCol);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow + 1, startCol], startDirection);
                 break;
             case 3:
-                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol - 1], startDirection);
                 RecursiveDFS(startRow, startCol - 1);
+                Tile.ConnectTiles(tileArray[startRow, startCol], tileArray[startRow, startCol - 1], startDirection);
                 break;
             default:
                 break;
         }
         //Debug.Log(name + " generated seeded maze, startPos: (" + startRow + ";" + startCol + ";" + startDirection + ").");
-        GenerateIntArray();
+        //GenerateIntArray();
     }
 
     // Overload of the seeded maze generation method with a specified end position and direction as well.
@@ -93,7 +95,7 @@ public class MazeGenerator : MapGenerator
                 break;
         }
         //Debug.Log(name + "endPos: (" + endRow + ";" + endCol + ").");
-        GenerateIntArray();
+        //GenerateIntArray();
     }
 
 

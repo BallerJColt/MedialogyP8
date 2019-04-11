@@ -77,6 +77,23 @@ public abstract class MapGenerator : MonoBehaviour
         return deadEnd;
     }
 
+    public List<TileInfo> GetDeadEndListTileInfo()
+    {
+        List<TileInfo> deadEndList = new List<TileInfo>();
+        for (int i = 0; i < mazeRows; i++)
+        {
+            for (int j = 0; j < mazeColumns; j++)
+            {
+                if (mazeIntArray[i, j] == 1 || mazeIntArray[i, j] == 2 || mazeIntArray[i, j] == 4 || mazeIntArray[i, j] == 8)
+                {
+                    deadEndList.Add(new TileInfo(i, j, (int)Mathf.Log(mazeIntArray[i, j], 2)));
+                    //Debug.Log("" + i + " " + j);
+                }
+            }
+        }
+        return deadEndList;
+    }
+
     public int[] GetFirstDeadEnd(int entranceRow, int entranceCol)
     {
         List<int[]> deadEndList = GetDeadEndList();
@@ -96,7 +113,7 @@ public abstract class MapGenerator : MonoBehaviour
         int[] deadEnd = new int[] { -1, -1 };
         do
         {
-            int idx = Random.Range(0,deadEndList.Count);
+            int idx = Random.Range(0, deadEndList.Count);
             deadEnd = deadEndList[idx];
         }
         while (deadEnd[0] == entranceRow && deadEnd[1] == entranceCol);
@@ -108,6 +125,24 @@ public abstract class MapGenerator : MonoBehaviour
         int[] deadEnd = GetRandomDeadEnd(entrance.row, entrance.column);
         int deadEndDirection = (int)Mathf.Log(mazeIntArray[deadEnd[0], deadEnd[1]], 2);
         return new TileInfo(deadEnd[0], deadEnd[1], deadEndDirection);
+    }
+
+    public TileInfo GetRandomDeadEndHallway(TileInfo entrance)
+    {
+        int error = 0;
+        List<TileInfo> deadEndList = GetDeadEndListTileInfo();
+        TileInfo deadEnd = new TileInfo(0, 0, 0); //this will crash the game later if there is no suitable dead end. Should generate in a way that there is always one
+        do
+        {
+            int idx = Random.Range(0, deadEndList.Count);
+            deadEnd = deadEndList[idx];
+            error++;
+            //Debug.Log("Error " + error);
+        }
+        while ((deadEnd.IsSamePosition(entrance) || deadEnd.IsInCorner() || deadEnd.IsPerpendicular()) && error < 30);
+        if(error >= 29)
+            Debug.Log("There were no suitable dead ends in "+ gameObject.name +", exiting to avoid infinite loop"); 
+        return deadEnd;
     }
 
     public abstract void Generate();

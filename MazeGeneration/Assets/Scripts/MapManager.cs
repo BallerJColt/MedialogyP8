@@ -15,16 +15,26 @@ public class MapManager : MonoBehaviour
     public int startCol;
 
     public Vector3 playAreaSize;
-
+    public enum PortalGenerationType
+    {
+        Everywhere,
+        Hallways
+    }
+    public PortalGenerationType portalGenerationLocation;
     public TileInfo[] portalInfo;
     public MapInfo[] mapSequence;
 
     void Start()
     {
+        //3x3 is the minimum size
+        if (mazeRows < 3)
+            mazeRows = 3;
+        if (mazeCols < 3)
+            mazeCols = 3;
+
         if (mapSequence.Length > 1)
             portalInfo = new TileInfo[mapSequence.Length - 1];
 
-        //Only use this method when in VR, otherwise it won't work
         playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
@@ -34,7 +44,10 @@ public class MapManager : MonoBehaviour
             startCol = 0;
             Debug.Log("Player was out of game area, Maze starts from (0;0).");
         }
-        GenerateMapSequence();
+        if (portalGenerationLocation == PortalGenerationType.Everywhere)
+            GenerateMapSequence();
+        else
+            GenerateMapSequenceHallway();
         OffsetMap();
         /*
         //This is to debug the portal infos in the console
@@ -98,51 +111,161 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //This method is now obsolete, as the GenerateMapSequence method with all mazes does the same.  
-    void InitializeMazes()
+    void GenerateMapSequenceHallway()
     {
-        int[] nextEntrancePosition = new int[] { -1, -1 };
-        int currentEntranceDirection = 0;
-        int nextEntranceDirection = 0;
-
-        for (int i = 0; i < mazeCount; i++)
+        if (mapSequence.Length > 0)
         {
-            Vector3 mazeSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
-            GameObject tempMaze = Instantiate(mazeGeneratorPrefab[0], mazeSpawnPoint, Quaternion.identity);
-            tempMaze.name = "Maze " + i.ToString();
-            tempMaze.transform.parent = transform;
-            MazeGenerator mazeScript = tempMaze.GetComponent<MazeGenerator>();
-            mazeScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
-            mazeScript.Initialize();
+            mapSequence[0].startSeed.row = startRow;
+            mapSequence[0].startSeed.column = startCol;
+            mapSequence[0].startSeed.direction = GenerateRandomStartDirection(startRow, startCol);
+        }
 
-            if (i == 0)
+        for (int i = 0; i < mapSequence.Length; i++)
+        {
+            Debug.Log("Starting Maze " + i);
+            Vector3 mapSpawnPoint = new Vector3(transform.position.x + i * (mazeCols * tileWidth + 1), 0, 0);
+            GameObject tempMap = Instantiate(mazeGeneratorPrefab[(int)mapSequence[i].mapType], mapSpawnPoint, Quaternion.identity);
+            tempMap.name = i.ToString() + " - " + mapSequence[i].mapType.ToString();
+            tempMap.transform.parent = transform;
+
+            MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
+            mapScript.Initialize();
+            Debug.Log("Maze " + i + " Initialized!");
+
+            //calculate start seed
+            if (i > 0)
             {
-                int startDirection = GenerateRandomStartDirection(startRow, startCol);
+                mapSequence[i].startSeed = new TileInfo(mapSequence[i - 1].endSeed);
+                mapSequence[i].startSeed.direction = (mapSequence[i - 1].endSeed.direction + 2) % 4; //rotate 180 degrees
 
-                mazeScript.Generate(startRow, startCol, startDirection);
-                nextEntrancePosition = mazeScript.GetRandomDeadEnd(startRow, startCol);
-                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
-
+                //mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, mapSequence[i - 1].endSeed.direction);
             }
-            else
+            if ((int)mapSequence[i].mapType == 1)
             {
-
-                mazeScript.Generate(nextEntrancePosition[0], nextEntrancePosition[1], nextEntranceDirection);
-                nextEntrancePosition = mazeScript.GetRandomDeadEnd(nextEntrancePosition[0], nextEntrancePosition[1]);
-                //Debug.Log(nextEntrancePosition[0] + " " + nextEntrancePosition[1]);
+                Debug.Log("Can't do rooms with this method yet...");
+                continue;
             }
-            currentEntranceDirection = (int)Mathf.Log(mazeScript.mazeIntArray[nextEntrancePosition[0], nextEntrancePosition[1]], 2);
+            /* else
+            {
+                if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
+                {
+                    Debug.Log("Can't do rooms with this method yet...");
+                    //i++;
+                }
+            } */
+            if (i + 1 < mapSequence.Length)
+            {
+                mapSequence[i].isEndSeeded = true;
+                Debug.Log("Generating End Seed For Maze " + i);
+                mapSequence[i].endSeed = GenerateRandomHallwayDeadEnd(mapSequence[i].startSeed);
+            }
+            mapScript.Generate(mapSequence[i]);
+            //if (mapSequence[i].isEndSeeded == false)
+            mapSequence[i].endSeed = mapScript.GetRandomDeadEndHallway(mapSequence[i].startSeed);
             if (i < portalInfo.Length)
-                portalInfo[i] = new TileInfo(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            //Debug.Log("current entrancedirection: " + currentEntranceDirection);
-            nextEntranceDirection = PortalPositionHelper.GetRandomPortalExit(nextEntrancePosition[0], nextEntrancePosition[1], currentEntranceDirection);
-            //Debug.Log("next entrancedirection: " + nextEntranceDirection);
+                portalInfo[i] = new TileInfo(mapSequence[i].endSeed);
         }
     }
 
     int GenerateRandomStartDirection(int row, int col)
     {
         return PortalPositionHelper.GetRandomPortalExit(row, col);
+    }
+
+    TileInfo GenerateRandomHallwayDeadEnd(TileInfo flag)
+    {
+        TileInfo startCoord = new TileInfo(flag.row, flag.column, -1);
+        List<TileInfo> possibleCoordinates = new List<TileInfo>();
+        for (int i = 0; i < mazeRows; i++)
+        {
+            for (int j = 0; j < mazeCols; j++)
+            {
+                possibleCoordinates.Add(new TileInfo(i, j, -1));
+            }
+        }
+
+        //Remove Start
+        if (possibleCoordinates.Remove(startCoord))
+            Debug.Log("Removed Start (" + startCoord.row + ";" + startCoord.column + ")");
+
+        //Remove Lead-in
+        if (possibleCoordinates.Remove(flag.GetNeighbourCoord()))
+            Debug.Log("Removed Lead-in (" + flag.GetNeighbourCoord().row + ";" + flag.GetNeighbourCoord().column + ")");
+
+        //Remove corners
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                TileInfo cornerTile = new TileInfo(i * (mazeRows - 1), j * (mazeCols - 1), -1);
+                if (possibleCoordinates.Remove(cornerTile))
+                    Debug.Log("Removed corner (" + cornerTile.row + ";" + cornerTile.column + ")");
+            }
+        }
+
+        //Remove corner shutoffs
+        List<TileInfo> shutoffCorners = PortalPositionHelper.GetShutoffList(startCoord);
+        if (shutoffCorners.Count > 0)
+        {
+            Debug.Log("Start (" + startCoord.row + ";" + startCoord.column + ") Shuts off corners.");
+            foreach (TileInfo t in shutoffCorners)
+            {
+                if (possibleCoordinates.Remove(t))
+                    Debug.Log("(" + t.row + ";" + t.column + ") Removed.");
+            }
+        }
+
+        //Generate possible directions
+        Debug.Log("All possible coordinates\n---------------------");
+        foreach (TileInfo t in possibleCoordinates)
+        {
+            Debug.Log("(" + t.row + ";" + t.column + ")");
+        }
+
+        List<TileInfo> possibleTiles = new List<TileInfo>();
+        foreach (TileInfo t in possibleCoordinates)
+        {
+            int[] possibleDirections = PortalPositionHelper.GetEntranceArray(t.row, t.column);
+            for (int i = 0; i < possibleDirections.Length; i++)
+            {
+                TileInfo tileToAdd = new TileInfo(t.row, t.column, possibleDirections[i]);
+                possibleTiles.Add(tileToAdd);
+            }
+        }
+
+        //Remove perpendicular
+        List<TileInfo> tilesToRemove = new List<TileInfo>();
+        foreach (TileInfo t in possibleTiles)
+        {
+            if (t.IsPerpendicular())
+            {
+                tilesToRemove.Add(t);
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") is perpendicular");
+            }
+            else if (t.IsLeadingIntoEntrance(flag))
+            {
+                tilesToRemove.Add(t);
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") leads into entrance");
+            }
+        }
+
+        foreach (TileInfo t in tilesToRemove)
+        {
+            if (possibleTiles.Remove(t))
+            {
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") removed");
+            }
+        }
+
+        Debug.Log("All possible Tiles\n---------------------");
+        foreach (TileInfo t in possibleTiles)
+        {
+            Debug.Log("(" + t.row + ";" + t.column + ";" + t.direction + ")");
+        }
+
+        int idx = Random.Range(0, possibleTiles.Count);
+        return possibleTiles[idx];
     }
 
     TileInfo GenerateRandomConrner(TileInfo flag)
@@ -160,14 +283,16 @@ public class MapManager : MonoBehaviour
 
     public Vector3 GetCameraRigSize()
     {
+        Vector3 size = new Vector3(playAreaSize.x, 0, playAreaSize.z);
         var chaperone = Valve.VR.OpenVR.Chaperone;
         float x = 0, z = 0;
         if (chaperone != null)
         {
             chaperone.GetPlayAreaSize(ref x, ref z);
             Debug.Log("got here"); //expert debugging right here
+            size = new Vector3(Mathf.Round(x), 0, Mathf.Round(z));
         }
-        return new Vector3(Mathf.Round(x), 0, Mathf.Round(z));
+        return size;
     }
 
     void OffsetMap()

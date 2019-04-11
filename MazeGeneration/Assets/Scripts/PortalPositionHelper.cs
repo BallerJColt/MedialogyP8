@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public static class PortalPositionHelper
 {
@@ -18,6 +19,19 @@ public static class PortalPositionHelper
         {"leftColumn", new int[3] {0,1,2}},
         {"inside", new int[4] {0,1,2,3}},
     };
+
+    private static List<TileInfo> CornerShutoffList = new List<TileInfo>
+    {
+        new TileInfo(0,1, -1),
+        new TileInfo(0, maxCols - 2, -1),
+        new TileInfo(maxRows - 2, 0, -1),
+        new TileInfo(maxRows - 1, maxCols - 2, -1),
+        new TileInfo(1, 0, -1),
+        new TileInfo(1, maxCols - 1, -1),
+        new TileInfo(maxRows - 1, 1, -1),
+        new TileInfo(maxRows - 2, maxCols - 1, -1),
+    };
+
     private static string GetDirectionArray(int row, int col)
     {
         if (row == 0)
@@ -63,7 +77,7 @@ public static class PortalPositionHelper
     }
 
     // If we want to choose an exit direction ourselves, we can use this method to access the possible exit directions
-    public static int[] GetEntranceArray(string position)
+    private static int[] GetEntranceArray(string position)
     {
         return PortalEntranceArrayList[position];
     }
@@ -80,4 +94,26 @@ public static class PortalPositionHelper
         int[] directionArray = PortalEntranceArrayList[entrancePosition];
         return GetRandomArrayElementWithFlag(directionArray, direction);
     }
+
+    public static List<TileInfo> GetShutoffList(TileInfo tile)
+    {
+        List<TileInfo> shutoffIndexes = new List<TileInfo>();
+        /* foreach (TileInfo t in CornerShutoffList)
+        {
+            if (t.IsSamePosition(tile))
+            {
+                int idx = (CornerShutoffList.IndexOf(t) + 4) % 8;
+                shutoffIndexes.Add(CornerShutoffList[idx]);
+            }
+        } */
+        for (int i = 0; i < CornerShutoffList.Count; i++)
+        {
+            if (CornerShutoffList[i].IsSamePosition(tile))
+            {
+                shutoffIndexes.Add(CornerShutoffList[(i+4)%8]);
+            }
+        }
+        return shutoffIndexes;
+    }
+
 }
