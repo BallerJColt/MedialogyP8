@@ -983,7 +983,7 @@ Transform:
   - {fileID: 255025855}
   - {fileID: 1988713554}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &496655627
 GameObject:
@@ -2465,6 +2465,122 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &843874197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843874198}
+  - component: {fileID: 843874199}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &843874198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843874197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6792789, y: 1.4908043, z: -0.9386254}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &843874199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843874197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f20d992465492d47926fb72b499d255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: NoteUpdateSound
+    clip: {fileID: 8300000, guid: 8da3958b246107640943d95879f950c4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: NoteSwitchSound
+    clip: {fileID: 8300000, guid: 8f86848df3e242246b4eb1603fe28b79, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AmbientSound
+    clip: {fileID: 8300000, guid: f5af034a64a991948abc981f4aed7414, type: 3}
+    volume: 0.779
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: FuseConnectSound
+    clip: {fileID: 8300000, guid: 9346fdc92a10df542a4965ebca4d9713, type: 3}
+    volume: 0.779
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ButtonPressSound
+    clip: {fileID: 8300000, guid: 5fa9365f26a50e040b4c5c202c8b8c6b, type: 3}
+    volume: 0.89
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ElevatorElectricZap
+    clip: {fileID: 8300000, guid: c9aa3576baa1db945a35b0c73e92948e, type: 3}
+    volume: 0.843
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ElevatorRunningSound
+    clip: {fileID: 8300000, guid: 1f76ccc3130eccc468f05036719b3be7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GeneratorLoop
+    clip: {fileID: 8300000, guid: 85fcb76de14a6794c8970249c23debb7, type: 3}
+    volume: 0.843
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: GeneratorStart
+    clip: {fileID: 8300000, guid: a4093847c9af7a3428405b416ba96812, type: 3}
+    volume: 0.843
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: LockCombination
+    clip: {fileID: 8300000, guid: ba1afe594a5629f499e46f5feea0d0ca, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UnlockSound
+    clip: {fileID: 8300000, guid: 0e73ed54ccf74274986c7c9139b04731, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MetalDoorSlam
+    clip: {fileID: 8300000, guid: 8b6a2d654a6d1c94f9c4b1996b1abd81, type: 3}
+    volume: 0.88
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &891627608
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,7 +5228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
