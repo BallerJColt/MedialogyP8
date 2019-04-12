@@ -2436,43 +2436,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 843874197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f20d992465492d47926fb72b499d255, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e42b6ea79d45546adf10ccea0e49b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
   - name: NoteUpdateSound
     clip: {fileID: 8300000, guid: 8da3958b246107640943d95879f950c4, type: 3}
-    volume: 1
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
   - name: NoteSwitchSound
     clip: {fileID: 8300000, guid: 8f86848df3e242246b4eb1603fe28b79, type: 3}
-    volume: 1
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
   - name: AmbientSound
     clip: {fileID: 8300000, guid: f5af034a64a991948abc981f4aed7414, type: 3}
-    volume: 0.779
-    pitch: 1
-    loop: 1
+    volume: 0
+    pitch: 0
+    loop: 0
     source: {fileID: 0}
   - name: FuseConnectSound
     clip: {fileID: 8300000, guid: 9346fdc92a10df542a4965ebca4d9713, type: 3}
-    volume: 0.779
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: ButtonPressSound
     clip: {fileID: 8300000, guid: 5fa9365f26a50e040b4c5c202c8b8c6b, type: 3}
-    volume: 0.89
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
   - name: ElevatorElectricZap
     clip: {fileID: 8300000, guid: c9aa3576baa1db945a35b0c73e92948e, type: 3}
-    volume: 0.843
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -2484,32 +2484,32 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: GeneratorLoop
     clip: {fileID: 8300000, guid: 85fcb76de14a6794c8970249c23debb7, type: 3}
-    volume: 0.843
-    pitch: 1
-    loop: 1
+    volume: 0
+    pitch: 0
+    loop: 0
     source: {fileID: 0}
   - name: GeneratorStart
     clip: {fileID: 8300000, guid: a4093847c9af7a3428405b416ba96812, type: 3}
-    volume: 0.843
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
   - name: LockCombination
     clip: {fileID: 8300000, guid: ba1afe594a5629f499e46f5feea0d0ca, type: 3}
-    volume: 1
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
   - name: UnlockSound
     clip: {fileID: 8300000, guid: 0e73ed54ccf74274986c7c9139b04731, type: 3}
-    volume: 1
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
   - name: MetalDoorSlam
     clip: {fileID: 8300000, guid: 8b6a2d654a6d1c94f9c4b1996b1abd81, type: 3}
-    volume: 0.88
-    pitch: 1
+    volume: 0
+    pitch: 0
     loop: 0
     source: {fileID: 0}
 --- !u!1 &891627608

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ElevatorBtn.cs" />
+     <Compile Include="Assets\Scripts\AudioManager.cs" />
      <Compile Include="Assets\Scripts\CameraAlignment.cs" />
      <Compile Include="Assets\Scripts\DummyScript.cs" />
      <Compile Include="Assets\Scripts\ElevatorMovement.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\Scripts\PortalPair.cs" />
      <Compile Include="Assets\Scripts\PortalPositionHelper.cs" />
      <Compile Include="Assets\Scripts\RoomGenerator.cs" />
+     <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\TeleportTrigger.cs" />
      <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />

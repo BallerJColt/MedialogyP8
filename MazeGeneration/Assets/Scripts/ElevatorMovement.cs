@@ -68,6 +68,7 @@ public class ElevatorMovement : MonoBehaviour
         goingUp = false;
         StopCoroutine("goingUp");
         goingDown = true;
+        GameObject.FindObjectOfType<AudioManager>().Play("ElevatorRunningSound");
         while (transform.position.y > finalElevatorHeight && goingDown)
         {
             transform.position = transform.position + elevatorVelocity * Time.fixedDeltaTime;
@@ -86,6 +87,7 @@ public class ElevatorMovement : MonoBehaviour
             goingDown = false;
             StopCoroutine("goingDown");
             goingUp = true;
+            GameObject.FindObjectOfType<AudioManager>().Play("ElevatorRunningSound");
             while (transform.position.y < 0 && goingUp)
             {
                 transform.position = transform.position - elevatorVelocity * Time.fixedDeltaTime;

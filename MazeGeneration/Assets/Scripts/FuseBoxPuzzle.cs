@@ -20,6 +20,8 @@ public class FuseBoxPuzzle : MonoBehaviour
     {
         connectedPlugs++;
 
+        GameObject.FindObjectOfType<AudioManager>().Play("FuseConnectSound");
+
         if (fusepuzzle.go.tag == fusepuzzle.sGo.tag)
         {
             correctPlugs++;
@@ -28,6 +30,7 @@ public class FuseBoxPuzzle : MonoBehaviour
         if (correctPlugs == 5)
         {
             gameObject.GetComponentInChildren<Light>().enabled = true;
+            GameObject.FindObjectOfType<AudioManager>().Play("ElevatorElectricZap");
         }
 
         Debug.Log(connectedPlugs + " Correct: " + correctPlugs);
