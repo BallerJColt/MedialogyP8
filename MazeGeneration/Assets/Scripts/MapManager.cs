@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour
     public TileInfo[] portalInfo;
     public MapInfo[] mapSequence;
 
-    void Start()
+    void Awake()
     {
         //3x3 is the minimum size
         if (mazeRows < 3)

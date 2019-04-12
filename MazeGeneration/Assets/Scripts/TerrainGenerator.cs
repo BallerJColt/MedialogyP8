@@ -18,7 +18,7 @@ namespace EventCallbacks
         public GameObject wallSegment;
         public GameObject woodPillar;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             GenerateTerrainEvent.RegisterListener(OnGenerateTerrain);
         }

@@ -127,4 +127,8 @@ public class TileInfo
     {
         return row + column + direction;
     }
+
+    public void PrintTile() {
+        Debug.Log("(" + row + ";" + column + ";" + direction + ")");
+    }
 }
