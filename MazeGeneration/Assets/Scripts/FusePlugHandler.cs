@@ -29,7 +29,7 @@ public class FusePlugHandler : MonoBehaviour
         inSocket = true;
         socketGoIn = other.gameObject;
 
-        transform.parent.GetComponent<Valve.VR.InteractionSystem.Hand>().DetachObject(gameObject);
+        //transform.parent.GetComponent<Valve.VR.InteractionSystem.Hand>().DetachObject(gameObject);
 
         gameObject.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
 
