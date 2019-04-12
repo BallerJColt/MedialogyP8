@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\ElevatorBtn.cs" />
      <Compile Include="Assets\Scripts\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\BasicController.cs" />
      <Compile Include="Assets\Scripts\CameraAlignment.cs" />
      <Compile Include="Assets\Scripts\DummyScript.cs" />
      <Compile Include="Assets\Scripts\ElevatorMovement.cs" />
@@ -73,42 +74,47 @@
      <Compile Include="Assets\Scripts\PortalGeneratorCaller.cs" />
      <Compile Include="Assets\Scripts\PortalPair.cs" />
      <Compile Include="Assets\Scripts\PortalPositionHelper.cs" />
+     <Compile Include="Assets\Scripts\PortalRenderController.cs" />
      <Compile Include="Assets\Scripts\RoomGenerator.cs" />
      <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\SteamVR_UnitySettingsWindow.cs" />
      <Compile Include="Assets\Scripts\SteamVR_UpdateModeEditor.cs" />
      <Compile Include="Assets\Scripts\SwitchEquipment.cs" />
+     <Compile Include="Assets\Scripts\Teleporter.cs" />
      <Compile Include="Assets\Scripts\TeleportTrigger.cs" />
      <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\TileInfo.cs" />
      <Compile Include="Assets\Scripts\TwinCamController.cs" />
      <Compile Include="Assets\Scripts\WallSegment.cs" />
+     <None Include="Assets\Shaders\PrevPortal.shader" />
+     <None Include="Assets\Shaders\DepthHack.shader" />
      <None Include="Assets\Shaders\TimeDeviceShader.shader" />
      <None Include="Assets\Shaders\PortalShad.shader" />
+     <None Include="Assets\Shaders\NextPortal.shader" />
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.EditorCoroutines.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.MemoryProfiler">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
  <Reference Include="Unity.MemoryProfiler.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -312,16 +318,16 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="Valve.Newtonsoft.Json">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+ <HintPath>C:/Users/Baller/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
