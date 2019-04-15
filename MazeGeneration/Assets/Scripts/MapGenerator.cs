@@ -32,6 +32,11 @@ public abstract class MapGenerator : MonoBehaviour
         }
         //Debug.Log(name + " initialized.");
     }
+    
+    //I added this for debug purposes, we can remove it when we have a floor texture
+    void Update() {
+        if(Input.GetKeyUp("b")) OpenAllDeadEnds();
+    }
 
     protected void GenerateIntArray()
     {
@@ -140,9 +145,29 @@ public abstract class MapGenerator : MonoBehaviour
             //Debug.Log("Error " + error);
         }
         while ((deadEnd.IsSamePosition(entrance) || deadEnd.IsInCorner() || deadEnd.IsPerpendicular()) && error < 30);
-        if(error >= 29)
-            Debug.Log("There were no suitable dead ends in "+ gameObject.name +", exiting to avoid infinite loop"); 
+        if (error >= 29)
+            Debug.Log("There were no suitable dead ends in " + gameObject.name + ", exiting to avoid infinite loop");
         return deadEnd;
+    }
+
+
+    //I added this for debug purposes, opens up all dead-ends on the floor so we can check if the portals are seamless
+    public void OpenAllDeadEnds()
+    {
+        for (int i = 0; i < mazeIntArray.GetLength(0); i++)
+        {
+            for (int j = 0; j < mazeIntArray.GetLength(1); j++)
+            {
+                if (mazeIntArray[i, j] == 1 || mazeIntArray[i, j] == 4)
+                {
+                    tileArray[i, j].SetTileID(5);
+                }
+                else if (mazeIntArray[i, j] == 2 || mazeIntArray[i, j] == 8)
+                {
+                    tileArray[i, j].SetTileID(10);
+                }
+            }
+        }
     }
 
     public abstract void Generate();

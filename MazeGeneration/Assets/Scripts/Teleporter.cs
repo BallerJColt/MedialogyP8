@@ -21,7 +21,7 @@ public class Teleporter : MonoBehaviour
             Vector3 colliderNoYAxis = new Vector3(colliderWorldPos.x, 0, colliderWorldPos.z);
             Vector3 renderPlaneNoYAxis = new Vector3(renderQuad.position.x, 0, renderQuad.position.z);
 
-            //move player
+            //offsets are static for some reason, we need to fix that
             if (Vector3.Magnitude(playerNoYAxis - renderPlaneNoYAxis) < Vector3.Magnitude(colliderNoYAxis - renderPlaneNoYAxis))
             {
                 Debug.Log(Vector3.Magnitude(playerNoYAxis - renderPlaneNoYAxis) + " lower than " + Vector3.Magnitude(colliderNoYAxis - renderPlaneNoYAxis));
@@ -29,7 +29,6 @@ public class Teleporter : MonoBehaviour
                 {
                     prController.TeleportPlayer(portalID + 1);
                     other.transform.root.Translate(6f, 0, 0, Space.World);
-                    Debug.Log("asd");
                 }
                 else
                 {
