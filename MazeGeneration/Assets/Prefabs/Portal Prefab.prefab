@@ -49,7 +49,7 @@ MonoBehaviour:
   isForwardTeleporter: 0
   portalID: 0
   renderQuad: {fileID: 1747615144528127520}
-  cullingQuad: {fileID: 1747615144567443643}
+  projectionQuad: {fileID: 1747615144567443643}
 --- !u!54 &7073501727968177394
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -168,8 +168,8 @@ GameObject:
   - component: {fileID: 1747615144567443643}
   - component: {fileID: 1747615144567443641}
   - component: {fileID: 1747615144567443642}
-  m_Layer: 10
-  m_Name: Culling Quad
+  m_Layer: 0
+  m_Name: Camera Projection Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 1747615144567443644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.5, y: 3, z: 1.5}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 1747615143729970027}
   m_RootOrder: 1
@@ -204,7 +204,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747615144567443644}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

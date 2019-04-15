@@ -42,8 +42,8 @@ MonoBehaviour:
     y: 550
     width: 319
     height: 397
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 104, y: 124}
+  m_MaxSize: {x: 4004, y: 4024}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -94,7 +94,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: BallerLaptopLayout
+  m_LastLoadedLayoutName: 
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 622}
   m_MaxSize: {x: 18008, y: 18072}
   vertical: 0
-  controlID: 406
+  controlID: 30
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 448}
   m_MaxSize: {x: 4002, y: 8048}
   vertical: 1
-  controlID: 504
+  controlID: 60
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -186,8 +186,8 @@ MonoBehaviour:
     y: 0
     width: 1184
     height: 495
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 224}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -212,8 +212,8 @@ MonoBehaviour:
     y: 495
     width: 1184
     height: 452
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 224}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 622}
   m_MaxSize: {x: 10004, y: 18072}
   vertical: 1
-  controlID: 388
+  controlID: 11
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -264,8 +264,8 @@ MonoBehaviour:
     y: 0
     width: 319
     height: 276
-  m_MinSize: {x: 204, y: 224}
-  m_MaxSize: {x: 4004, y: 4024}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -461,9 +461,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.025, y: 1, z: 0}
+    m_Target: {x: 10.538971, y: 1.7246094, z: 0.8952637}
     speed: 2
-    m_Value: {x: 1.025, y: 1, z: 0}
+    m_Value: {x: 10.538971, y: 1.7246094, z: 0.8952637}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -495,9 +495,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_Size:
-    m_Target: 5.237205
+    m_Target: 12.935365
     speed: 2
-    m_Value: 5.237205
+    m_Value: 12.935365
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -538,9 +538,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 205b0000
-      m_LastClickedID: 23328
-      m_ExpandedIDs: 4accf6ff64ccf6ff12fcf6ff367af7ff467af7ff867af7ff967af7ff9c7af7ff8a9bf8ff1226f9ff0c4ff9ff9250f9ffbcb6f9ffccb6f9ffdcb6f9ffecb6f9fffcb6f9ff42b8f9ff3cbff9ffc2c0f9ffcc03fcff7e33fcffe46afdff7a6bfdffc47cfdfff2abfdffe61cfeff3835feff3cf0feffd81cffffde1cfffff276fffff876ffffb0d2ffffd6fbffffd8110000e0110000ea11000006120000205b0000
+      m_SelectedIDs: c81b0000
+      m_LastClickedID: 7112
+      m_ExpandedIDs: 2673ffffd6fbffffc81b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -602,20 +602,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Baller\Documents\GitHub\MedialogyP8\MazeGeneration
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 18.000488}
-    m_SelectedIDs: b6530000
-    m_LastClickedID: 21430
-    m_ExpandedIDs: 00000000ca5000006c530000e6540000a2590000585a0000bc5a000000ca9a3b
+    m_SelectedIDs: 7a170000
+    m_LastClickedID: 6010
+    m_ExpandedIDs: 00000000680d0000921000008c120000d0180000ba190000341a000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -643,7 +643,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ca5000006c530000e6540000a2590000585a0000bc5a000000ca9a3b
+    m_ExpandedIDs: 00000000680d0000921000008c120000d0180000ba190000341a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -674,15 +674,15 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 00000000762c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: BasicController
-      m_OriginalName: BasicController
+      m_Name: Portal Prefab
+      m_OriginalName: Portal Prefab
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 29664
+      m_UserData: 5916
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 51.5}
+    m_ScrollPosition: {x: 0, y: 101}
     m_GridSize: 16
   m_DirectoriesAreaWidth: 159
 --- !u!114 &19

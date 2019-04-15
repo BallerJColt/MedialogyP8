@@ -224,19 +224,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14135e9dc8f71f341b32833c9d8c29dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousPortalCamera: {fileID: 1347709477}
-  nextPortalCamera: {fileID: 995948999}
+  previousPortalCameraLeftEye: {fileID: 0}
+  previousPortalCameraRightEye: {fileID: 1347709475}
+  nextPortalCameraLeftEye: {fileID: 0}
+  nextPortalCameraRightEye: {fileID: 995948997}
   portalPrefab: {fileID: 1747615143729970028, guid: 0e7682cb11c237641b9a0a8a9d979f36,
     type: 3}
+  isStereoscopic: 0
   mazeCount: 3
   currentMaze: 0
   cameraOffset: 0
   portalWidth: 0
   pillarOffset: 0.1
-  _prevHackQuad: {fileID: 0}
-  _nextHackQuad: {fileID: 0}
-  prevCullQuadArray: []
-  nextCullQuadArray: []
+  prevProjectionQuad: {fileID: 0}
+  nextProjectionQuad: {fileID: 0}
+  prevProjectionQuadArray: []
+  nextProjectionQuadArray: []
 --- !u!1 &777009145
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 995949000}
   - component: {fileID: 995948999}
+  - component: {fileID: 995949001}
   - component: {fileID: 995948998}
   m_Layer: 0
   m_Name: Next Maze Camera
@@ -449,14 +453,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &995948998
-AudioListener:
+--- !u!114 &995948998
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995948997}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6a4f6a8eac00244b3a16ee5512016c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectionScreen: {fileID: 0}
+  estimateViewFrustum: 1
+  setNearClipPlane: 0
+  minNearClipDistance: 0.0001
+  nearClipDistanceOffset: -0.01
 --- !u!20 &995948999
 Camera:
   m_ObjectHideFlags: 0
@@ -506,13 +519,28 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995948997}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.8667555, y: -0.3671875, z: -1.2346431}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.35, y: 1, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &995949001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995948997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed759c47ee799d4c9792212da6dea89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 5
+  isStereoscopic: 0
+  isRightEye: 0
 --- !u!1 &1266227007
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +553,7 @@ GameObject:
   - component: {fileID: 1266227009}
   - component: {fileID: 1266227008}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -605,6 +633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1347709478}
   - component: {fileID: 1347709477}
+  - component: {fileID: 1347709479}
   - component: {fileID: 1347709476}
   m_Layer: 0
   m_Name: Previous Maze Camera
@@ -613,14 +642,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1347709476
-AudioListener:
+--- !u!114 &1347709476
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347709475}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6a4f6a8eac00244b3a16ee5512016c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectionScreen: {fileID: 0}
+  estimateViewFrustum: 1
+  setNearClipPlane: 0
+  minNearClipDistance: 0.0001
+  nearClipDistanceOffset: -0.01
 --- !u!20 &1347709477
 Camera:
   m_ObjectHideFlags: 0
@@ -670,13 +708,28 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347709475}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.8667555, y: -0.3671875, z: -1.2346431}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.65, y: 1, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1347709479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347709475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed759c47ee799d4c9792212da6dea89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: -5
+  isStereoscopic: 0
+  isRightEye: 0
 --- !u!1 &1604854433
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +766,7 @@ MonoBehaviour:
   mazeCount: 5
   mazeRows: 5
   mazeCols: 5
-  tileWidth: 0.8
+  tileWidth: 1
   wallWidth: 0.5
   startRow: 0
   startCol: 0

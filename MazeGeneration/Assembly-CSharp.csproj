@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\DummyScript.cs" />
      <Compile Include="Assets\Scripts\ElevatorMovement.cs" />
      <Compile Include="Assets\Scripts\Event.cs" />
+     <Compile Include="Assets\Scripts\FollowCam.cs" />
      <Compile Include="Assets\Scripts\FuseBoxPuzzle.cs" />
      <Compile Include="Assets\Scripts\FusePlugHandler.cs" />
      <Compile Include="Assets\Scripts\HallwayTeleporter.cs" />
@@ -69,6 +70,7 @@
      <Compile Include="Assets\Scripts\MazeGenerator.cs" />
      <Compile Include="Assets\Scripts\MineLights.cs" />
      <Compile Include="Assets\Scripts\NotePadScript.cs" />
+     <Compile Include="Assets\Scripts\ObliqueProjectionToQuad.cs" />
      <Compile Include="Assets\Scripts\OffsetLensCam.cs" />
      <Compile Include="Assets\Scripts\PortalGenerator.cs" />
      <Compile Include="Assets\Scripts\PortalGeneratorCaller.cs" />
