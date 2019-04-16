@@ -22,14 +22,14 @@ public static class PortalPositionHelper
 
     private static List<TileInfo> CornerShutoffList = new List<TileInfo>
     {
-        new TileInfo(0,1, 1),
-        new TileInfo(0, maxCols - 2, 3),
-        new TileInfo(maxRows - 2, 0, 0),
-        new TileInfo(maxRows - 1, maxCols - 2, 3),
-        new TileInfo(1, 0, 2),
-        new TileInfo(1, maxCols - 1, 2),
-        new TileInfo(maxRows - 1, 1, 1),
-        new TileInfo(maxRows - 2, maxCols - 1, 0),
+        new TileInfo(0,1, -1),
+        new TileInfo(0, maxCols - 2, -1),
+        new TileInfo(maxRows - 2, 0, -1),
+        new TileInfo(maxRows - 1, maxCols - 2, -1),
+        new TileInfo(1, 0, -1),
+        new TileInfo(1, maxCols - 1, -1),
+        new TileInfo(maxRows - 1, 1, -1),
+        new TileInfo(maxRows - 2, maxCols - 1, -1),
     };
 
     private static string GetDirectionArray(int row, int col)

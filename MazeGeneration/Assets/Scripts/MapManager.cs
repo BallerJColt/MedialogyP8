@@ -146,16 +146,10 @@ public class MapManager : MonoBehaviour
 
                 //mapSequence[i].startSeed.direction = PortalPositionHelper.GetRandomPortalExit(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, mapSequence[i - 1].endSeed.direction);
             }
-            if ((int)mapSequence[i].mapType == 1)
+            /* if ((int)mapSequence[i].mapType == 1)
             {
                 Debug.Log("Can't do rooms with this method yet...");
-                //if the starting seed is not next to a corner
-                if (PortalPositionHelper.GetAllCornerTiles().Contains(new TileInfo(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, -1)) == false)
-                {
-                    //set start seed to top left corner going right if startseed doesn't correspond to roomgen rules
-                    //Should only really happen in the first room
-                    mapSequence[i].startSeed = new TileInfo(0, 1, 1);
-                }
+                
             }
             else
             {
@@ -165,7 +159,7 @@ public class MapManager : MonoBehaviour
                     Debug.Log("Can't do rooms with this method yet...");
                     //i++;
                 }
-            }
+            } */
             if (i + 1 < mapSequence.Length)
             {
                 mapSequence[i].isEndSeeded = true;
@@ -223,7 +217,7 @@ public class MapManager : MonoBehaviour
             Debug.Log("Start (" + startCoord.row + ";" + startCoord.column + ") Shuts off corners.");
             foreach (TileInfo t in shutoffCorners)
             {
-                if (possibleCoordinates.Remove(new TileInfo(t.row,t.column,-1)))
+                if (possibleCoordinates.Remove(t))
                     Debug.Log("(" + t.row + ";" + t.column + ") Removed.");
             }
         }
