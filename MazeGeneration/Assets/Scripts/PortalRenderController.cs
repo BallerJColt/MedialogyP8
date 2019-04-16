@@ -37,6 +37,7 @@ public class PortalRenderController : MonoBehaviour
 
         InitializePortals();
         SetProjectionQuads();
+        OffsetCameras();
     }
 
     void InitializePortals()
@@ -103,6 +104,22 @@ public class PortalRenderController : MonoBehaviour
             SetProjectionQuads();
             //Camera.main.transform.Translate(cameraOffset, 0, 0, Space.World);
         }
+    }
+
+    void OffsetCameras()
+    {
+        previousPortalCameraLeftEye.GetComponent<FollowCam>().SetOffset(-cameraOffset);
+        previousPortalCameraRightEye.GetComponent<FollowCam>().SetOffset(-cameraOffset);
+        nextPortalCameraLeftEye.GetComponent<FollowCam>().SetOffset(cameraOffset);
+        nextPortalCameraRightEye.GetComponent<FollowCam>().SetOffset(cameraOffset);
+        if (isStereoscopic)
+        {
+            previousPortalCameraLeftEye.GetComponent<FollowCam>().isStereoscopic = true;
+            previousPortalCameraRightEye.GetComponent<FollowCam>().isStereoscopic = true;
+            nextPortalCameraLeftEye.GetComponent<FollowCam>().isStereoscopic = true;
+            nextPortalCameraRightEye.GetComponent<FollowCam>().isStereoscopic = true;
+        }
+
     }
 
     void SetProjectionQuads()

@@ -7,10 +7,8 @@ public abstract class MapGenerator : MonoBehaviour
     public int mazeRows;
     public int mazeColumns;
     public float tileWidth;
-    public float wallWidth;
     public GameObject tilePrefab;
     public Tile[,] tileArray;
-    bool matCheck = false;
     public int[,] mazeIntArray;
 
     public void Initialize()
@@ -58,12 +56,11 @@ public abstract class MapGenerator : MonoBehaviour
         }
     }
 
-    public void SetDimensions(int rows, int cols, float width, float wWidth)
+    public void SetDimensions(int rows, int cols, float width)
     {
         mazeRows = rows;
         mazeColumns = cols;
         tileWidth = width;
-        wallWidth = wWidth;
     }
     public List<int[]> GetDeadEndList()
     {

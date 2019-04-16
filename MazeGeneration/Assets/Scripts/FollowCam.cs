@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class FollowCam : MonoBehaviour
 {
     public float offset;
     public bool isStereoscopic;
     public bool isRightEye;
+
+    void Awake()
+    {
+        if (!isStereoscopic && !isRightEye)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 
     void LateUpdate()
     {
@@ -33,7 +41,7 @@ public class FollowCam : MonoBehaviour
         transform.rotation = Camera.main.transform.rotation;
     }
 
-    void SetOffset(float o)
+    public void SetOffset(float o)
     {
         offset = o;
     }

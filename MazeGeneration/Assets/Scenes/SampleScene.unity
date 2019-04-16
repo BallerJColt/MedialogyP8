@@ -237,8 +237,6 @@ MonoBehaviour:
   cameraOffset: 0
   portalWidth: 1
   pillarOffset: 0.1
-  prevProjectionQuad: {fileID: 0}
-  nextProjectionQuad: {fileID: 0}
   prevProjectionQuadArray: []
   nextProjectionQuadArray: []
 --- !u!1 &777009145
@@ -871,14 +869,14 @@ MonoBehaviour:
   - {fileID: 6700716075161373839, guid: 22bc3d0eaee86bb428496bf988489ae9, type: 3}
   - {fileID: 2500389178016090726, guid: 3767eab88ce28c4448bbd26f359914bc, type: 3}
   playerHead: {fileID: 777009149}
-  mazeCount: 5
-  mazeRows: 5
-  mazeCols: 5
+  mazeRows: 3
+  mazeCols: 3
   tileWidth: 0.8
-  wallWidth: 0.5
   startRow: 0
   startCol: 0
   playAreaSize: {x: 4, y: 0, z: 4}
+  isMapSeeded: 0
+  randomGeneratorSeed: 1
   portalGenerationLocation: 1
   portalInfo: []
   mapSequence:
@@ -994,7 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed759c47ee799d4c9792212da6dea89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: -5
+  offset: -3.4
   isStereoscopic: 0
   isRightEye: 0
 --- !u!20 &1813671426
@@ -1047,7 +1045,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813671423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.65, y: 1, z: -0.1}
+  m_LocalPosition: {x: -4.05, y: 1, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

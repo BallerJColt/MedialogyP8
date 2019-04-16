@@ -6,11 +6,10 @@ public class MapManager : MonoBehaviour
 {
     public GameObject[] mazeGeneratorPrefab;
     public Transform playerHead;
-    public int mazeCount;
+
     public int mazeRows;
     public int mazeCols;
     public float tileWidth = 1f;
-    public float wallWidth = 0f;
     public int startRow;
     public int startCol;
 
@@ -20,17 +19,23 @@ public class MapManager : MonoBehaviour
         Everywhere,
         Hallways
     }
+    private int minMazeSize;
+    public bool isMapSeeded;
+    public int randomGeneratorSeed;
     public PortalGenerationType portalGenerationLocation;
     public TileInfo[] portalInfo;
     public MapInfo[] mapSequence;
 
     void Awake()
     {
-        //3x3 is the minimum size
-        if (mazeRows < 3)
-            mazeRows = 3;
-        if (mazeCols < 3)
-            mazeCols = 3;
+        if (isMapSeeded)
+            Random.InitState(randomGeneratorSeed);
+        minMazeSize = SetMinMazeSize();
+        //3x3 is the minimum size, 5x5 if there are rooms as well.
+        if (mazeRows < minMazeSize)
+            mazeRows = minMazeSize;
+        if (mazeCols < minMazeSize)
+            mazeCols = minMazeSize;
 
         if (mapSequence.Length > 1)
             portalInfo = new TileInfo[mapSequence.Length - 1];
@@ -38,7 +43,7 @@ public class MapManager : MonoBehaviour
         playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
-        if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols)
+        if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols || isMapSeeded) //if map is seeded maze starts from 0;0
         {
             startRow = 0;
             startCol = 0;
@@ -76,7 +81,7 @@ public class MapManager : MonoBehaviour
             tempMap.transform.parent = transform;
 
             MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
-            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth);
             mapScript.Initialize();
 
             //calculate start seed
@@ -129,7 +134,7 @@ public class MapManager : MonoBehaviour
             tempMap.transform.parent = transform;
 
             MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
-            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth);
             mapScript.Initialize();
             Debug.Log("Maze " + i + " Initialized!");
 
@@ -144,16 +149,23 @@ public class MapManager : MonoBehaviour
             if ((int)mapSequence[i].mapType == 1)
             {
                 Debug.Log("Can't do rooms with this method yet...");
-                continue;
+                //if the starting seed is not next to a corner
+                if (PortalPositionHelper.GetAllCornerTiles().Contains(new TileInfo(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, -1)) == false)
+                {
+                    //set start seed to top left corner going right if startseed doesn't correspond to roomgen rules
+                    //Should only really happen in the first room
+                    mapSequence[i].startSeed = new TileInfo(0, 1, 1);
+                }
             }
-            /* else
+            else
             {
+                //if the current is maze and next is room we need to set the end seed
                 if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
                 {
                     Debug.Log("Can't do rooms with this method yet...");
                     //i++;
                 }
-            } */
+            }
             if (i + 1 < mapSequence.Length)
             {
                 mapSequence[i].isEndSeeded = true;
@@ -211,7 +223,7 @@ public class MapManager : MonoBehaviour
             Debug.Log("Start (" + startCoord.row + ";" + startCoord.column + ") Shuts off corners.");
             foreach (TileInfo t in shutoffCorners)
             {
-                if (possibleCoordinates.Remove(t))
+                if (possibleCoordinates.Remove(new TileInfo(t.row,t.column,-1)))
                     Debug.Log("(" + t.row + ";" + t.column + ") Removed.");
             }
         }
@@ -306,5 +318,15 @@ public class MapManager : MonoBehaviour
         row = Mathf.RoundToInt(Mathf.Abs((playerHead.position.z - (playAreaSize.z / 2f - tileWidth / 2f)) / tileWidth));
 
         return;
+    }
+
+    int SetMinMazeSize()
+    {
+        foreach (MapInfo m in mapSequence)
+        {
+            if ((int)m.mapType == 1)
+                return 5;
+        }
+        return 3;
     }
 }

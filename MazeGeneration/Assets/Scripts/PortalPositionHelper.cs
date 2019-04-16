@@ -22,14 +22,14 @@ public static class PortalPositionHelper
 
     private static List<TileInfo> CornerShutoffList = new List<TileInfo>
     {
-        new TileInfo(0,1, -1),
-        new TileInfo(0, maxCols - 2, -1),
-        new TileInfo(maxRows - 2, 0, -1),
-        new TileInfo(maxRows - 1, maxCols - 2, -1),
-        new TileInfo(1, 0, -1),
-        new TileInfo(1, maxCols - 1, -1),
-        new TileInfo(maxRows - 1, 1, -1),
-        new TileInfo(maxRows - 2, maxCols - 1, -1),
+        new TileInfo(0,1, 1),
+        new TileInfo(0, maxCols - 2, 3),
+        new TileInfo(maxRows - 2, 0, 0),
+        new TileInfo(maxRows - 1, maxCols - 2, 3),
+        new TileInfo(1, 0, 2),
+        new TileInfo(1, maxCols - 1, 2),
+        new TileInfo(maxRows - 1, 1, 1),
+        new TileInfo(maxRows - 2, maxCols - 1, 0),
     };
 
     private static string GetDirectionArray(int row, int col)
@@ -95,17 +95,14 @@ public static class PortalPositionHelper
         return GetRandomArrayElementWithFlag(directionArray, direction);
     }
 
+    public static List<TileInfo> GetAllCornerTiles() {
+        return CornerShutoffList;
+    }
+
     public static List<TileInfo> GetShutoffList(TileInfo tile)
     {
         List<TileInfo> shutoffIndexes = new List<TileInfo>();
-        /* foreach (TileInfo t in CornerShutoffList)
-        {
-            if (t.IsSamePosition(tile))
-            {
-                int idx = (CornerShutoffList.IndexOf(t) + 4) % 8;
-                shutoffIndexes.Add(CornerShutoffList[idx]);
-            }
-        } */
+        
         for (int i = 0; i < CornerShutoffList.Count; i++)
         {
             if (CornerShutoffList[i].IsSamePosition(tile))
