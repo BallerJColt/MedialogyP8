@@ -252,7 +252,6 @@ GameObject:
   - component: {fileID: 777009147}
   - component: {fileID: 777009146}
   - component: {fileID: 777009150}
-  - component: {fileID: 777009152}
   - component: {fileID: 777009151}
   m_Layer: 0
   m_Name: Cylinder
@@ -360,7 +359,7 @@ CharacterController:
   m_GameObject: {fileID: 777009145}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.50000006
@@ -369,18 +368,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &777009152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777009145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15d9f9a6f872e1348a6b1e7848459801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &970162661
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,37 +856,17 @@ MonoBehaviour:
   - {fileID: 6700716075161373839, guid: 22bc3d0eaee86bb428496bf988489ae9, type: 3}
   - {fileID: 2500389178016090726, guid: 3767eab88ce28c4448bbd26f359914bc, type: 3}
   playerHead: {fileID: 777009149}
-  mazeRows: 3
-  mazeCols: 3
+  mazeRows: 5
+  mazeCols: 5
   tileWidth: 0.8
   startRow: 0
   startCol: 0
   playAreaSize: {x: 4, y: 0, z: 4}
   isMapSeeded: 0
-  randomGeneratorSeed: 1
+  randomGeneratorSeed: 0
   portalGenerationLocation: 1
   portalInfo: []
   mapSequence:
-  - mapType: 0
-    isEndSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
-  - mapType: 0
-    isEndSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
   - mapType: 0
     isEndSeeded: 0
     startSeed:

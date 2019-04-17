@@ -96,7 +96,7 @@ public static class PortalPositionHelper
     }
 
     public static List<TileInfo> GetAllCornerTiles() {
-        return CornerShutoffList;
+        return new List<TileInfo>(CornerShutoffList);
     }
 
     public static List<TileInfo> GetShutoffList(TileInfo tile)
