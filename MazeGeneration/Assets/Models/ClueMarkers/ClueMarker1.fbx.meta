@@ -1,22 +1,15 @@
 fileFormatVersion: 2
-guid: 1ccb68f6e91ce7544998c4250c135cbf
+guid: bc744033ed348fa4f9065b349886f0f2
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Frame
-    100002: PortalLens
-    100004: //RootNode
-    400000: Frame
-    400002: PortalLens
-    400004: //RootNode
-    2100000: TimeFrameMat
-    2100002: lambert1
-    2300000: Frame
-    2300002: PortalLens
-    3300000: Frame
-    3300002: PortalLens
-    4300000: Frame
-    4300002: PortalLens
+    100000: //RootNode
+    400000: //RootNode
+    2100000: clueNumMat
+    2100002: clueSidesMat
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: ClueMesh
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -48,7 +41,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -68,7 +61,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:

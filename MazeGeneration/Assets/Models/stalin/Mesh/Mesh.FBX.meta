@@ -1,76 +1,15 @@
 fileFormatVersion: 2
-guid: 220fbb3759643194ab63fdce3be9fc48
+guid: 032dc3d9079190948a8325a4a9e0ab21
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Arms
-    100002: Bank_Safe
-    100004: Bank_Safe_Door
-    100006: Bank_Safe_Jt
-    100008: Bank_Safe_Main
-    100010: Bank_Safe_Sh
-    100012: Bars
-    100014: Floor
-    100016: Hand
-    100018: Knob
-    100020: Lock
-    100022: Rubber
-    100024: //RootNode
-    400000: Arms
-    400002: Bank_Safe
-    400004: Bank_Safe_Door
-    400006: Bank_Safe_Jt
-    400008: Bank_Safe_Main
-    400010: Bank_Safe_Sh
-    400012: Bars
-    400014: Floor
-    400016: Hand
-    400018: Knob
-    400020: Lock
-    400022: Rubber
-    400024: //RootNode
-    2100000: Safe_Mat
-    2300000: Arms
-    2300002: Bank_Safe_Door
-    2300004: Bank_Safe_Jt
-    2300006: Bank_Safe_Main
-    2300008: Bank_Safe_Sh
-    2300010: Bars
-    2300012: Hand
-    2300014: Knob
-    2300016: Lock
-    2300018: Rubber
-    3300000: Arms
-    3300002: Bank_Safe_Door
-    3300004: Bank_Safe_Jt
-    3300006: Bank_Safe_Main
-    3300008: Bank_Safe_Sh
-    3300010: Bars
-    3300012: Hand
-    3300014: Knob
-    3300016: Lock
-    3300018: Rubber
-    4300000: Bank_Safe_Main
-    4300002: Bank_Safe_Sh
-    4300004: Bank_Safe_Jt
-    4300006: Bank_Safe_Door
-    4300008: Bars
-    4300010: Lock
-    4300012: Knob
-    4300014: Rubber
-    4300016: Hand
-    4300018: Arms
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Safe_Mat
-    second: {fileID: 2100000, guid: 25ac0248332de3e4ba8ffbaf92cb1d61, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: TexturesCom_MetalScratches0082_2_seamless_S
-    second: {fileID: 2800000, guid: fa8ae9f958e821b46847b903ce1b4d87, type: 3}
+    100000: //RootNode
+    400000: //RootNode
+    2100000: 03 - Default
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Stalin_mesh
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
