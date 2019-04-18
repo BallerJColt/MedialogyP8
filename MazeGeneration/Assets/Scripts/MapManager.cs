@@ -6,11 +6,10 @@ public class MapManager : MonoBehaviour
 {
     public GameObject[] mazeGeneratorPrefab;
     public Transform playerHead;
-    public int mazeCount;
+
     public int mazeRows;
     public int mazeCols;
     public float tileWidth = 1f;
-    public float wallWidth = 0f;
     public int startRow;
     public int startCol;
 
@@ -20,17 +19,31 @@ public class MapManager : MonoBehaviour
         Everywhere,
         Hallways
     }
+    private int minMazeSize;
+    public bool isMapSeeded;
+    public int randomGeneratorSeed;
     public PortalGenerationType portalGenerationLocation;
     public TileInfo[] portalInfo;
     public MapInfo[] mapSequence;
 
+    /*
+    *   IF YOU ADD ROOMS, THEY HAVE TO ALTERNATE WITH MAZES!!!
+    *   IF YOU ADD ROOMS, THEY HAVE TO ALTERNATE WITH MAZES!!!
+    *   IF YOU ADD ROOMS, THEY HAVE TO ALTERNATE WITH MAZES!!!
+    *   IF YOU ADD ROOMS, THEY HAVE TO ALTERNATE WITH MAZES!!!
+    *   IF YOU ADD ROOMS, THEY HAVE TO ALTERNATE WITH MAZES!!!
+     */
+
     void Awake()
     {
-        //3x3 is the minimum size
-        if (mazeRows < 3)
-            mazeRows = 3;
-        if (mazeCols < 3)
-            mazeCols = 3;
+        if (isMapSeeded)
+            Random.InitState(randomGeneratorSeed);
+        minMazeSize = SetMinMazeSize();
+        //3x3 is the minimum size, 5x5 if there are rooms as well.
+        if (mazeRows < minMazeSize)
+            mazeRows = minMazeSize;
+        if (mazeCols < minMazeSize)
+            mazeCols = minMazeSize;
 
         if (mapSequence.Length > 1)
             portalInfo = new TileInfo[mapSequence.Length - 1];
@@ -38,7 +51,7 @@ public class MapManager : MonoBehaviour
         playAreaSize = GetCameraRigSize();
         GetStartSeedFromPlayerPosition(out startCol, out startRow);
 
-        if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols)
+        if (startRow < 0 || startRow >= mazeRows || startCol < 0 || startCol >= mazeCols || isMapSeeded) //if map is seeded maze starts from 0;0
         {
             startRow = 0;
             startCol = 0;
@@ -59,6 +72,12 @@ public class MapManager : MonoBehaviour
         //maybe add script to find player head so we don't have to drag it in
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp("n"))
+            GenerateRandomRoomDeadEnd(new TileInfo(0, 0, 0));
+    }
+
     void GenerateMapSequence()
     {
         if (mapSequence.Length > 0)
@@ -76,7 +95,7 @@ public class MapManager : MonoBehaviour
             tempMap.transform.parent = transform;
 
             MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
-            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth);
             mapScript.Initialize();
 
             //calculate start seed
@@ -129,7 +148,7 @@ public class MapManager : MonoBehaviour
             tempMap.transform.parent = transform;
 
             MapGenerator mapScript = tempMap.GetComponent<MapGenerator>();
-            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth, wallWidth);
+            mapScript.SetDimensions(mazeRows, mazeCols, tileWidth);
             mapScript.Initialize();
             Debug.Log("Maze " + i + " Initialized!");
 
@@ -143,11 +162,17 @@ public class MapManager : MonoBehaviour
             }
             if ((int)mapSequence[i].mapType == 1)
             {
-                Debug.Log("Can't do rooms with this method yet...");
-                continue;
+                TileInfo startNoDir = new TileInfo(mapSequence[i].startSeed.row, mapSequence[i].startSeed.column, -1);
+                List<TileInfo> possibleStarts = PortalPositionHelper.GetAllCornerTiles();
+                if (possibleStarts.Contains(startNoDir) == false)
+                {
+                    Debug.Log("Start seed not possible for rooms, generating room at (0,1,1)");
+                    mapSequence[i].startSeed = new TileInfo(0, 1, 1);
+                }
             }
-            /* else
+            /*else
             {
+                //if the current is maze and next is room we need to set the end seed
                 if (i + 1 < mapSequence.Length && (int)mapSequence[i + 1].mapType == 1) //Change this so we can use the enum
                 {
                     Debug.Log("Can't do rooms with this method yet...");
@@ -158,11 +183,16 @@ public class MapManager : MonoBehaviour
             {
                 mapSequence[i].isEndSeeded = true;
                 Debug.Log("Generating End Seed For Maze " + i);
-                mapSequence[i].endSeed = GenerateRandomHallwayDeadEnd(mapSequence[i].startSeed);
+                if ((int)mapSequence[i + 1].mapType == 1)
+                    mapSequence[i].endSeed = GenerateRandomRoomDeadEnd(mapSequence[i].startSeed);
+                else
+                    mapSequence[i].endSeed = GenerateRandomHallwayDeadEnd(mapSequence[i].startSeed);
             }
             mapScript.Generate(mapSequence[i]);
             //if (mapSequence[i].isEndSeeded == false)
-            mapSequence[i].endSeed = mapScript.GetRandomDeadEndHallway(mapSequence[i].startSeed);
+            if (i + 1 < mapSequence.Length && mapSequence[i + 1].mapType == 0)
+                mapSequence[i].endSeed = mapScript.GetRandomDeadEndHallway(mapSequence[i].startSeed);
+
             if (i < portalInfo.Length)
                 portalInfo[i] = new TileInfo(mapSequence[i].endSeed);
         }
@@ -171,6 +201,80 @@ public class MapManager : MonoBehaviour
     int GenerateRandomStartDirection(int row, int col)
     {
         return PortalPositionHelper.GetRandomPortalExit(row, col);
+    }
+
+    TileInfo GenerateRandomRoomDeadEnd(TileInfo flag)
+    {
+        TileInfo startCoord = new TileInfo(flag.row, flag.column, -1);
+        List<TileInfo> possibleCoordinates = PortalPositionHelper.GetAllCornerTiles();
+
+        foreach (var v in possibleCoordinates)
+            v.PrintTile();
+
+        //Remoe Start
+        if (possibleCoordinates.Remove(startCoord))
+            Debug.Log("Removed Start (" + startCoord.row + ";" + startCoord.column + ")");
+
+        //Remove Lead-in
+        if (possibleCoordinates.Remove(flag.GetNeighbourCoord()))
+            Debug.Log("Removed Lead-in (" + flag.GetNeighbourCoord().row + ";" + flag.GetNeighbourCoord().column + ")");
+
+        //Remove corner shutoffs
+        List<TileInfo> shutoffCorners = PortalPositionHelper.GetShutoffList(startCoord);
+        if (shutoffCorners.Count > 0)
+        {
+            Debug.Log("Start (" + startCoord.row + ";" + startCoord.column + ") Shuts off corners.");
+            foreach (TileInfo t in shutoffCorners)
+            {
+                if (possibleCoordinates.Remove(t))
+                    Debug.Log("(" + t.row + ";" + t.column + ") Removed.");
+            }
+        }
+
+        // Generate directions
+        // These are the Dead-end directions in the maze befor the room so they have to point
+        // the opposite direction from where we want the room's entrance corridor to start!
+        List<TileInfo> possibleTiles = new List<TileInfo>();
+        foreach (TileInfo t in possibleCoordinates)
+        {
+            int dir = 0;
+            if (t.row == 0 || t.row == mazeRows - 1)
+            {
+                if (t.column < mazeCols / 2)
+                    dir = 3; //Left
+                else
+                    dir = 1; //Right
+            }
+            else if (t.column == 0 || t.column == mazeCols - 1)
+            {
+                if (t.row < mazeRows / 2)
+                    dir = 0; //Up
+                else
+                    dir = 2; //Down
+            }
+            possibleTiles.Add(new TileInfo(t.row, t.column, dir));
+        }
+
+        List<TileInfo> tilesToRemove = new List<TileInfo>();
+        foreach (TileInfo t in possibleTiles)
+        {
+            if (t.IsLeadingIntoEntrance(flag))
+            {
+                tilesToRemove.Add(t);
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") leads into entrance");
+            }
+        }
+
+        foreach (TileInfo t in tilesToRemove)
+        {
+            if (possibleTiles.Remove(t))
+            {
+                Debug.Log("Tile (" + t.row + ";" + t.column + ";" + t.direction + ") removed");
+            }
+        }
+
+        int idx = Random.Range(0, possibleTiles.Count);
+        return possibleTiles[idx];
     }
 
     TileInfo GenerateRandomHallwayDeadEnd(TileInfo flag)
@@ -234,7 +338,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        //Remove perpendicular
+        //Remove perpendicular and ones that lead into reserved tile next to entrance
         List<TileInfo> tilesToRemove = new List<TileInfo>();
         foreach (TileInfo t in possibleTiles)
         {
@@ -306,5 +410,15 @@ public class MapManager : MonoBehaviour
         row = Mathf.RoundToInt(Mathf.Abs((playerHead.position.z - (playAreaSize.z / 2f - tileWidth / 2f)) / tileWidth));
 
         return;
+    }
+
+    int SetMinMazeSize()
+    {
+        foreach (MapInfo m in mapSequence)
+        {
+            if ((int)m.mapType == 1)
+                return 5;
+        }
+        return 3;
     }
 }

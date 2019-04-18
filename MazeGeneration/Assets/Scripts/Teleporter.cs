@@ -7,39 +7,34 @@ public class Teleporter : MonoBehaviour
     public bool isForwardTeleporter;
     public int portalID;
     public Transform renderQuad;
-    public Transform cullingQuad;
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public Transform projectionQuad;
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.name + " Exited " + transform.name);
-        PortalRenderController prController = transform.parent.GetComponent<PortalRenderController>();
-        Vector3 playerNoYAxis = new Vector3(other.transform.position.x, 0, other.transform.position.z);
-        BoxCollider thisCollider = GetComponentInChildren<BoxCollider>();
-        Vector3 colliderWorldPos = transform.TransformPoint(thisCollider.center);
-        Vector3 colliderNoYAxis = new Vector3(colliderWorldPos.x, 0, colliderWorldPos.z);
-        Vector3 renderPlaneNoYAxis = new Vector3(renderQuad.position.x, 0, renderQuad.position.z);
-
-
-        //move player
-        if (Vector3.Magnitude(playerNoYAxis - renderPlaneNoYAxis) < Vector3.Magnitude(colliderNoYAxis - renderPlaneNoYAxis))
+        if (other.tag == "Player")
         {
-            Debug.Log(Vector3.Magnitude(playerNoYAxis - renderPlaneNoYAxis) + " lower than " + Vector3.Magnitude(colliderNoYAxis - renderPlaneNoYAxis));
-            if (isForwardTeleporter)
+            Debug.Log(other.name + " Exited " + transform.name);
+            PortalRenderController prController = transform.parent.GetComponent<PortalRenderController>();
+            Vector3 playerNoYAxis = new Vector3(other.transform.position.x, 0, other.transform.position.z);
+            BoxCollider thisCollider = GetComponentInChildren<BoxCollider>();
+            Vector3 colliderWorldPos = transform.TransformPoint(thisCollider.center);
+            Vector3 colliderNoYAxis = new Vector3(colliderWorldPos.x, 0, colliderWorldPos.z);
+            Vector3 renderPlaneNoYAxis = new Vector3(renderQuad.position.x, 0, renderQuad.position.z);
+
+            //offsets are static for some reason, we need to fix that
+            if (Vector3.Magnitude(playerNoYAxis - renderPlaneNoYAxis) < Vector3.Magnitude(colliderNoYAxis - renderPlaneNoYAxis))
             {
-                prController.TeleportPlayer(portalID + 1);
-                other.transform.Translate(6f,0,0,Space.World);
-                Debug.Log("asd");
-            }
-            else
-            {
-                prController.TeleportPlayer(portalID - 1);
-                other.transform.Translate(-6f,0,0,Space.World);
+                Debug.Log(Vector3.Magnitude(playerNoYAxis - renderPlaneNoYAxis) + " lower than " + Vector3.Magnitude(colliderNoYAxis - renderPlaneNoYAxis));
+                if (isForwardTeleporter)
+                {
+                    prController.TeleportPlayer(portalID + 1);
+                    other.transform.root.Translate(6f, 0, 0, Space.World);
+                }
+                else
+                {
+                    prController.TeleportPlayer(portalID - 1);
+                    other.transform.root.Translate(-6f, 0, 0, Space.World);
+                }
             }
         }
         //advance culling mask array

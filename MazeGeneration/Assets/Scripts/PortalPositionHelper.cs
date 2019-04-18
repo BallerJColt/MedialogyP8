@@ -95,17 +95,14 @@ public static class PortalPositionHelper
         return GetRandomArrayElementWithFlag(directionArray, direction);
     }
 
+    public static List<TileInfo> GetAllCornerTiles() {
+        return new List<TileInfo>(CornerShutoffList);
+    }
+
     public static List<TileInfo> GetShutoffList(TileInfo tile)
     {
         List<TileInfo> shutoffIndexes = new List<TileInfo>();
-        /* foreach (TileInfo t in CornerShutoffList)
-        {
-            if (t.IsSamePosition(tile))
-            {
-                int idx = (CornerShutoffList.IndexOf(t) + 4) % 8;
-                shutoffIndexes.Add(CornerShutoffList[idx]);
-            }
-        } */
+        
         for (int i = 0; i < CornerShutoffList.Count; i++)
         {
             if (CornerShutoffList[i].IsSamePosition(tile))
