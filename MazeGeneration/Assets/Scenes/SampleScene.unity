@@ -877,7 +877,7 @@ MonoBehaviour:
       row: 0
       column: 0
       direction: 0
-  - mapType: 0
+  - mapType: 1
     isEndSeeded: 0
     startSeed:
       row: 0

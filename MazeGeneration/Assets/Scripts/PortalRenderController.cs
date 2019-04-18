@@ -65,6 +65,7 @@ public class PortalRenderController : MonoBehaviour
             tempPortal.transform.parent = transform;
             tempScript.portalID = i;
             tempScript.isForwardTeleporter = true;
+            tempScript.cameraOffset = cameraOffset;
             nextProjectionQuadArray[i] = tempScript.projectionQuad.gameObject;
             tempScript.renderQuad.GetComponent<Renderer>().material = Resources.Load("Materials/Next" + (isStereoscopic ? "Stereo" : "Mono")) as Material;
 
@@ -88,6 +89,7 @@ public class PortalRenderController : MonoBehaviour
             tempPortal.transform.parent = transform;
             tempScript.portalID = i;
             tempScript.isForwardTeleporter = false;
+            tempScript.cameraOffset = cameraOffset;
             prevProjectionQuadArray[i] = tempScript.projectionQuad.gameObject;
             tempScript.renderQuad.GetComponent<Renderer>().material = Resources.Load("Materials/Prev" + (isStereoscopic ? "Stereo" : "Mono")) as Material;
         }
