@@ -72,12 +72,6 @@ public class MapManager : MonoBehaviour
         //maybe add script to find player head so we don't have to drag it in
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyUp("n"))
-            GenerateRandomRoomDeadEnd(new TileInfo(0, 0, 0));
-    }
-
     void GenerateMapSequence()
     {
         if (mapSequence.Length > 0)
