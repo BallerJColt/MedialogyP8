@@ -13,14 +13,16 @@ public class SwitchEquipment : MonoBehaviour
     Transform clipBoardPos;
     Transform timeDevicePos;
     public SteamVR_Action_Boolean triggerClick;
+    bool triggerPressed;
     public SteamVR_Action_Boolean touchPadClick;
+    bool touchPadPressed;
     public SteamVR_Input_Sources inputSource;
 
     public SwitchEquipment otherSwitcher;
 
     int currentEquipmentIndex;
 
-    public string currentEquipmentName;
+    string currentEquipmentName;
 
     // Start is called before the first frame update
     void Start()
@@ -33,43 +35,53 @@ public class SwitchEquipment : MonoBehaviour
         if(gameObject.name == "LeftHand")
         {
             AddEquipment("EmptyLeft");
-            SwitchToSpecificEquipment("EmptyLeft");
         }
         else if (gameObject.name == "RightHand")
         {
             AddEquipment("EmptyRight");
-            SwitchToSpecificEquipment("EmptyRight");
         }
-        //AddEquipment("TimeDevice");
-        //AddEquipment("ClipBoard");
-
         //GetAllEquipment();
-        GetEquipmentPositions(); // check if it is needed
+        //GetEquipmentPositions(); // check if it is needed
 
         SwitchToSpecificEquipment("TimeDevice");
     }
     void Update()
     {
-
-        if (Input.GetKeyDown("m") && gameObject.name == "LeftHand")
+        if (!otherSwitcher)
         {
-            AddEquipment("TimeDevice");
-            SwitchToSpecificEquipment("TimeDevice");
+            string otherName;
+            if (gameObject.name == "Hand1")
+            {
+                otherName = "Hand2";
+            }
+            else
+            {
+                otherName = "Hand1";
+            }
+            if (GameObject.Find(otherName) != null)
+            {
+                otherSwitcher = GameObject.Find(otherName).GetComponent<SwitchEquipment>();
+            }
+
         }
 
         //if (hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) && currentEquipmentName == "NoteBook")
-        if (triggerClick.GetStateDown(inputSource) && currentEquipmentName == "ClipBoard")
+        if (triggerClick.GetState(inputSource) && currentEquipmentName == "ClipBoard")
+
         {
-            
             FindObjectOfType<AudioManager>().Play("NoteSwitchSound");
             notePadScript.NotepadSwitchPage();
         }
-        if (touchPadClick.GetStateDown(inputSource))
+        if (touchPadClick.GetState(inputSource))
         {
-            Debug.Log("switch equipment");   
             SwitchToNextEquipment();
         }
-        positionEquipment(equipments[currentEquipmentIndex]);
+
+
+        //if (hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            SwitchToNextEquipment();
+        }
     }
 
     void GetAllEquipment()
@@ -90,7 +102,6 @@ public class SwitchEquipment : MonoBehaviour
                 equipments.Add(equipmentList.transform.GetChild(i).gameObject);
             }
         }
-        SwitchToSpecificEquipment(equipmentName);
 
     }
 
@@ -159,12 +170,10 @@ public class SwitchEquipment : MonoBehaviour
             {
                 equipments[i].SetActive(true);
                 currentEquipmentName = equipments[i].name;
-                //positionEquipment(equipments[i]);
+                positionEquipment(equipments[i]);
             }
-            else if (equipments[i].name != otherSwitcher.currentEquipmentName) //you should not set the equipment on the other hand off
+            else if (i != otherSwitcher.currentEquipmentIndex) //you should not set the equipment on the other hand off
             {
-                //Debug.Log(currentEquipmentName);
-                //Debug.Log(otherSwitcher.currentEquipmentName);
                 equipments[i].SetActive(false);
             }
         }
