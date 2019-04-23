@@ -11,17 +11,17 @@ public class RoomGenerator : MapGenerator
     }
     public override void Generate(MapInfo info)
     {
-        Generate(info.startSeed);
+        Generate(info.startSeed, info.roomName);
     }
-    public override void Generate(TileInfo startSeed)
+    public override void Generate(TileInfo startSeed, string roomName = "RoomTemplate")
     {
-        Generate(startSeed.row, startSeed.column, startSeed.direction);
+        Generate(startSeed.row, startSeed.column, startSeed.direction, roomName);
     }
-    public override void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir)
+    public override void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir, string roomName = "RoomTemplate")
     {
-        Generate(startRow, startCol, startDir);
+        Generate(startRow, startCol, startDir, roomName);
     }
-    public override void Generate(int startRow, int startCol, int startDirection)
+    public override void Generate(int startRow, int startCol, int startDirection, string roomName = "RoomTemplate")
     {
         int sR = 0;
         int sC = 0;
@@ -32,10 +32,10 @@ public class RoomGenerator : MapGenerator
         switch (startDirection)
         {
             case 0:
-                for (int i = mazeRows - 2; i > 1; i--)
-                {
-                    Tile.ConnectTiles(tileArray[i, startCol], tileArray[i - 1, startCol], startDirection);
-                }
+
+                Tile.ConnectTiles(tileArray[1, startCol], tileArray[0, startCol], startDirection);
+                Tile.ConnectTiles(tileArray[mazeRows - 2, startCol], tileArray[mazeRows - 1, startCol], (startDirection + 2) % 4);
+
                 if (startCol == 0)
                 {
                     doorDirection = 1;
@@ -46,15 +46,14 @@ public class RoomGenerator : MapGenerator
                     doorDirection = 3;
                     eC--;
                 }
-                tileArray[0, startCol].SetTileID(0);
-                tileArray[mazeRows - 1, startCol].SetTileID(0);
-                tileArray[mazeRows / 2, startCol].OpenWall(doorDirection);
+                tileArray[0, startCol].OpenWall(doorDirection);
+                tileArray[mazeRows - 1, startCol].OpenWall(doorDirection);
+                for (int i = startRow + 1; i < mazeRows - 1 - startRow; i++)
+                    tileArray[i, startCol].SetTileID(0);
                 break;
             case 1:
-                for (int i = 1; i < mazeColumns - 2; i++)
-                {
-                    Tile.ConnectTiles(tileArray[startRow, i], tileArray[startRow, i + 1], startDirection);
-                }
+                Tile.ConnectTiles(tileArray[startRow, mazeColumns - 2], tileArray[startRow, mazeColumns - 1], startDirection);
+                Tile.ConnectTiles(tileArray[startRow, 1], tileArray[startRow, 0], (startDirection + 2) % 4);
                 if (startRow == 0)
                 {
                     doorDirection = 2;
@@ -65,15 +64,16 @@ public class RoomGenerator : MapGenerator
                     doorDirection = 0;
                     eR--;
                 }
-                tileArray[startRow, 0].SetTileID(0);
-                tileArray[startRow, mazeColumns - 1].SetTileID(0);
-                tileArray[startRow, mazeColumns / 2].OpenWall(doorDirection);
+                tileArray[startRow, 0].OpenWall(doorDirection);
+                tileArray[startRow, mazeColumns - 1].OpenWall(doorDirection);
+                for (int i = startCol - 1; i > 1; i--)
+                    tileArray[startRow, i].SetTileID(0);
                 break;
             case 2:
-                for (int i = 1; i < mazeRows - 2; i++)
-                {
-                    Tile.ConnectTiles(tileArray[i, startCol], tileArray[i + 1, startCol], startDirection);
-                }
+
+                Tile.ConnectTiles(tileArray[mazeRows - 2, startCol], tileArray[mazeRows - 1, startCol], startDirection);
+                Tile.ConnectTiles(tileArray[1, startCol], tileArray[0, startCol], (startDirection + 2) % 4);
+
                 if (startCol == 0)
                 {
                     doorDirection = 1;
@@ -84,15 +84,16 @@ public class RoomGenerator : MapGenerator
                     doorDirection = 3;
                     eC--;
                 }
-                tileArray[0, startCol].SetTileID(0);
-                tileArray[mazeRows - 1, startCol].SetTileID(0);
-                tileArray[mazeRows / 2, startCol].OpenWall(doorDirection);
+                tileArray[mazeRows - 1, startCol].OpenWall(doorDirection);
+                tileArray[0, startCol].OpenWall(doorDirection);
+                for (int i = startRow - 1; i > 1; i--)
+                    tileArray[i, startCol].SetTileID(0);
                 break;
             case 3:
-                for (int i = mazeColumns - 2; i > 1; i--)
-                {
-                    Tile.ConnectTiles(tileArray[startRow, i], tileArray[startRow, i - 1], startDirection);
-                }
+
+                Tile.ConnectTiles(tileArray[startRow, 1], tileArray[startRow, 0], startDirection);
+                Tile.ConnectTiles(tileArray[startRow, mazeColumns - 2], tileArray[startRow, mazeColumns - 1], (startDirection + 2) % 4);
+
                 if (startRow == 0)
                 {
                     doorDirection = 2;
@@ -103,15 +104,42 @@ public class RoomGenerator : MapGenerator
                     doorDirection = 0;
                     eR--;
                 }
-                tileArray[startRow, 0].SetTileID(0);
-                tileArray[startRow, mazeColumns - 1].SetTileID(0);
-                tileArray[startRow, mazeColumns / 2].OpenWall(doorDirection);
+                tileArray[startRow, 0].OpenWall(doorDirection);
+                tileArray[startRow, mazeColumns - 1].OpenWall(doorDirection);
+                for (int i = startCol + 1; i < mazeColumns - startCol - 1; i++)
+                    tileArray[startRow, i].SetTileID(0);
                 break;
             default:
                 break;
         }
-        GenerateEmptyRoom(sR, sC, eR, eC);
+        if (roomName == "")
+            GenerateEmptyRoom(sR, sC, eR, eC);
+        else
+        {
+            CreatePremadeRoom(roomName, doorDirection);
+            DeleteUnusedTiles(sR, sC, eR, eC);
+        }
         GenerateIntArray();
+    }
+
+    void CreatePremadeRoom(string roomName, int alignment)
+    {
+        GameObject premadeRoom = Instantiate((GameObject)Resources.Load("Prefabs/" + roomName), transform.position, Quaternion.identity);
+        premadeRoom.transform.parent = transform;
+        premadeRoom.transform.Translate(mazeColumns * tileWidth / 2f - tileWidth / 2f, 0f, -mazeRows * tileWidth / 2f + tileWidth / 2f, Space.World);
+        premadeRoom.transform.Rotate(0, 90f * alignment, 0, Space.Self);
+        premadeRoom.transform.Translate(0f, 0f, tileWidth / 2f, Space.Self);
+    }
+
+    void DeleteUnusedTiles(int startRow, int startCol, int endRow, int endCol)
+    {
+        for (int i = startRow; i < endRow; i++)
+        {
+            for (int j = startCol; j < endCol; j++)
+            {
+                Destroy(tileArray[i, j].gameObject);
+            }
+        }
     }
 
     void GenerateEmptyRoom(int startRow, int startCol, int endRow, int endCol)

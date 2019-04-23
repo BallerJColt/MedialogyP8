@@ -28,7 +28,7 @@ public class MazeGenerator : MapGenerator
         GenerateIntArray();
     }
 
-    public override void Generate(TileInfo startSeed)
+    public override void Generate(TileInfo startSeed, string roomName = "RoomTemplate")
     {
         Generate(startSeed.row, startSeed.column, startSeed.direction);
     }
@@ -40,7 +40,7 @@ public class MazeGenerator : MapGenerator
 
     // Maze generation using recursive DFS with a starting position and direction as seed.
     // It makes the first connection manually, then calls the RecursiveDFS() method to generate the rest of the maze.
-    public override void Generate(int startRow, int startCol, int startDirection)
+    public override void Generate(int startRow, int startCol, int startDirection, string roomName = "RoomTemplate")
     {
         tileArray[startRow, startCol].OpenWall(startDirection);
         switch (startDirection)
@@ -71,7 +71,7 @@ public class MazeGenerator : MapGenerator
     // Overload of the seeded maze generation method with a specified end position and direction as well.
     // It opens the end tile so it will be ignored by the generator method, then calls the GenerateSeededMaze(int,int,int) method,
     // finally it connects the end tile with its neighbour to the specified direction.
-    public override void Generate(int startRow, int startCol, int startDirection, int endRow, int endCol, int endDirection)
+    public override void Generate(int startRow, int startCol, int startDirection, int endRow, int endCol, int endDirection, string roomName = "RoomTemplate")
     {
         tileArray[endRow, endCol].OpenWall(endDirection);
 

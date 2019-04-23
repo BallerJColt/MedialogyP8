@@ -77,6 +77,7 @@
      <Compile Include="Assets\Scripts\NotePadScript.cs" />
      <Compile Include="Assets\Scripts\ObliqueProjectionToQuad.cs" />
      <Compile Include="Assets\Scripts\OffsetLensCam.cs" />
+     <Compile Include="Assets\Scripts\PlayerTracker.cs" />
      <Compile Include="Assets\Scripts\PortalGenerator.cs" />
      <Compile Include="Assets\Scripts\PortalGeneratorCaller.cs" />
      <Compile Include="Assets\Scripts\PortalPair.cs" />

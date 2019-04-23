@@ -65,6 +65,7 @@ public class PortalRenderController : MonoBehaviour
             tempPortal.transform.parent = transform;
             tempScript.portalID = i;
             tempScript.isForwardTeleporter = true;
+            tempScript.cameraOffset = cameraOffset;
             nextProjectionQuadArray[i] = tempScript.projectionQuad.gameObject;
             tempScript.renderQuad.GetComponent<Renderer>().material = Resources.Load("Materials/Next" + (isStereoscopic ? "Stereo" : "Mono")) as Material;
 
@@ -88,20 +89,28 @@ public class PortalRenderController : MonoBehaviour
             tempPortal.transform.parent = transform;
             tempScript.portalID = i;
             tempScript.isForwardTeleporter = false;
+            tempScript.cameraOffset = cameraOffset;
             prevProjectionQuadArray[i] = tempScript.projectionQuad.gameObject;
             tempScript.renderQuad.GetComponent<Renderer>().material = Resources.Load("Materials/Prev" + (isStereoscopic ? "Stereo" : "Mono")) as Material;
         }
 
     }
 
-    // Update is called once per frame
+    // This is for debugging, we can remove it later
     void Update()
     {
         if (Input.GetKeyUp("space"))
         {
             currentMaze++;
             Debug.Log(currentMaze % portalCount);
-            SetProjectionQuads();
+            TeleportPlayer(currentMaze);
+            //Camera.main.transform.Translate(cameraOffset, 0, 0, Space.World);
+        }
+        if (Input.GetKeyUp("n"))
+        {
+            currentMaze--;
+            Debug.Log(currentMaze % portalCount);
+            TeleportPlayer(currentMaze);
             //Camera.main.transform.Translate(cameraOffset, 0, 0, Space.World);
         }
     }
@@ -124,12 +133,12 @@ public class PortalRenderController : MonoBehaviour
 
     void SetProjectionQuads()
     {
-        previousPortalCameraRightEye.projectionScreen = prevProjectionQuadArray[(currentMaze + (portalCount - 1)) % portalCount];
-        nextPortalCameraRightEye.projectionScreen = nextProjectionQuadArray[currentMaze % portalCount];
+        previousPortalCameraRightEye.projectionScreen = prevProjectionQuadArray[TrueModulus(currentMaze - 1, portalCount)];
+        nextPortalCameraRightEye.projectionScreen = nextProjectionQuadArray[TrueModulus(currentMaze, portalCount)];
         if (isStereoscopic)
         {
-            previousPortalCameraLeftEye.projectionScreen = prevProjectionQuadArray[(currentMaze + (portalCount - 1)) % portalCount];
-            nextPortalCameraLeftEye.projectionScreen = nextProjectionQuadArray[currentMaze % portalCount];
+            previousPortalCameraLeftEye.projectionScreen = prevProjectionQuadArray[TrueModulus(currentMaze - 1, portalCount)];
+            nextPortalCameraLeftEye.projectionScreen = nextProjectionQuadArray[TrueModulus(currentMaze, portalCount)];
         }
     }
 
@@ -137,5 +146,10 @@ public class PortalRenderController : MonoBehaviour
     {
         currentMaze = mazeID;
         SetProjectionQuads();
+    }
+
+    int TrueModulus(int k, int n)
+    {
+        return ((k %= n) < 0) ? k + n : k;
     }
 }

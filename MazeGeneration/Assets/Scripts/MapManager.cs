@@ -72,12 +72,6 @@ public class MapManager : MonoBehaviour
         //maybe add script to find player head so we don't have to drag it in
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyUp("n"))
-            GenerateRandomRoomDeadEnd(new TileInfo(0, 0, 0));
-    }
-
     void GenerateMapSequence()
     {
         if (mapSequence.Length > 0)
@@ -167,7 +161,7 @@ public class MapManager : MonoBehaviour
                 if (possibleStarts.Contains(startNoDir) == false)
                 {
                     Debug.Log("Start seed not possible for rooms, generating room at (0,1,1)");
-                    mapSequence[i].startSeed = new TileInfo(0, 1, 1);
+                    mapSequence[i].startSeed = new TileInfo(0, 1, 3);
                 }
             }
             /*else
@@ -241,16 +235,16 @@ public class MapManager : MonoBehaviour
             if (t.row == 0 || t.row == mazeRows - 1)
             {
                 if (t.column < mazeCols / 2)
-                    dir = 3; //Left
+                    dir = 1; //Roight
                 else
-                    dir = 1; //Right
+                    dir = 3; //Left
             }
             else if (t.column == 0 || t.column == mazeCols - 1)
             {
                 if (t.row < mazeRows / 2)
-                    dir = 0; //Up
+                    dir = 2; //Doon
                 else
-                    dir = 2; //Down
+                    dir = 0; //Oop
             }
             possibleTiles.Add(new TileInfo(t.row, t.column, dir));
         }
@@ -417,7 +411,7 @@ public class MapManager : MonoBehaviour
         foreach (MapInfo m in mapSequence)
         {
             if ((int)m.mapType == 1)
-                return 5;
+                return 4;
         }
         return 3;
     }

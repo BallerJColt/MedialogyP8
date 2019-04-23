@@ -8,6 +8,7 @@ public class Teleporter : MonoBehaviour
     public int portalID;
     public Transform renderQuad;
     public Transform projectionQuad;
+    public float cameraOffset;
 
     void OnTriggerExit(Collider other)
     {
@@ -28,12 +29,12 @@ public class Teleporter : MonoBehaviour
                 if (isForwardTeleporter)
                 {
                     prController.TeleportPlayer(portalID + 1);
-                    other.transform.root.Translate(6f, 0, 0, Space.World);
+                    other.transform.root.Translate(cameraOffset, 0, 0, Space.World);
                 }
                 else
                 {
                     prController.TeleportPlayer(portalID - 1);
-                    other.transform.root.Translate(-6f, 0, 0, Space.World);
+                    other.transform.root.Translate(-cameraOffset, 0, 0, Space.World);
                 }
             }
         }
