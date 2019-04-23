@@ -691,10 +691,10 @@
       <Project>{AD60CD02-7635-B0F5-6BDB-F7AD1DB70221}</Project>      <Name>SteamVR_Editor</Name>    </ProjectReference>
     <ProjectReference Include="SteamVR.csproj">
       <Project>{5AA2B7F7-37D5-1798-4E5E-F6D472F00809}</Project>      <Name>SteamVR</Name>    </ProjectReference>
-    <ProjectReference Include="SteamVR_Actions.csproj">
-      <Project>{D4A9AA43-BDC1-0ECB-BFA8-A1EB3E8E9A74}</Project>      <Name>SteamVR_Actions</Name>    </ProjectReference>
     <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
       <Project>{7CEF525C-B30E-FBA4-3064-B8F5ACE9FEDA}</Project>      <Name>SteamVR_Windows_EditorHelper</Name>    </ProjectReference>
+    <ProjectReference Include="SteamVR_Actions.csproj">
+      <Project>{D4A9AA43-BDC1-0ECB-BFA8-A1EB3E8E9A74}</Project>      <Name>SteamVR_Actions</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

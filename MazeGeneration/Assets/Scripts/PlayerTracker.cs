@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CSVWrite))]
 public class PlayerTracker : MonoBehaviour
 {
     private int mazeCount;
@@ -16,10 +17,11 @@ public class PlayerTracker : MonoBehaviour
     public int currentMaze;
     public int currentRow;
     public int currentColumn;
-
+    private CSVWrite dataLogger;
     // Start is called before the first frame update
     void Start()
     {
+        dataLogger = GetComponent<CSVWrite>();
         MapManager mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
         tileWidth = mapManager.tileWidth;
         startPos = new Vector3(mapManager.transform.position.x - tileWidth / 2f, 0, mapManager.transform.position.z + tileWidth / 2f);
@@ -44,6 +46,7 @@ public class PlayerTracker : MonoBehaviour
         while (true)
         {
             Debug.Log("Time: " + Time.time + ", Maze: " + currentMaze + ", Row: " + currentRow + ", Column: " + currentColumn + ".");
+            dataLogger.Save(Time.time, currentMaze, currentRow, currentColumn);
             yield return new WaitForSeconds(timeBetweenPings);
         }
     }

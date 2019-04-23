@@ -18,10 +18,7 @@ public class CSVWrite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("v"))
-        {
-            Save(10f,1,5,8);
-        }
+
     }
 
     void CreateHeaders(){
@@ -35,7 +32,7 @@ public class CSVWrite : MonoBehaviour
         rowData.Add(rowDataTemp);
     }
     
-    void Save(float gameTime, int maze, int row, int column){
+    public void Save(float gameTime, int maze, int row, int column){
 
         // Input data
         string[] rowDataTemp = new string[4];
@@ -52,7 +49,7 @@ public class CSVWrite : MonoBehaviour
         }
 
         int length = output.GetLength(0);
-        string delimiter = ";";
+        string delimiter = ",";
 
         StringBuilder sb = new StringBuilder();
         
