@@ -11,6 +11,7 @@ public class PlayerTracker : MonoBehaviour
 
     Vector3 currentPos;
     bool isLoggerRunning;
+    public bool logPosition;
     public float timeBetweenPings;
     public int currentMaze;
     public int currentRow;
@@ -25,7 +26,7 @@ public class PlayerTracker : MonoBehaviour
         mazeCount = mapManager.mapSequence.Length;
         mazeOffset = mapManager.mazeCols * tileWidth + 1f;
 
-        if(!isLoggerRunning)
+        if(!isLoggerRunning && logPosition)
             StartCoroutine("PositionToConsole");
     }
     // Update is called once per frame

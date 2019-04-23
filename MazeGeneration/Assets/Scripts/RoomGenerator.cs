@@ -11,17 +11,17 @@ public class RoomGenerator : MapGenerator
     }
     public override void Generate(MapInfo info)
     {
-        Generate(info.startSeed);
+        Generate(info.startSeed, info.roomName);
     }
-    public override void Generate(TileInfo startSeed)
+    public override void Generate(TileInfo startSeed, string roomName = "RoomTemplate")
     {
-        Generate(startSeed.row, startSeed.column, startSeed.direction);
+        Generate(startSeed.row, startSeed.column, startSeed.direction, roomName);
     }
-    public override void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir)
+    public override void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir, string roomName = "RoomTemplate")
     {
-        Generate(startRow, startCol, startDir);
+        Generate(startRow, startCol, startDir, roomName);
     }
-    public override void Generate(int startRow, int startCol, int startDirection)
+    public override void Generate(int startRow, int startCol, int startDirection, string roomName = "RoomTemplate")
     {
         int sR = 0;
         int sC = 0;
@@ -112,8 +112,34 @@ public class RoomGenerator : MapGenerator
             default:
                 break;
         }
-        GenerateEmptyRoom(sR, sC, eR, eC);
+        if (roomName == "")
+            GenerateEmptyRoom(sR, sC, eR, eC);
+        else
+        {
+            CreatePremadeRoom(roomName, doorDirection);
+            DeleteUnusedTiles(sR, sC, eR, eC);
+        }
         GenerateIntArray();
+    }
+
+    void CreatePremadeRoom(string roomName, int alignment)
+    {
+        GameObject premadeRoom = Instantiate((GameObject)Resources.Load("Prefabs/" + roomName), transform.position, Quaternion.identity);
+        premadeRoom.transform.parent = transform;
+        premadeRoom.transform.Translate(mazeColumns * tileWidth / 2f - tileWidth / 2f, 0f, -mazeRows * tileWidth / 2f + tileWidth / 2f, Space.World);
+        premadeRoom.transform.Rotate(0, 90f * alignment, 0, Space.Self);
+        premadeRoom.transform.Translate(0f, 0f, tileWidth / 2f, Space.Self);
+    }
+
+    void DeleteUnusedTiles(int startRow, int startCol, int endRow, int endCol)
+    {
+        for (int i = startRow; i < endRow; i++)
+        {
+            for (int j = startCol; j < endCol; j++)
+            {
+                Destroy(tileArray[i, j].gameObject);
+            }
+        }
     }
 
     void GenerateEmptyRoom(int startRow, int startCol, int endRow, int endCol)

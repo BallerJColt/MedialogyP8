@@ -381,6 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f393104f886951499713c7a439df6be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logPosition: 0
   timeBetweenPings: 1
   currentMaze: 0
   currentRow: 0
@@ -884,7 +885,8 @@ MonoBehaviour:
   portalGenerationLocation: 1
   portalInfo: []
   mapSequence:
-  - mapType: 0
+  - mapType: 1
+    roomName: RoomTemplate
     isEndSeeded: 0
     startSeed:
       row: 0
@@ -895,6 +897,18 @@ MonoBehaviour:
       column: 0
       direction: 0
   - mapType: 0
+    roomName: 
+    isEndSeeded: 0
+    startSeed:
+      row: 0
+      column: 0
+      direction: 0
+    endSeed:
+      row: 0
+      column: 0
+      direction: 0
+  - mapType: 1
+    roomName: OtherRoomTemplate
     isEndSeeded: 0
     startSeed:
       row: 0
@@ -905,6 +919,7 @@ MonoBehaviour:
       column: 0
       direction: 0
   - mapType: 0
+    roomName: 
     isEndSeeded: 0
     startSeed:
       row: 0
@@ -914,17 +929,8 @@ MonoBehaviour:
       row: 0
       column: 0
       direction: 0
-  - mapType: 0
-    isEndSeeded: 0
-    startSeed:
-      row: 0
-      column: 0
-      direction: 0
-    endSeed:
-      row: 0
-      column: 0
-      direction: 0
-  - mapType: 0
+  - mapType: 1
+    roomName: 
     isEndSeeded: 0
     startSeed:
       row: 0

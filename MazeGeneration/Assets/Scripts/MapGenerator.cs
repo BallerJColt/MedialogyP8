@@ -30,10 +30,11 @@ public abstract class MapGenerator : MonoBehaviour
         }
         //Debug.Log(name + " initialized.");
     }
-    
+
     //I added this for debug purposes, we can remove it when we have a floor texture
-    void Update() {
-        if(Input.GetKeyUp("b")) OpenAllDeadEnds();
+    void Update()
+    {
+        if (Input.GetKeyUp("b")) OpenAllDeadEnds();
     }
 
     protected void GenerateIntArray()
@@ -43,14 +44,19 @@ public abstract class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < mazeColumns; j++)
             {
-                EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
-                mazeIntArray[i, j] = tileArray[i, j].GetTileID();
-                gtei.go = tileArray[i, j].gameObject;
-                gtei.wallArray = tileArray[i, j].GetWallArray();
-                gtei.tileWidth = tileWidth;
+                if (tileArray[i, j] != null)
+                {
+                    EventCallbacks.GenerateTerrainEvent gtei = new EventCallbacks.GenerateTerrainEvent();
+                    mazeIntArray[i, j] = tileArray[i, j].GetTileID();
+                    gtei.go = tileArray[i, j].gameObject;
+                    gtei.wallArray = tileArray[i, j].GetWallArray();
+                    gtei.tileWidth = tileWidth;
 
-                //ID Changing when creating new tile
-                gtei.FireEvent();
+                    //ID Changing when creating new tile
+                    gtei.FireEvent();
+                }
+                else
+                    mazeIntArray[i, j] = 0;
                 //Debug.Log(tileWidth + " generated int array");
             }
         }
@@ -169,7 +175,7 @@ public abstract class MapGenerator : MonoBehaviour
 
     public abstract void Generate();
     public abstract void Generate(MapInfo info);
-    public abstract void Generate(TileInfo info);
-    public abstract void Generate(int startRow, int startCol, int startDir);
-    public abstract void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir);
+    public abstract void Generate(TileInfo info, string roomName = "RoomTemplate");
+    public abstract void Generate(int startRow, int startCol, int startDir, string roomName = "RoomTemplate");
+    public abstract void Generate(int startRow, int startCol, int startDir, int endRow, int endCol, int endDir, string roomName = "RoomTemplate");
 }

@@ -161,7 +161,7 @@ public class MapManager : MonoBehaviour
                 if (possibleStarts.Contains(startNoDir) == false)
                 {
                     Debug.Log("Start seed not possible for rooms, generating room at (0,1,1)");
-                    mapSequence[i].startSeed = new TileInfo(0, 1, 1);
+                    mapSequence[i].startSeed = new TileInfo(0, 1, 3);
                 }
             }
             /*else
