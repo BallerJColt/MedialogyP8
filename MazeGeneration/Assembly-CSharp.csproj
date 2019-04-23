@@ -56,16 +56,13 @@
      <Compile Include="Assets\ElevatorBtn.cs" />
      <Compile Include="Assets\MatchFOV.cs" />
      <Compile Include="Assets\Scripts\AudioManager.cs" />
-     <Compile Include="Assets\Scripts\ButtonPress.cs" />
      <Compile Include="Assets\Scripts\CameraAlignment.cs" />
-     <Compile Include="Assets\Scripts\CSVWrite.cs" />
      <Compile Include="Assets\Scripts\DummyScript.cs" />
      <Compile Include="Assets\Scripts\ElevatorMovement.cs" />
      <Compile Include="Assets\Scripts\Event.cs" />
      <Compile Include="Assets\Scripts\FuseBoxPuzzle.cs" />
      <Compile Include="Assets\Scripts\FusePlugHandler.cs" />
      <Compile Include="Assets\Scripts\HallwayTeleporter.cs" />
-     <Compile Include="Assets\Scripts\KeyPadPuzzle.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />
      <Compile Include="Assets\Scripts\MapInfo.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
@@ -92,28 +89,28 @@
      <None Include="Assets\Shaders\TimeDeviceShader.shader" />
      <None Include="Assets\Shaders\PortalShad.shader" />
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.EditorCoroutines.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.MemoryProfiler">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
  <Reference Include="Unity.MemoryProfiler.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -310,6 +307,9 @@
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
+ <Reference Include="Vuforia.UnityExtensions">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.GoogleAudioSpatializer">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
  </Reference>
@@ -317,16 +317,16 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="Valve.Newtonsoft.Json">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
- <HintPath>C:/Users/ronny/Documents/GitHub/MedialogyP8/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+ <HintPath>C:/Users/stud/Downloads/MedialogyP8-RoomPrefabs/MedialogyP8-RoomPrefabs/MazeGeneration/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -675,6 +675,8 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="SteamVR_Actions.csproj">
+      <Project>{D4A9AA43-BDC1-0ECB-BFA8-A1EB3E8E9A74}</Project>      <Name>SteamVR_Actions</Name>    </ProjectReference>
     <ProjectReference Include="SteamVR_Input_Editor.csproj">
       <Project>{482C0F60-F6F5-DB7E-D76D-BBCC5C87199D}</Project>      <Name>SteamVR_Input_Editor</Name>    </ProjectReference>
     <ProjectReference Include="SteamVR_Editor.csproj">
@@ -683,8 +685,6 @@
       <Project>{5AA2B7F7-37D5-1798-4E5E-F6D472F00809}</Project>      <Name>SteamVR</Name>    </ProjectReference>
     <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
       <Project>{7CEF525C-B30E-FBA4-3064-B8F5ACE9FEDA}</Project>      <Name>SteamVR_Windows_EditorHelper</Name>    </ProjectReference>
-    <ProjectReference Include="SteamVR_Actions.csproj">
-      <Project>{D4A9AA43-BDC1-0ECB-BFA8-A1EB3E8E9A74}</Project>      <Name>SteamVR_Actions</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
