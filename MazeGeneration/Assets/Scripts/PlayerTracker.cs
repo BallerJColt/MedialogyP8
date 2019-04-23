@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCoordinateLogger : MonoBehaviour
+public class PlayerTracker : MonoBehaviour
 {
-    public int mazeCount;
-    public float mazeOffset;
+    private int mazeCount;
+    private float mazeOffset;
+    Vector3 startPos;
+    float tileWidth;
+
+    Vector3 currentPos;
+    bool isLoggerRunning;
+    public float timeBetweenPings;
     public int currentMaze;
     public int currentRow;
     public int currentColumn;
-
-    //make private
-    public Vector3 startPos;
-    public float tileWidth;
-
-    public Vector3 currentPos;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +24,10 @@ public class PlayerCoordinateLogger : MonoBehaviour
         startPos = new Vector3(mapManager.transform.position.x - tileWidth / 2f, 0, mapManager.transform.position.z + tileWidth / 2f);
         mazeCount = mapManager.mapSequence.Length;
         mazeOffset = mapManager.mazeCols * tileWidth + 1f;
-    }
 
+        if(!isLoggerRunning)
+            StartCoroutine("PositionToConsole");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -33,5 +35,15 @@ public class PlayerCoordinateLogger : MonoBehaviour
         currentRow = (int)(-currentPos.z / tileWidth);
         currentMaze = (int)(currentPos.x / mazeOffset);
         currentColumn = (int)((currentPos.x - currentMaze * mazeOffset) / tileWidth);
+    }
+
+    private IEnumerator PositionToConsole()
+    {
+        isLoggerRunning = true;
+        while (true)
+        {
+            Debug.Log("Time: " + Time.time + ", Maze: " + currentMaze + ", Row: " + currentRow + ", Column: " + currentColumn + ".");
+            yield return new WaitForSeconds(timeBetweenPings);
+        }
     }
 }

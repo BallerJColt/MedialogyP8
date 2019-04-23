@@ -381,14 +381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f393104f886951499713c7a439df6be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeCount: 0
-  mazeOffset: 0
+  timeBetweenPings: 1
   currentMaze: 0
   currentRow: 0
   currentColumn: 0
-  startPos: {x: 0, y: 0, z: 0}
-  tileWidth: 0
-  currentPos: {x: 0, y: 0, z: 0}
 --- !u!1 &970162661
 GameObject:
   m_ObjectHideFlags: 0
