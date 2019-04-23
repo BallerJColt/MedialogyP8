@@ -14,8 +14,8 @@ public class ButtonPress : MonoBehaviour
     void HandHoverUpdate (Valve.VR.InteractionSystem.Hand hand) {
 
         if (interactionButton.GetStateDown (hand.handType)) {
-            Debug.Log (hand.handType + " clicked " + gameObject.name);
-            
+            //Debug.Log (hand.handType + " clicked " + gameObject.name);
+            Debug.Log("Clicked " + gameObject.name);
             triggerEvent.Invoke();
             
         }
