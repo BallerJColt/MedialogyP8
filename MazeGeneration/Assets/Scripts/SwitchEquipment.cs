@@ -9,11 +9,14 @@ public class SwitchEquipment : MonoBehaviour
     public NotePadScript notePadScript;
     //public string inputKey;
     GameObject equipmentList;
-    public List<GameObject> equipments; //in the order: emptyhand, timedevice, notebook
-    Transform noteBookPos;
+    public List<GameObject> equipments;
+    Transform clipBoardPos;
     Transform timeDevicePos;
-
-   //Hand hand;
+    public SteamVR_Action_Boolean triggerClick;
+    bool triggerPressed;
+    public SteamVR_Action_Boolean touchPadClick;
+    bool touchPadPressed;
+    public SteamVR_Input_Sources inputSource;
 
     public SwitchEquipment otherSwitcher;
 
@@ -27,8 +30,19 @@ public class SwitchEquipment : MonoBehaviour
         //hand = GetComponent<Hand>();
 
         //get equipment from equipment list
-        GetAllEquipment();
-        GetEquipmentPositions();
+        equipmentList = GameObject.Find("Equipment List");
+
+        if(gameObject.name == "LeftHand")
+        {
+            AddEquipment("EmptyLeft");
+        }
+        else if (gameObject.name == "RightHand")
+        {
+            AddEquipment("EmptyRight");
+        }
+        //GetAllEquipment();
+        //GetEquipmentPositions(); // check if it is needed
+
         SwitchToSpecificEquipment("TimeDevice");
     }
     void Update()
@@ -52,11 +66,17 @@ public class SwitchEquipment : MonoBehaviour
         }
 
         //if (hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) && currentEquipmentName == "NoteBook")
+        if (triggerClick.GetState(inputSource) && currentEquipmentName == "ClipBoard")
+
         {
-            Debug.Log("Notepad page switch!");
             FindObjectOfType<AudioManager>().Play("NoteSwitchSound");
             notePadScript.NotepadSwitchPage();
         }
+        if (touchPadClick.GetState(inputSource))
+        {
+            SwitchToNextEquipment();
+        }
+
 
         //if (hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
         {
@@ -73,9 +93,16 @@ public class SwitchEquipment : MonoBehaviour
         }
     }
 
-    void AddEquipment(GameObject newEquipment)
+    void AddEquipment(string equipmentName)
     {
-        equipments.Add(newEquipment);
+        for (int i = 0; i < equipmentList.transform.childCount; i++)
+        {
+            if(equipmentList.transform.GetChild(i).name == equipmentName)
+            {
+                equipments.Add(equipmentList.transform.GetChild(i).gameObject);
+            }
+        }
+
     }
 
     void GetEquipmentPositions()
@@ -83,9 +110,9 @@ public class SwitchEquipment : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            if (child.name == "NoteBookPos")
+            if (child.name == "ClipBoardPos")
             {
-                noteBookPos = child;
+                clipBoardPos = child;
             }
             else if (child.name == "TimeDevicePos")
             {
@@ -154,9 +181,9 @@ public class SwitchEquipment : MonoBehaviour
 
     void positionEquipment(GameObject equipment)
     {
-        if (equipment.name == "NoteBook")
+        if (equipment.name == "ClipBoard")
         {
-            equipment.transform.SetPositionAndRotation(noteBookPos.position, noteBookPos.rotation);
+            equipment.transform.SetPositionAndRotation(clipBoardPos.position, clipBoardPos.rotation);
         }
         else if (equipment.name == "TimeDevice")
         {
