@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallOffset: 0.1
-  wallHeight: 2
+  wallHeight: 2.5
   ceilingLamp: {fileID: 4771548619695553747, guid: 8ca664705a6803049aa393e96c6ca14b,
     type: 3}
   ceiling: {fileID: 9109257161806172612, guid: d303b1d90640a1f46909707957f5889f, type: 3}

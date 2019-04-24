@@ -128,7 +128,7 @@ public class RoomGenerator : MapGenerator
         premadeRoom.transform.parent = transform;
         premadeRoom.transform.Translate(mazeColumns * tileWidth / 2f - tileWidth / 2f, 0f, -mazeRows * tileWidth / 2f + tileWidth / 2f, Space.World);
         premadeRoom.transform.Rotate(0, 90f * (alignment + 2) % 4, 0, Space.Self);
-        premadeRoom.transform.Translate(0f, 0f, -tileWidth / 2f, Space.Self);
+        premadeRoom.transform.Translate(0f, 0f, -tileWidth / 2f + .1f, Space.Self);
     }
 
     void DeleteUnusedTiles(int startRow, int startCol, int endRow, int endCol)
