@@ -13,23 +13,18 @@ public class InputPromptTest : MonoBehaviour
     public SteamVR_Input_Sources inputSource;
     bool waitingForInput = false;
 
-    public SteamVR_Action_Boolean yesButton;
-    public SteamVR_Action_Boolean noButton;
+    public SteamVR_Action_Boolean touchPad;
+    public SteamVR_Action_Boolean trigger;
 
 
     void Update()
     {
-        if (noButton.GetStateDown(inputSource) && waitingForInput == true)
-        {
-            // Do nothing?
-            Debug.Log("Pressed no!");
-            waitingForInput = false;
-        }
-        else if (yesButton.GetStateDown(inputSource) && waitingForInput == true)
+        if (touchPad.GetState(inputSource) && trigger.GetState(inputSource) && waitingForInput == true)
         {
             // Take current player position and save to heatmap
             Debug.Log("Pressed yes!");
             waitingForInput = false;
+            GameObject.Find("VRCamera").GetComponent<PlayerTracker>().logPosition = false;
         }
     }
 

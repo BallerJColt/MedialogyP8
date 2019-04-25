@@ -14,6 +14,7 @@ public class PlayerTracker : MonoBehaviour
     Vector3 currentPos;
     bool isLoggerRunning;
     public bool logPosition;
+    public bool promptPlayer;
     public float timeBetweenPings;
     public int currentMaze;
     public int currentRow;
@@ -50,8 +51,10 @@ public class PlayerTracker : MonoBehaviour
         {
             Debug.Log("Time: " + Time.time + ", Maze: " + currentMaze + ", Row: " + currentRow + ", Column: " + currentColumn + ".");
             dataLogger.Save(Time.time, currentMaze, currentRow, currentColumn);
-
-            promptTrigger.promptPlayer();
+            if (promptPlayer)
+            {
+                promptTrigger.promptPlayer();
+            }
 
             yield return new WaitForSeconds(timeBetweenPings);
         }

@@ -7,12 +7,24 @@ using System.Text;
 
 public class CSVWrite : MonoBehaviour
 {
-    public String fileName;
+    private MapManager mm;
+    public int ParticipantNumber;
+
+    int mazeCols;
+    int mazeRows;
+
+    string filePath = "";
+
     private List<string[]> rowData = new List<string[]>();
 
     void Start()
     {
         CreateHeaders();
+        mm = GameObject.Find("MapManager").GetComponent<MapManager>();
+        mazeCols = mm.mazeCols;
+        mazeRows = mm.mazeRows;
+        filePath = getPath();
+
     }
 
     // Update is called once per frame
@@ -55,9 +67,6 @@ public class CSVWrite : MonoBehaviour
         
         for (int index = 0; index < length; index++)
             sb.AppendLine(string.Join(delimiter, output[index]));
-        
-        
-        string filePath = getPath();
 
         StreamWriter outStream = new StreamWriter(filePath, false);
         outStream.WriteLine(sb);
@@ -66,6 +75,17 @@ public class CSVWrite : MonoBehaviour
 
     // Following method is used to retrive the relative path as device platform
     private string getPath(){
-        return Application.dataPath + "/CSV/" + fileName + ".csv";
+        DateTime time = DateTime.Now;
+        if( ! File.Exists(Application.dataPath + "/CSV/" + "participant_" + ParticipantNumber + "_condition_" + mazeRows +"x" + mazeCols + ".csv"))
+        {
+            return Application.dataPath + "/CSV/" + "participant_" + ParticipantNumber + "_condition_" + mazeRows +"x" + mazeCols + ".csv";
+        }
+        else
+        {
+            Debug.Break();
+            return Application.dataPath + "/CSV/" + "participant_" + "Unknown" + "_condition_" + mazeRows +"x" + mazeCols + "_time_" +time+ ".csv";
+        }
+        
+        
     }
 }

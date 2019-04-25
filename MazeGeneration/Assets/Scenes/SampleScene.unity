@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logPosition: 1
+  promptPlayer: 0
   timeBetweenPings: 3
   currentMaze: 0
   currentRow: 0
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96ba102b1fd7ed44ab3e22571ecdf5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: pilot
+  ParticipantNumber: 0
 --- !u!114 &218500613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,11 +168,11 @@ MonoBehaviour:
     actionPath: /actions/default/out/Haptic
     needsReinit: 0
   inputSource: 0
-  yesButton:
+  touchPad:
     actionPath: /actions/default/in/Teleport
     needsReinit: 0
-  noButton:
-    actionPath: /actions/default/in/GrabGrip
+  trigger:
+    actionPath: /actions/default/in/GrabPinch
     needsReinit: 0
 --- !u!1 &387014560
 GameObject:
@@ -424,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96ba102b1fd7ed44ab3e22571ecdf5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: testfilename
+  ParticipantNumber: 0
 --- !u!114 &777009152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logPosition: 1
+  promptPlayer: 0
   timeBetweenPings: 1
   currentMaze: 0
   currentRow: 0
