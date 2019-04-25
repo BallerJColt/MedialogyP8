@@ -1,36 +1,36 @@
 fileFormatVersion: 2
-guid: 98d74202a84c53942a5d667b54494847
+guid: 431a2bf40037d814e815834d36e45bbe
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: PaperMat
-    2100002: PaperNoteMat
+    2100000: IgorTextMat
+    2100002: IgorNoteBackMat
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Note
+    4300000: pCube1
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: PaperMat
-    second: {fileID: 2100000, guid: 3c9c54e3fae215c4096ba779f05fbe57, type: 2}
+      name: IgorNoteBackMat
+    second: {fileID: 2100000, guid: 8ac22c3a4f9eae147952e8c5388caef4, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: PaperNoteMat
-    second: {fileID: 2100000, guid: efdeb1380fdb35448b3c1b0f5f0a353d, type: 2}
+      name: IgorTextMat
+    second: {fileID: 2100000, guid: 6a75eab5095405c4da70132011d8f43e, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IntroNote
-    second: {fileID: 2800000, guid: d916fb485213bd84bad61bae41f25498, type: 3}
+      name: EmployeeList
+    second: {fileID: 2800000, guid: 728ecfa42c37aea4f86d45e154b55c7e, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Paper
-    second: {fileID: 2800000, guid: 12c8e6560de1dfc46a84ae50cb23b88c, type: 3}
+      name: paper4
+    second: {fileID: 2800000, guid: ae077ccad9cb7f34db5da05a49bb69b0, type: 3}
   materials:
     importMaterials: 1
     materialName: 0
