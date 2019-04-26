@@ -943,8 +943,8 @@ MonoBehaviour:
   portalGenerationLocation: 1
   portalInfo: []
   mapSequence:
-  - mapType: 0
-    roomName: 
+  - mapType: 1
+    roomName: LockerRoom
     isEndSeeded: 0
     startSeed:
       row: 0
