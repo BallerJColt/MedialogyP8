@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NewRoomCollider : MonoBehaviour
 {
-    public NotePadScript notePad;
+    NotePadScript notePad;
+    RaycastClueFound clueTrigger;
     private bool isTriggered = false;
     Collider triggerCollider;
     Valve.VR.InteractionSystem.Player player;
@@ -12,6 +13,8 @@ public class NewRoomCollider : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Valve.VR.InteractionSystem.Player>();
+        notePad = GameObject.Find("Equipment List").GetComponent<NotePadScript>();
+        clueTrigger = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<RaycastClueFound>();
         triggerCollider = player.headCollider;
     }
 
@@ -22,6 +25,7 @@ public class NewRoomCollider : MonoBehaviour
         {
             isTriggered = true;
             notePad.NotepadEnterNewRoom();
+            clueTrigger.nextClue();
         }
     }
 }
