@@ -35,7 +35,7 @@ public class ElevatorMovement : MonoBehaviour
 
     public void DownBtn()
     {
-        if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5 && !goingDown && !goingUp)
+        if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5)
         {
             StartCoroutine("MoveDown");
         }
@@ -50,7 +50,7 @@ public class ElevatorMovement : MonoBehaviour
     public void UpBtn()
     {
 
-        if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5 && !goingDown && !goingUp)
+        if (GameObject.FindGameObjectWithTag("FuseBox").GetComponent<FuseBoxPuzzle>().correctPlugs == 5)
         {
             StartCoroutine("MoveUp");
         }
