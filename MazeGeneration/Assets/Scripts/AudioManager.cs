@@ -6,6 +6,10 @@ public class AudioManager : MonoBehaviour
 {
 
 	public Sound[] sounds;
+    float currentTime;
+    public float delayTime = 4;
+    string delayedSound;
+    bool timerActive = false;
 
 	void Awake()
 	{
@@ -21,7 +25,19 @@ public class AudioManager : MonoBehaviour
         Play("AmbientSound");
     }
 
-	public void Play(string sound)
+    private void Update()
+    {
+        if (timerActive)
+        {
+            if (delayTime <= Time.time - currentTime)
+            {
+                timerActive = false;
+                Play(delayedSound);
+            }
+        }
+    }
+
+    public void Play(string sound)
 	{
 		Sound s = Array.Find(sounds, item => item.name == sound);
 		if (s == null)
@@ -35,5 +51,13 @@ public class AudioManager : MonoBehaviour
 
 		s.source.Play();
 	}
+
+    public void DelayedPlay(string sound)
+    {
+        currentTime = Time.time;
+        // delayTime = seconds;
+        delayedSound = sound;
+        timerActive = true;
+    }
 
 }

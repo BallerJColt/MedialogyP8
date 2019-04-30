@@ -50,7 +50,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: NoteSwtichSound
+  - name: NoteSwitchSound
     clip: {fileID: 8300000, guid: 8f86848df3e242246b4eb1603fe28b79, type: 3}
     volume: 1
     pitch: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 85fcb76de14a6794c8970249c23debb7, type: 3}
     volume: 0.9
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
   - name: GeneratorStart
     clip: {fileID: 8300000, guid: a4093847c9af7a3428405b416ba96812, type: 3}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1793735377013469966}
   - component: {fileID: 1146691302159274996}
   - component: {fileID: 5324415367447080352}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Notepad_TriggerNewRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,5 +104,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6d4c1fba70064459e0ad0ce1cd7b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notePad: {fileID: 0}
-  clueTrigger: {fileID: 0}

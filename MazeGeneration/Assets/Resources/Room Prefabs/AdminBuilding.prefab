@@ -14506,8 +14506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6d4c1fba70064459e0ad0ce1cd7b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notePad: {fileID: 0}
-  clueTrigger: {fileID: 0}
 --- !u!1 &833173987716911320
 GameObject:
   m_ObjectHideFlags: 0
@@ -21336,7 +21334,7 @@ PrefabInstance:
     - target: {fileID: 5005339720645863075, guid: 8ed0bef8e3c7e5548b5619bd0b1b8c0e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.0724087
+      value: -2.077
       objectReference: {fileID: 0}
     - target: {fileID: 5005339720645863075, guid: 8ed0bef8e3c7e5548b5619bd0b1b8c0e,
         type: 3}
@@ -21387,6 +21385,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005339720645863075, guid: 8ed0bef8e3c7e5548b5619bd0b1b8c0e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5999375
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005339720645863075, guid: 8ed0bef8e3c7e5548b5619bd0b1b8c0e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6682191
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005339720645863078, guid: 8ed0bef8e3c7e5548b5619bd0b1b8c0e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ed0bef8e3c7e5548b5619bd0b1b8c0e, type: 3}
