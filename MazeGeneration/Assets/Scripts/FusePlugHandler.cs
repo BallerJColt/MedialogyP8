@@ -26,6 +26,11 @@ public class FusePlugHandler : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
+        if (!other.GetComponent<fuseSocketHandler>().occupiedSocket)
+        {
+            return;
+        }
+
         inSocket = true;
         socketGoIn = other.gameObject;
 

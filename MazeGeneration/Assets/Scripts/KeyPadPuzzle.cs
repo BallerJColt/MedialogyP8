@@ -23,6 +23,7 @@ public class KeyPadPuzzle : MonoBehaviour
             {
                 // Success
                 Debug.Log("CORRECT PASSWORD");
+                gameObject.GetComponentInChildren<Valve.VR.InteractionSystem.Interactable>().enabled = true;
             }
             currentNumber = 0;
         }
