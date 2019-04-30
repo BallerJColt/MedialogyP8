@@ -118,6 +118,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2017537099}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &218500606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218500605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420da7056fad3fd42800ff6c3ac15cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clueColliderLayer: 11
+  activationDistance: 4
+  gazeTime: 3
+  clueAmount: 4
+  timeDeviceCam: {fileID: 0}
 --- !u!114 &218500611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,7 +258,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &451613999
 GameObject:
@@ -272,7 +289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &451614001
 MonoBehaviour:
@@ -301,6 +318,195 @@ MonoBehaviour:
   pillarOffset: 0.1
   prevProjectionQuadArray: []
   nextProjectionQuadArray: []
+--- !u!1001 &537174611
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5306536468703829378, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_Name
+      value: Equipment List
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4761891
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0373964
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5903895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704072832353899341, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: roomNameStrings.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueHintStrings.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueTextStrings.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueNumberSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: roomNameStrings.Array.data[0]
+      value: Administration Building
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: roomNameStrings.Array.data[1]
+      value: Generator Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: roomNameStrings.Array.data[2]
+      value: Equipment Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: roomNameStrings.Array.data[3]
+      value: Locker Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueHintStrings.Array.data[0]
+      value: The elevator is not powered on?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueHintStrings.Array.data[1]
+      value: It smells really bad in here, but I cannot see anything
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueHintStrings.Array.data[2]
+      value: This room is really burned, but why?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueHintStrings.Array.data[3]
+      value: There got to be a clue in here somewhere
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueTextStrings.Array.data[0]
+      value: Someone sabotaged the elevator power on purpose
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueTextStrings.Array.data[1]
+      value: A guy called Igor got murdered here
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueTextStrings.Array.data[2]
+      value: Seems like someone intentionally started the fire in this room
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueTextStrings.Array.data[3]
+      value: Igor wrote about another miner acting wierd. He might be the killer?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: foundNote
+      value: 
+      objectReference: {fileID: 100000, guid: 98d74202a84c53942a5d667b54494847, type: 3}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueNumberSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: c96bfa543c5cc744b84e753b53845d73,
+        type: 3}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueNumberSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 55b2f342e1c467341bc875bc5b9e9d05,
+        type: 3}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueNumberSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d02939f13b1f0548be2ae5eb3ff6532,
+        type: 3}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: clueNumberSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 19b6b5d3a384e4d419829a7f867be9fa,
+        type: 3}
+    - target: {fileID: 4740252876463215756, guid: edb05e969b30bb94fa2738444a6cb11f,
+        type: 3}
+      propertyPath: notepadCanvasObject
+      value: 
+      objectReference: {fileID: 537174612}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: edb05e969b30bb94fa2738444a6cb11f, type: 3}
+--- !u!1 &537174612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8196688161241683453, guid: edb05e969b30bb94fa2738444a6cb11f,
+    type: 3}
+  m_PrefabInstance: {fileID: 537174611}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &777009145
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +601,7 @@ Transform:
   m_Children:
   - {fileID: 1266227010}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &777009150
 Rigidbody:
@@ -494,7 +700,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995948997
 GameObject:
@@ -586,7 +792,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &995949001
 MonoBehaviour:
@@ -708,7 +914,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1266227007
 GameObject:
@@ -882,7 +1088,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1347709479
 MonoBehaviour:
@@ -1010,7 +1216,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1813671423
 GameObject:
@@ -1117,7 +1323,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2017537099
 PrefabInstance:
@@ -1168,7 +1374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1188,3 +1394,82 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+--- !u!1001 &2105176197
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4075559997124684449, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.23448423
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.06948158
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.90534395
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075559997124684451, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552299731107934804, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: sounds.Array.data[1].name
+      value: NoteSwitchSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552299731107934804, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0,
+        type: 3}
+      propertyPath: delayTime
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3e2da26be06a0dc48a0af55c1cf6ccc0, type: 3}
