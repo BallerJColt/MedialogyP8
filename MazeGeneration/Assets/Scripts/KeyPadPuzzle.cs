@@ -22,10 +22,16 @@ public class KeyPadPuzzle : MonoBehaviour
             if (currentNumber == password)
             {
                 // Success
+                GameObject.Find("Safe_lever").GetComponent<Valve.VR.InteractionSystem.Interactable>().enabled = true;
                 Debug.Log("CORRECT PASSWORD");
             }
             currentNumber = 0;
         }
         i++;
+    }
+
+    public void UnlockDoor()
+    {
+        gameObject.GetComponentInParent<Valve.VR.InteractionSystem.Interactable>().enabled = true;
     }
 }
