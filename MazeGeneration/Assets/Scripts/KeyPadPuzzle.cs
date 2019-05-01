@@ -23,10 +23,16 @@ public class KeyPadPuzzle : MonoBehaviour
             {
                 // Success
                 Debug.Log("CORRECT PASSWORD");
+                FindObjectOfType<AudioManager>().Play("UnlockSound");
                 gameObject.GetComponentInChildren<Valve.VR.InteractionSystem.Interactable>().enabled = true;
             }
             currentNumber = 0;
         }
         i++;
+    }
+
+    public void ButtonPressSound()
+    {
+        FindObjectOfType<AudioManager>().Play("KeypadPress");
     }
 }
