@@ -16,7 +16,7 @@ public class RaycastClueFound : MonoBehaviour
     private bool timerStarted = false;
     private bool[] clueActive;
     private float currentTime;
-    // public NotePadScript notePad;
+    public NotePadScript notePad;
 
     void Start()
     {
@@ -49,7 +49,7 @@ public class RaycastClueFound : MonoBehaviour
                     Debug.Log("Clue found!");
                     clueActive[currentClue] = false;
                     timerStarted = false;
-                    // notePad.NotepadTriggerUpdatePage();
+                    notePad.NotepadTriggerUpdatePage();
                 }
             }
 

@@ -24,7 +24,7 @@ public class KeyPadPuzzle : MonoBehaviour
                 // Success
                 Debug.Log("CORRECT PASSWORD");
                 FindObjectOfType<AudioManager>().Play("UnlockSound");
-                gameObject.GetComponentInChildren<Valve.VR.InteractionSystem.Interactable>().enabled = true;
+                GameObject.Find("Safe_lever").GetComponentInChildren<Valve.VR.InteractionSystem.Interactable>().enabled = true;
             }
             currentNumber = 0;
         }

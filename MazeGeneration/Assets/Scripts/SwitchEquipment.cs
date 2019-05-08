@@ -13,16 +13,14 @@ public class SwitchEquipment : MonoBehaviour
     Transform clipBoardPos;
     Transform timeDevicePos;
     public SteamVR_Action_Boolean triggerClick;
-    bool triggerPressed;
     public SteamVR_Action_Boolean touchPadClick;
-    bool touchPadPressed;
     public SteamVR_Input_Sources inputSource;
 
     public SwitchEquipment otherSwitcher;
 
     int currentEquipmentIndex;
 
-    string currentEquipmentName;
+    public string currentEquipmentName;
 
     // Start is called before the first frame update
     void Start()
@@ -32,56 +30,46 @@ public class SwitchEquipment : MonoBehaviour
         //get equipment from equipment list
         equipmentList = GameObject.Find("Equipment List");
 
-        if(gameObject.name == "LeftHand")
+        if (gameObject.name == "LeftHand")
         {
             AddEquipment("EmptyLeft");
+            SwitchToSpecificEquipment("EmptyLeft");
         }
         else if (gameObject.name == "RightHand")
         {
             AddEquipment("EmptyRight");
+            SwitchToSpecificEquipment("EmptyRight");
         }
+        AddEquipment("TimeDevice");
+        AddEquipment("ClipBoard");
+
         //GetAllEquipment();
-        //GetEquipmentPositions(); // check if it is needed
+        GetEquipmentPositions(); // check if it is needed
 
         SwitchToSpecificEquipment("TimeDevice");
     }
     void Update()
     {
-        if (!otherSwitcher)
-        {
-            string otherName;
-            if (gameObject.name == "Hand1")
-            {
-                otherName = "Hand2";
-            }
-            else
-            {
-                otherName = "Hand1";
-            }
-            if (GameObject.Find(otherName) != null)
-            {
-                otherSwitcher = GameObject.Find(otherName).GetComponent<SwitchEquipment>();
-            }
 
+        if (Input.GetKeyDown("m") && gameObject.name == "LeftHand")
+        {
+            AddEquipment("TimeDevice");
+            SwitchToSpecificEquipment("TimeDevice");
         }
 
         //if (hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) && currentEquipmentName == "NoteBook")
-        if (triggerClick.GetState(inputSource) && currentEquipmentName == "ClipBoard")
-
+        if (triggerClick.GetStateDown(inputSource) && currentEquipmentName == "ClipBoard")
         {
+
             FindObjectOfType<AudioManager>().Play("NoteSwitchSound");
             notePadScript.NotepadSwitchPage();
         }
-        if (touchPadClick.GetState(inputSource))
+        if (touchPadClick.GetStateDown(inputSource))
         {
+            Debug.Log("switch equipment");
             SwitchToNextEquipment();
         }
-
-
-        //if (hand.controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
-        {
-            SwitchToNextEquipment();
-        }
+        positionEquipment(equipments[currentEquipmentIndex]);
     }
 
     void GetAllEquipment()
@@ -97,11 +85,12 @@ public class SwitchEquipment : MonoBehaviour
     {
         for (int i = 0; i < equipmentList.transform.childCount; i++)
         {
-            if(equipmentList.transform.GetChild(i).name == equipmentName)
+            if (equipmentList.transform.GetChild(i).name == equipmentName)
             {
                 equipments.Add(equipmentList.transform.GetChild(i).gameObject);
             }
         }
+        SwitchToSpecificEquipment(equipmentName);
 
     }
 
@@ -126,7 +115,7 @@ public class SwitchEquipment : MonoBehaviour
         //set the currentequipment to be the next in the order by incrementing the index
         currentEquipmentIndex++;
 
-        //set currentEquipment to index 0 
+        //set currentEquipment to index 0
         if (currentEquipmentIndex > equipments.Count - 1)
         {
             currentEquipmentIndex = 0;
@@ -138,7 +127,7 @@ public class SwitchEquipment : MonoBehaviour
             currentEquipmentIndex++;
         }
 
-        //set currentEquipment to index 0 
+        //set currentEquipment to index 0
         if (currentEquipmentIndex > equipments.Count - 1)
         {
             currentEquipmentIndex = 0;
@@ -170,10 +159,12 @@ public class SwitchEquipment : MonoBehaviour
             {
                 equipments[i].SetActive(true);
                 currentEquipmentName = equipments[i].name;
-                positionEquipment(equipments[i]);
+                //positionEquipment(equipments[i]);
             }
-            else if (i != otherSwitcher.currentEquipmentIndex) //you should not set the equipment on the other hand off
+            else if (equipments[i].name != otherSwitcher.currentEquipmentName) //you should not set the equipment on the other hand off
             {
+                //Debug.Log(currentEquipmentName);
+                //Debug.Log(otherSwitcher.currentEquipmentName);
                 equipments[i].SetActive(false);
             }
         }

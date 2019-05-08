@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.mazegeneration.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\stud\\Desktop\\MedialogyP8-master\\MazeGeneration\\actions.json",
+      "action_manifest_path": "C:\\Users\\user\\Desktop\\MedialogyP8-master\\MazeGeneration\\actions.json",
       "strings": {
         "en_us": {
           "name": "MazeGeneration [Testing]"
