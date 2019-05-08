@@ -5,6 +5,8 @@ using UnityEngine;
 public class KeyPadPuzzle : MonoBehaviour
 {
     public int password;
+    public GameObject safeHandle;
+    public GameObject safeDoor;
     private int i = 0;
     private int currentNumber = 0;
 
@@ -24,11 +26,20 @@ public class KeyPadPuzzle : MonoBehaviour
                 // Success
                 Debug.Log("CORRECT PASSWORD");
                 FindObjectOfType<AudioManager>().Play("UnlockSound");
-                GameObject.Find("Safe_lever").GetComponentInChildren<Valve.VR.InteractionSystem.Interactable>().enabled = true;
+                safeHandle.GetComponent<Valve.VR.InteractionSystem.Interactable>().enabled = true;
+                safeHandle.GetComponent<Valve.VR.InteractionSystem.Interactable>().highlightOnHover = true;
+                safeHandle.GetComponent<Valve.VR.InteractionSystem.CircularDrive>().enabled = true;
             }
             currentNumber = 0;
         }
         i++;
+    }
+
+    public void valveUnlock()
+    {
+        safeDoor.GetComponent<Valve.VR.InteractionSystem.Interactable>().enabled = true;
+        safeDoor.GetComponent<Valve.VR.InteractionSystem.Interactable>().highlightOnHover = true;
+        safeDoor.GetComponent<Valve.VR.InteractionSystem.CircularDrive>().enabled = true;
     }
 
     public void ButtonPressSound()
