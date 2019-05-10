@@ -2,34 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndEvent : MonoBehaviour
-{
+public class EndEvent : MonoBehaviour {
     // AudioSource metalDoorSlamSound;
-    Camera mainCam;
+    public GameObject fadeCube;
     public float doorShutdelay = 10;
     float currentTime;
     bool timerActive = false;
 
-    void Start()
-    {
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    void Start () {
+        fadeCube = GameObject.Find ("FadeToBlackCube");
+        fadeCube.SetActive (false);
     }
 
-    void Update()
-    {
-        if (timerActive)
-        {
-            if (doorShutdelay <= Time.time - currentTime)
-            {
-                FindObjectOfType<AudioManager>().Play("MetalDoorSlam");
-                mainCam.cullingMask = 0;
+    void Update () {
+        if (timerActive) {
+            if (doorShutdelay <= Time.time - currentTime) {
+                FindObjectOfType<AudioManager> ().Play ("MetalDoorSlam");
+                fadeCube.SetActive (true);
                 timerActive = false;
             }
-        }  
+        }
     }
 
-    public void executeLastEvent()
-    {
+    public void executeLastEvent () {
         currentTime = Time.time;
         timerActive = true;
     }

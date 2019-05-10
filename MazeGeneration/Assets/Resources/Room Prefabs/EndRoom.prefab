@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e85951f34ef6c0479bf0b86aa51fc39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  password: 4231
+  password: 3241
   safeHandle: {fileID: 3222878122409426411}
   safeDoor: {fileID: 3222878122409426405}
 --- !u!1 &1860255375617867869
@@ -2013,6 +2013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d567ef364e1334fbca4af157891075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeCube: {fileID: 0}
   doorShutdelay: 10
 --- !u!1 &3222878122312534810
 GameObject:
@@ -2933,8 +2934,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3222878122549525683}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -0.3826, y: 0.6233425, z: 1.599001}
-  m_LocalScale: {x: 3.2779396, y: 2.5, z: 0.19999999}
+  m_LocalPosition: {x: -0.0174, y: 0.6233425, z: 1.599001}
+  m_LocalScale: {x: 2.47794, y: 2.5, z: 0.19999999}
   m_Children: []
   m_Father: {fileID: 3222878122312534809}
   m_RootOrder: 6

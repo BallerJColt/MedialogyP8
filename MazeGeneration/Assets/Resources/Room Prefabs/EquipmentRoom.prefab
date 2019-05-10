@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 2134185834742577369}
   - component: {fileID: 2134185834745968889}
   - component: {fileID: 2134185834745002553}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Classic fluorescent lamp (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

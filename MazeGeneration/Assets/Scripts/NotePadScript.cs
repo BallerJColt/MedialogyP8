@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NotePadScript : MonoBehaviour
-{
+public class NotePadScript : MonoBehaviour {
     // Gameobject of notepad canvas:
     public GameObject notepadCanvasObject;
 
@@ -27,135 +26,115 @@ public class NotePadScript : MonoBehaviour
     Image crossOutTextImage;
 
     // Other variables:
-    int currentPage = -1;
-    int roomsEntered = 0;
+    int currentPage = 0;
+    int roomsEntered = 1;
     int pageAmount = 0; // not counting 0
     bool[] clueFound;
 
-    void Start()
-    {
+    void Start () {
         // Find all the necesarry components: 
-        roomNameText = notepadCanvasObject.transform.Find("RoomNameText").GetComponent<Text>();
-        clueHintText = notepadCanvasObject.transform.Find("ClueHintText").GetComponent<Text>();
-        clueText = notepadCanvasObject.transform.Find("ClueText").GetComponent<Text>();
-        pageNumber = notepadCanvasObject.transform.Find("PageNumberText").GetComponent<Text>();
-        clueNumberImage = notepadCanvasObject.transform.Find("ClueNumberImage").GetComponent<Image>();
-        crossOutTextImage = notepadCanvasObject.transform.Find("CrossOutImage").GetComponent<Image>();
+        roomNameText = notepadCanvasObject.transform.Find ("RoomNameText").GetComponent<Text> ();
+        clueHintText = notepadCanvasObject.transform.Find ("ClueHintText").GetComponent<Text> ();
+        clueText = notepadCanvasObject.transform.Find ("ClueText").GetComponent<Text> ();
+        pageNumber = notepadCanvasObject.transform.Find ("PageNumberText").GetComponent<Text> ();
+        clueNumberImage = notepadCanvasObject.transform.Find ("ClueNumberImage").GetComponent<Image> ();
+        crossOutTextImage = notepadCanvasObject.transform.Find ("CrossOutImage").GetComponent<Image> ();
 
-        pageAmount = roomNameStrings.Length;    // The amount of rooms is determined by the amount of room name strings in the array
-        clueFound = new bool[pageAmount];   // Boolean array used to check if the clue was found in the specific room
-        foundNote.SetActive(false);     // Introduction note disabled from the beginning
+        pageAmount = roomNameStrings.Length; // The amount of rooms is determined by the amount of room name strings in the array
+        clueFound = new bool[pageAmount]; // Boolean array used to check if the clue was found in the specific room
+        foundNote.SetActive (true); // Introduction note disabled/enable from the beginning
+        clueNumberImage.gameObject.SetActive (false);
 
-        for (int i = 0; i < pageAmount; i++)
-        {
+        for (int i = 0; i < pageAmount; i++) {
             clueFound[i] = false;
         }
     }
 
-    public void NotepadEnterNewRoom()
-    {
-        if (roomsEntered < pageAmount)
-        {
+    public void NotepadEnterNewRoom () {
+        if (roomsEntered < pageAmount) {
             currentPage = (currentPage + 1) % pageAmount;
             roomsEntered++;
-            FindObjectOfType<AudioManager>().Play("NoteUpdateSound");
-            SetNotepadToBlank();
+            FindObjectOfType<AudioManager> ().Play ("NoteUpdateSound");
+            SetNotepadToBlank ();
 
-        }
-        else if (roomsEntered != 0)
-        {
-            foundNote.SetActive(false);
+        } else if (roomsEntered != 0) {
+            foundNote.SetActive (false);
             currentPage = (currentPage + 1) % roomsEntered;
-            Debug.Log("Current page:" + currentPage);
-            SwitchPage(currentPage);
+            Debug.Log ("Current page:" + currentPage);
+            SwitchPage (currentPage);
         }
 
     }
 
-    public void NotepadSwitchPage()
-    {
-        Debug.Log((currentPage + 1) + " " + roomsEntered);
-        if ((currentPage + 1) == roomsEntered && foundNote.activeSelf == false)
-        {
-            foundNote.SetActive(true);
-            SetNotepadToBlank();
+    public void NotepadSwitchPage () {
+        Debug.Log ((currentPage + 1) + " " + roomsEntered);
+        if ((currentPage + 1) == roomsEntered && foundNote.activeSelf == false) {
+            foundNote.SetActive (true);
+            SetNotepadToBlank ();
 
-        }
-        else if (roomsEntered != 0)
-        {
-            foundNote.SetActive(false);
+        } else if (roomsEntered != 0) {
+            foundNote.SetActive (false);
             currentPage = (currentPage + 1) % roomsEntered;
-            Debug.Log("Current page:" + currentPage);
-            SwitchPage(currentPage);
+            Debug.Log ("Current page:" + currentPage);
+            SwitchPage (currentPage);
         }
-
 
     }
 
-    public void NotepadTriggerUpdatePage()
-    {
-        if (clueFound[currentPage] == false)
-        {
-            FindObjectOfType<AudioManager>().Play("NoteUpdateSound");
-            ClueUpdate();
-        } else
-        {
-            Debug.Log("Clue " + currentPage + " already found!");
+    public void NotepadTriggerUpdatePage () {
+        if (clueFound[currentPage] == false) {
+            FindObjectOfType<AudioManager> ().Play ("NoteUpdateSound");
+            ClueUpdate ();
+        } else {
+            Debug.Log ("Clue " + currentPage + " already found!");
         }
-            
+
     }
 
-    private void ClueUpdate()   // Used when the clue is found
+    private void ClueUpdate () // Used when the clue is found
     {
         clueText.text = clueTextStrings[currentPage];
         clueNumberImage.sprite = clueNumberSprites[currentPage];
-        clueNumberImage.gameObject.SetActive(true);
-        crossOutTextImage.gameObject.SetActive(true);
+        clueNumberImage.gameObject.SetActive (true);
+        crossOutTextImage.gameObject.SetActive (true);
         clueFound[currentPage] = true;
     }
 
-    private void SwitchPage(int page)   // Method used to switch the pages
+    private void SwitchPage (int page) // Method used to switch the pages
     {
 
-        if (clueFound[page] == true)
-        {
+        if (clueFound[page] == true) {
             clueText.text = clueTextStrings[page];
-            clueNumberImage.sprite = clueNumberSprites[currentPage];
-            clueNumberImage.gameObject.SetActive(true);
-            crossOutTextImage.gameObject.SetActive(true);
+            clueNumberImage.sprite = clueNumberSprites[page];
+            clueNumberImage.gameObject.SetActive (true);
+            crossOutTextImage.gameObject.SetActive (true);
             roomNameText.text = roomNameStrings[page];
             clueHintText.text = clueHintStrings[page];
             pageNumber.text = ((currentPage + 1) + " of " + roomsEntered);
-        }
-        else
-        {
-            EnterNewRoom(page);
+        } else {
+            EnterNewRoom (page);
         }
 
     }
 
-    private void EnterNewRoom(int page) // Method used when the player enters a new room
+    private void EnterNewRoom (int page) // Method used when the player enters a new room
     {
-        if (page < pageAmount)
-        {
-            crossOutTextImage.gameObject.SetActive(false);
-            clueNumberImage.gameObject.SetActive(false);
+        if (page < pageAmount) {
+            crossOutTextImage.gameObject.SetActive (false);
+            clueNumberImage.gameObject.SetActive (false);
             clueText.text = null;
             roomNameText.text = roomNameStrings[page];
             clueHintText.text = clueHintStrings[page];
             pageNumber.text = ((currentPage + 1) + " of " + roomsEntered);
-        }
-        else
-        {
-            Debug.Log("Notepad: Page does not exist!");
+        } else {
+            Debug.Log ("Notepad: Page does not exist!");
         }
 
     }
 
-    private void SetNotepadToBlank()
-    {
-        crossOutTextImage.gameObject.SetActive(false);
-        clueNumberImage.gameObject.SetActive(false);
+    private void SetNotepadToBlank () {
+        crossOutTextImage.gameObject.SetActive (false);
+        clueNumberImage.gameObject.SetActive (false);
         clueText.text = null;
         roomNameText.text = null;
         clueHintText.text = null;
